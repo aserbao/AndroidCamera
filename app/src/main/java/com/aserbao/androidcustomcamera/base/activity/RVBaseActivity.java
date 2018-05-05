@@ -29,7 +29,6 @@ public abstract class RVBaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         mClassBeans = new ArrayList<>();
-        initData();
         initView();
     }
 
