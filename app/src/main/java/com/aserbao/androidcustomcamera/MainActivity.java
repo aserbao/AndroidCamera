@@ -1,13 +1,17 @@
 package com.aserbao.androidcustomcamera;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.aserbao.androidcustomcamera.base.activity.RVBaseActivity;
+import com.aserbao.androidcustomcamera.base.beans.ClassBean;
+import com.aserbao.androidcustomcamera.blocks.BlocksActivity;
+import com.aserbao.androidcustomcamera.whole.WholeActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
+public class MainActivity extends RVBaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public List<ClassBean> initData() {
+        mClassBeans.add(new ClassBean("每个功能点单独代码实现", BlocksActivity.class));
+        mClassBeans.add(new ClassBean("所有功能点整合代码实现", WholeActivity.class));
+        return mClassBeans;
     }
 }

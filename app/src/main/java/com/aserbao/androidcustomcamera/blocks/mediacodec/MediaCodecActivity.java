@@ -1,15 +1,17 @@
 package com.aserbao.androidcustomcamera.blocks.mediacodec;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import com.aserbao.androidcustomcamera.R;
+import com.aserbao.androidcustomcamera.base.activity.RVBaseActivity;
+import com.aserbao.androidcustomcamera.base.beans.ClassBean;
+import com.aserbao.androidcustomcamera.blocks.mediacodec.primary.PrimaryMediaCodecActivity;
 
-public class MediaCodecActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MediaCodecActivity extends RVBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_media_codec);
+    public List<ClassBean> initData() {
+        mClassBeans.add(new ClassBean("MediaCodec基本方法使用",PrimaryMediaCodecActivity.class));
+        return mClassBeans;
     }
 }

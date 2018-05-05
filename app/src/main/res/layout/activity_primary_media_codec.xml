@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aserbao.androidcustomcamera.blocks.mediacodec.MediaCodecActivity">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/media_rv"
+    tools:context="com.aserbao.androidcustomcamera.blocks.mediacodec.primary.PrimaryMediaCodecActivity">
+    <Button
+        android:id="@+id/btn_recording"
+        android:text="开始录制"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </FrameLayout>

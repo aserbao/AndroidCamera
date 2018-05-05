@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
         </activity>
         <activity android:name=".blocks.BlocksActivity">
             <intent-filter>
@@ -21,7 +20,10 @@
         </activity>
         <activity android:name=".blocks.mediacodec.MediaCodecActivity">
         </activity>
-
+        <activity android:name=".whole.WholeActivity">
+        </activity>
+        <activity android:name=".blocks.mediacodec.primary.PrimaryMediaCodecActivity">
+        </activity>
     </application>
 
 </manifest>

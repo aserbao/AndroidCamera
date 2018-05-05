@@ -23,10 +23,7 @@ import butterknife.ButterKnife;
  * Created by aserbao on 2018/5/4.
  */
 
-
 public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonViewHolder> {
-
-
     private Context mContext;
     private Activity mActivity;
     private List<ClassBean> mClassBeen = new ArrayList<>();
