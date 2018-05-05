@@ -11,7 +11,20 @@
         android:text="开始录制"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <VideoView
+        android:id="@+id/primary_vv"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"/>
     <TextView
         android:id="@+id/primary_mc_tv"
         style="@style/common_text_view"/>
+
+    <Button
+        android:layout_gravity="right"
+        android:id="@+id/btn_watch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看视频"/>
 </FrameLayout>
