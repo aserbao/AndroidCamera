@@ -3,10 +3,8 @@ package com.aserbao.androidcustomcamera.blocks.mediacodec.primary;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.media.MediaCodec;
-import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +26,6 @@ import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PrimaryMediaCodecActivity extends BaseActivity {
@@ -51,7 +48,7 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
     @BindView(R.id.primary_mc_tv)
     TextView mPrimaryMcTv;
     public MediaCodec.BufferInfo mBufferInfo;
-    public MediaCodec mEncoder;
+    public MediaCodec mMediaCodec;
     @BindView(R.id.primary_vv)
     VideoView mPrimaryVv;
     private Surface mInputSurface;
@@ -167,17 +164,16 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
         MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, WIDTH, HEIGHT);
 
         //1. 设置一些属性。没有指定其中的一些可能会导致MediaCodec.configure()调用抛出一个无用的异常。
-        format.setInteger(MediaFormat.KEY_COLOR_FORMAT,
-                MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+//        format.setInteger(MediaFormat.KEY_COLOR_FORMAT,MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BIT_RATE);//比特率(比特率越高，音视频质量越高，编码文件越大)
         format.setInteger(MediaFormat.KEY_FRAME_RATE, FRAMES_PER_SECOND);//设置帧速
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);//设置关键帧间隔时间
 
         //2.创建一个MediaCodec编码器，并配置格式。获取一个我们可以用于输入的表面，并将其封装到处理EGL工作的类中。
-        mEncoder = MediaCodec.createEncoderByType(MIME_TYPE);
-        mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-        mInputSurface = mEncoder.createInputSurface();
-        mEncoder.start();
+        mMediaCodec = MediaCodec.createEncoderByType(MIME_TYPE);
+        mMediaCodec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+        mInputSurface = mMediaCodec.createInputSurface();
+        mMediaCodec.start();
         //3. 创建一个MediaMuxer。我们不能在这里添加视频跟踪和开始合成，因为我们的MediaFormat里面没有缓冲数据。
         // 只有在编码器开始处理数据后才能从编码器获得这些数据。我们实际上对多路复用音频没有兴趣。我们只是想要
         // 将从MediaCodec获得的原始H.264基本流转换为.mp4文件。
@@ -190,32 +186,32 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
     private void drainEncoder(boolean endOfStream) {
         final int TIMEOUT_USEC = 10000;
         if (endOfStream) {
-            mEncoder.signalEndOfInputStream();//在输入信号end-of-stream。相当于提交一个空缓冲区。视频编码完结
+            mMediaCodec.signalEndOfInputStream();//在输入信号end-of-stream。相当于提交一个空缓冲区。视频编码完结
         }
-        ByteBuffer[] encoderOutputBuffers = mEncoder.getOutputBuffers();
+        ByteBuffer[] encoderOutputBuffers = mMediaCodec.getOutputBuffers();
         while (true) {
-            int encoderStatus = mEncoder.dequeueOutputBuffer(mBufferInfo, TIMEOUT_USEC);
-            if (encoderStatus == MediaCodec.INFO_TRY_AGAIN_LATER) {//没有可以输出的数据使用时
+            int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, TIMEOUT_USEC);
+            if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {//没有可以输出的数据使用时
                 if (!endOfStream) {
                     break;      // out of while
                 }
-            } else if (encoderStatus == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+            } else if (outputBufferIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
                 //输出缓冲区已经更改，客户端必须引用新的
-                encoderOutputBuffers = mEncoder.getOutputBuffers();
-            } else if (encoderStatus == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                encoderOutputBuffers = mMediaCodec.getOutputBuffers();
+            } else if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                 //输出格式发生了变化，后续数据将使用新的数据格式。
                 if (mMuxerStarted) {
                     throw new RuntimeException("format changed twice");
                 }
-                MediaFormat newFormat = mEncoder.getOutputFormat();
+                MediaFormat newFormat = mMediaCodec.getOutputFormat();
                 mTrackIndex = mMuxer.addTrack(newFormat);
                 mMuxer.start();
                 mMuxerStarted = true;
-            } else if (encoderStatus < 0) {
+            } else if (outputBufferIndex < 0) {
             } else {
-                ByteBuffer encodedData = encoderOutputBuffers[encoderStatus];
+                ByteBuffer encodedData = encoderOutputBuffers[outputBufferIndex];
                 if (encodedData == null) {
-                    throw new RuntimeException("encoderOutputBuffer " + encoderStatus +
+                    throw new RuntimeException("encoderOutputBuffer " + outputBufferIndex +
                             " was null");
                 }
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
@@ -234,7 +230,7 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
 
                     mMuxer.writeSampleData(mTrackIndex, encodedData, mBufferInfo);
                 }
-                mEncoder.releaseOutputBuffer(encoderStatus, false);
+                mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
                     if (!endOfStream) {
                         Log.e(TAG, "意外结束");
@@ -290,10 +286,10 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
     }
 
     private void releaseEncoder() {
-        if (mEncoder != null) {
-            mEncoder.stop();
-            mEncoder.release();
-            mEncoder = null;
+        if (mMediaCodec != null) {
+            mMediaCodec.stop();
+            mMediaCodec.release();
+            mMediaCodec = null;
         }
         if (mInputSurface != null) {
             mInputSurface.release();

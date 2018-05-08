@@ -19,7 +19,7 @@ public class H264Encoder {
 
     private final static int TIMEOUT_USEC = 12000;
 
-    private MediaCodec mediaCodec;
+    private MediaCodec mMediaCodec;
 
     public boolean isRuning = false;
     private int width, height, framerate;
@@ -46,10 +46,11 @@ public class H264Encoder {
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, width * height * 5);
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+
         try {
-            mediaCodec = MediaCodec.createEncoderByType("video/avc");
-            mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-            mediaCodec.start();
+            mMediaCodec = MediaCodec.createEncoderByType("video/avc");
+            mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+            mMediaCodec.start();
             createfile();
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,8 +87,6 @@ public class H264Encoder {
             public void run() {
                 isRuning = true;
                 byte[] input = null;
-                long pts = 0;
-                long generateIndex = 0;
 
                 while (isRuning) {
                     if (yuv420Queue.size() > 0) {
@@ -99,20 +98,20 @@ public class H264Encoder {
                     }
                     if (input != null) {
                         try {
-                            ByteBuffer[] inputBuffers = mediaCodec.getInputBuffers();
-                            ByteBuffer[] outputBuffers = mediaCodec.getOutputBuffers();
-                            int inputBufferIndex = mediaCodec.dequeueInputBuffer(-1);
+                            ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();//获取输入队列
+                            ByteBuffer[] outputBuffers = mMediaCodec.getOutputBuffers();//获取输出队列
+                            int inputBufferIndex = mMediaCodec.dequeueInputBuffer(-1);//获取输入队列中有效数据的索引
                             if (inputBufferIndex >= 0) {
-                                pts = computePresentationTime(generateIndex);
                                 ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
                                 inputBuffer.clear();
                                 inputBuffer.put(input);
-                                mediaCodec.queueInputBuffer(inputBufferIndex, 0, input.length, System.currentTimeMillis(), 0);
-                                generateIndex += 1;
+                                //将获得的数据送入到编码器
+                                mMediaCodec.queueInputBuffer(inputBufferIndex, 0, input.length, System.currentTimeMillis(), 0);
                             }
 
                             MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
-                            int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
+                            //获取输出队列中有效数据的索引
+                            int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
                             while (outputBufferIndex >= 0) {
                                 ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];
                                 byte[] outData = new byte[bufferInfo.size];
@@ -129,8 +128,8 @@ public class H264Encoder {
                                     outputStream.write(outData, 0, outData.length);
                                 }
 
-                                mediaCodec.releaseOutputBuffer(outputBufferIndex, false);
-                                outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
+                                mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
+                                outputBufferIndex = mMediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
                             }
 
                         } catch (Throwable t) {
@@ -147,8 +146,8 @@ public class H264Encoder {
 
                 // 停止编解码器并释放资源
                 try {
-                    mediaCodec.stop();
-                    mediaCodec.release();
+                    mMediaCodec.stop();
+                    mMediaCodec.release();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -187,12 +186,6 @@ public class H264Encoder {
         }
     }
 
-    /**
-     * 根据帧数生成时间戳
-     */
-    private long computePresentationTime(long frameIndex) {
-        return 132 + frameIndex * 1000000 / framerate;
-    }
 
     public String getPath() {
         return mPath;
