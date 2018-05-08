@@ -192,7 +192,6 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
         if (endOfStream) {
             mEncoder.signalEndOfInputStream();//在输入信号end-of-stream。相当于提交一个空缓冲区。视频编码完结
         }
-
         ByteBuffer[] encoderOutputBuffers = mEncoder.getOutputBuffers();
         while (true) {
             int encoderStatus = mEncoder.dequeueOutputBuffer(mBufferInfo, TIMEOUT_USEC);
@@ -249,9 +248,6 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 生成一个框架，通过“软件”API(锁定/解锁)写入到表面。
-     */
     private void generateFrame(int frameNum) {
         Canvas canvas = mInputSurface.lockCanvas(null);
         try {
@@ -281,15 +277,13 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
             paint.setTextSize(50);
             paint.setColor(0xffffffff);
 
-            canvas.drawText("aserbao", 0, sliceHeight * frameMod, paint);
-            canvas.drawText("aserbao", 1 * sliceWidth, sliceHeight * (frameMod + 1), paint);
-            canvas.drawText("aserbao", 2 * sliceWidth, sliceHeight * frameMod, paint);
-            canvas.drawText("aserbao", 3 * sliceWidth, sliceHeight * (frameMod + 1), paint);
-            canvas.drawText("aserbao", 4 * sliceWidth, sliceHeight * frameMod, paint);
-            canvas.drawText("aserbao", 5 * sliceWidth, sliceHeight * (frameMod + 1), paint);
-            canvas.drawText("aserbao", 6 * sliceWidth, sliceHeight * frameMod, paint);
-            canvas.drawText("aserbao", 7 * sliceWidth, sliceHeight * (frameMod + 1), paint);
-            canvas.drawText("aserbao", 8 * sliceWidth, sliceHeight * frameMod, paint);
+            for (int i = 0; i < 8; i++) {
+                if(i % 2 == 0){
+                    canvas.drawText("aserbao", i * sliceWidth, sliceHeight * (frameMod + 1), paint);
+                }else{
+                    canvas.drawText("aserbao", i * sliceWidth, sliceHeight * frameMod, paint);
+                }
+            }
         } finally {
             mInputSurface.unlockCanvasAndPost(canvas);
         }

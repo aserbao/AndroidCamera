@@ -1,6 +1,7 @@
 package com.aserbao.androidcustomcamera.blocks.mediacodec.recordBaseCamera;
 
 import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class RecordBaseCameraActivity extends BaseActivity implements SurfaceHol
 
     Camera mCamera;
     public SurfaceHolder surfaceHolder;
-    int width = 1080;
-    int height = 1920;
+    int width = 1920;
+    int height = 1080;
     int framerate = 30;
     H264Encoder mEncoder;
 
@@ -77,7 +78,21 @@ public class RecordBaseCameraActivity extends BaseActivity implements SurfaceHol
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        mCamera.autoFocus(new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                if (success) {
+                    Camera.Parameters parameters = mCamera.getParameters();
+                    parameters = mCamera.getParameters();
+                    parameters.setPictureFormat(PixelFormat.JPEG); //图片输出格式
+//                    mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);//持续对焦模式
+                    mCamera.setParameters(parameters);
+                    mCamera.startPreview();
+                    mCamera.cancelAutoFocus();
+                }
+            }
+        });
     }
 
     @Override

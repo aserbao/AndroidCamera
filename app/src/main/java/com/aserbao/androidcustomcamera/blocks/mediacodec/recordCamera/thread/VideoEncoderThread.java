@@ -16,8 +16,8 @@ import java.util.Vector;
  */
 public class VideoEncoderThread extends Thread {
 
-    public static final int IMAGE_HEIGHT = 1080;
-    public static final int IMAGE_WIDTH = 1920;
+    public static final int IMAGE_HEIGHT = 720;
+    public static final int IMAGE_WIDTH = 1280;
 
     private static final String TAG = "VideoEncoderThread";
 

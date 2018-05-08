@@ -1,6 +1,7 @@
 package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera;
 
 import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -79,7 +80,21 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        mCamera.autoFocus(new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                if (success) {
+                    Camera.Parameters parameters = mCamera.getParameters();
+                    parameters = mCamera.getParameters();
+                    parameters.setPictureFormat(PixelFormat.JPEG); //图片输出格式
+//                    mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);//持续对焦模式
+                    mCamera.setParameters(parameters);
+                    mCamera.startPreview();
+                    mCamera.cancelAutoFocus();
+                }
+            }
+        });
     }
 
     @Override
