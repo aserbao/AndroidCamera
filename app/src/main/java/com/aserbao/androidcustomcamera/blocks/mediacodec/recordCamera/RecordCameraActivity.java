@@ -2,20 +2,21 @@ package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera;
 
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.MediaMuxerThread;
+import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.utils.FileUtils;
+import com.aserbao.androidcustomcamera.whole.videoplayer.VideoPlayerActivity;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread.IMAGE_HEIGHT;
@@ -34,15 +35,24 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
         return R.layout.activity_record_camera;
     }
 
-    @OnClick(R.id.btn_record_status)
-    public void onViewClicked() {
-        if(mBtnRecordStatus.getText().equals("开始录制")){
-            mBtnRecordStatus.setText("结束录制");
-            MediaMuxerThread.startMuxer();
-        }else if(mBtnRecordStatus.getText().equals("结束录制")){
-            mBtnRecordStatus.setText("开始录制");
-            MediaMuxerThread.stopMuxer();
+    @OnClick({R.id.btn_record_status,R.id.btn_record_player})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.btn_record_player:
+                Vector<String> videoFileNameIsMp4 = FileUtils.getVideoFileNameIsMp4(FileUtils.VIDEO_PATH);
+                VideoPlayerActivity.launch(RecordCameraActivity.this,FileUtils.VIDEO_PATH + videoFileNameIsMp4.firstElement());
+                break;
+            case R.id.btn_record_status:
+                if(mBtnRecordStatus.getText().equals("开始录制")){
+                    mBtnRecordStatus.setText("结束录制");
+                    MediaMuxerThread.startMuxer();
+                }else if(mBtnRecordStatus.getText().equals("结束录制")){
+                    mBtnRecordStatus.setText("开始录制");
+                    MediaMuxerThread.stopMuxer();
+                }
+                break;
         }
+
     }
     @Override
     public void initView() {
@@ -53,7 +63,6 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mCamera = Camera.open();
-
         mCamera.setDisplayOrientation(90);
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPreviewFormat(ImageFormat.NV21);
@@ -90,6 +99,8 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
 //        Log.e(TAG, "onPreviewFrame: " + data.toString() );
         MediaMuxerThread.addVideoFrameData(data);
     }
+
+
 
 
 }

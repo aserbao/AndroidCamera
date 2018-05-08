@@ -158,10 +158,8 @@ public class VideoEncoderThread extends Thread {
                         }
                     }
                 }
-
             } else if (!frameBytes.isEmpty()) {
                 byte[] bytes = this.frameBytes.remove(0);
-                Log.e("ang-->", "解码视频数据:" + bytes.length  + "后视频内容" + bytes[0] + "    原视频长度：" + frameBytes.firstElement().toString());
                 try {
                     encodeFrame(bytes);
                 } catch (Exception e) {

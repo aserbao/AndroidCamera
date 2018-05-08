@@ -5,27 +5,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.RecordCameraActivity">
+    tools:context="com.aserbao.androidcustomcamera.blocks.mediacodec.recordBaseCamera.RecordBaseCameraActivity">
     <SurfaceView
-        android:id="@+id/record_camera_sv"
+        android:id="@+id/record_base_camera_sv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/btn_record_status"
+            android:id="@+id/btn_record_base_status"
             android:text="开始录制"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/btn_record_player"
+            android:id="@+id/btn_record_base_player"
             android:text="播放"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-
-
 </FrameLayout>

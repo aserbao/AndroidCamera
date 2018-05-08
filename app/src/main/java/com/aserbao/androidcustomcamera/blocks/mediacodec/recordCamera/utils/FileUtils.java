@@ -8,16 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * 文件处理工具类
  * Created by renhui on 2017/9/25.
  */
 public class FileUtils {
-
     private static final String MAIN_DIR_NAME = "/android_records";
     private static final String BASE_VIDEO = "/video/";
     private static final String BASE_EXT = ".mp4";
+    public  static final String VIDEO_PATH = Environment.getExternalStorageDirectory().getPath() + MAIN_DIR_NAME + BASE_VIDEO;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
     private String currentFileName = "-";
@@ -132,6 +133,24 @@ public class FileUtils {
      */
     public static String getExternalStorageDirectory() {
         return Environment.getExternalStorageDirectory().getPath();
+    }
+
+    public static Vector<String> getVideoFileNameIsMp4(String filedir) {
+        Vector<String> vecFile = new Vector<String>();
+        File file = new File(filedir);
+        File[] subFile = file.listFiles();
+
+        for (int iFileLength = 0; iFileLength < subFile.length; iFileLength++) {
+            // 判断是否为文件夹
+            if (!subFile[iFileLength].isDirectory()) {
+                String filename = subFile[iFileLength].getName();
+                // 判断是否为MP4结尾
+                if (filename.trim().toLowerCase().endsWith(".mp4")) {
+                    vecFile.add(filename);
+                }
+            }
+        }
+        return vecFile;
     }
 
 }

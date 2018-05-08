@@ -30,6 +30,10 @@
         </activity>
         <activity android:name=".blocks.mediacodec.recordCamera.RecordCameraActivity">
         </activity>
+        <activity android:name=".whole.videoplayer.VideoPlayerActivity">
+        </activity>
+        <activity android:name=".blocks.mediacodec.recordBaseCamera.RecordBaseCameraActivity">
+        </activity>
     </application>
 
 </manifest>
