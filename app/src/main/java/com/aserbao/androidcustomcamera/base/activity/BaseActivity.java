@@ -27,11 +27,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayoutId());
         ButterKnife.bind(this);
         startRequestPermission();
+        initView();
     }
 
     private void startRequestPermission() {
         ActivityCompat.requestPermissions(this,BASIC_PERMISSIONS,123);
     }
+    public void initView(){
 
+    }
     protected abstract int setLayoutId();
 }
