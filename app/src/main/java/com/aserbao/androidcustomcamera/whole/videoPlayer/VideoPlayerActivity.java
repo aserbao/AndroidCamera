@@ -1,10 +1,7 @@
-package com.aserbao.androidcustomcamera.whole.videoplayer;
+package com.aserbao.androidcustomcamera.whole.videoPlayer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -13,7 +10,6 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class VideoPlayerActivity extends BaseActivity {
 

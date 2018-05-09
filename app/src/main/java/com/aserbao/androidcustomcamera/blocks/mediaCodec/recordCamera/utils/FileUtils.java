@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.utils;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils;
 
 import android.os.Environment;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -16,13 +16,13 @@ import java.util.Vector;
  */
 public class VideoEncoderThread extends Thread {
 
-    public static final int IMAGE_HEIGHT = 720;
-    public static final int IMAGE_WIDTH = 1280;
+    public static final int IMAGE_HEIGHT = 1080;
+    public static final int IMAGE_WIDTH = 1920;
 
     private static final String TAG = "VideoEncoderThread";
 
     // 编码相关参数
-    private static final String MIME_TYPE = "video/avc"; // H.264 Advanced Video
+    private static final String MIME_TYPE = "video/avc";
     private static final int FRAME_RATE = 30; // 帧率
     private static final int IFRAME_INTERVAL = 10; // I帧间隔（GOP）
     private static final int TIMEOUT_USEC = 10000; // 编码超时时间
@@ -63,20 +63,16 @@ public class VideoEncoderThread extends Thread {
 
     // 执行相关准备工作
     private void prepare() {
-        Log.i(TAG, "VideoEncoderThread().prepare");
         mFrameData = new byte[this.mWidth * this.mHeight * 3 / 2];
         mBufferInfo = new MediaCodec.BufferInfo();
         mCodecInfo = selectCodec(MIME_TYPE);
         if (mCodecInfo == null) {
-            Log.e(TAG, "Unable to find an appropriate codec for " + MIME_TYPE);
             return;
         }
         mediaFormat = MediaFormat.createVideoFormat(MIME_TYPE, this.mWidth, this.mHeight);
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, BIT_RATE);
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, FRAME_RATE);
-//        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
-        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420PackedPlanar);
-//        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);
     }
 
@@ -261,7 +257,6 @@ public class VideoEncoderThread extends Thread {
 
 
     private static void NV21toI420SemiPlanar(byte[] nv21bytes, byte[] i420bytes, int width, int height) {
-        Log.e(TAG, "NV21toI420SemiPlanar: nv21bytes:" +  nv21bytes.length + "   i420bytes:" + i420bytes.length + "windth * height" + width * height);
         System.arraycopy(nv21bytes, 0, i420bytes, 0, width * height);
         for (int i = width * height; i < nv21bytes.length; i += 2) {
             i420bytes[i] = nv21bytes[i + 1];

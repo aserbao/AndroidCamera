@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordBaseCamera;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordBaseCamera;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -108,12 +108,11 @@ public class H264Encoder {
                                 //将获得的数据送入到编码器
                                 mMediaCodec.queueInputBuffer(inputBufferIndex, 0, input.length, System.currentTimeMillis(), 0);
                             }
-
                             MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
-                            //获取输出队列中有效数据的索引
+                            //获取输出队列中有效数据的索引,获取输出的h264流
                             int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
                             while (outputBufferIndex >= 0) {
-                                ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];
+                                ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];//拿到输出队列中有效索引范围内的数据
                                 byte[] outData = new byte[bufferInfo.size];
                                 outputBuffer.get(outData);
                                 if (bufferInfo.flags == MediaCodec.BUFFER_FLAG_CODEC_CONFIG) {
@@ -127,7 +126,7 @@ public class H264Encoder {
                                 } else {
                                     outputStream.write(outData, 0, outData.length);
                                 }
-
+                                //把输出的outputBufferIndex还给系统
                                 mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
                                 outputBufferIndex = mMediaCodec.dequeueOutputBuffer(bufferInfo, TIMEOUT_USEC);
                             }

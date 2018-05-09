@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.primary;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

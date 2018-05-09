@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera;
 
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
@@ -10,9 +10,9 @@ import android.widget.Button;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.MediaMuxerThread;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.utils.FileUtils;
-import com.aserbao.androidcustomcamera.whole.videoplayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.MediaMuxerThread;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils.FileUtils;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -20,8 +20,8 @@ import java.util.Vector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread.IMAGE_HEIGHT;
-import static com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread.IMAGE_WIDTH;
+import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.VideoEncoderThread.IMAGE_HEIGHT;
+import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.VideoEncoderThread.IMAGE_WIDTH;
 
 public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.Callback, Camera.PreviewCallback {
     @BindView(R.id.record_camera_sv)

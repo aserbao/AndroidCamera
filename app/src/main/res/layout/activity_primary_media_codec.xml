@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aserbao.androidcustomcamera.blocks.mediacodec.primary.PrimaryMediaCodecActivity">
+    tools:context="com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.PrimaryMediaCodecActivity">
     <Button
         android:id="@+id/btn_recording"
         android:text="开始录制"

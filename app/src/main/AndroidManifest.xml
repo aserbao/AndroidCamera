@@ -22,17 +22,19 @@
         </activity>
         <activity android:name=".blocks.BlocksActivity">
         </activity>
-        <activity android:name=".blocks.mediacodec.MediaCodecActivity">
+        <activity android:name=".blocks.mediaCodec.MediaCodecActivity">
         </activity>
         <activity android:name=".whole.WholeActivity">
         </activity>
-        <activity android:name=".blocks.mediacodec.primary.PrimaryMediaCodecActivity">
+        <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity">
         </activity>
-        <activity android:name=".blocks.mediacodec.recordCamera.RecordCameraActivity">
+        <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity">
         </activity>
-        <activity android:name=".whole.videoplayer.VideoPlayerActivity">
+        <activity android:name=".whole.videoPlayer.VideoPlayerActivity">
         </activity>
-        <activity android:name=".blocks.mediacodec.recordBaseCamera.RecordBaseCameraActivity">
+        <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity">
+        </activity>
+        <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity">
         </activity>
     </application>
 

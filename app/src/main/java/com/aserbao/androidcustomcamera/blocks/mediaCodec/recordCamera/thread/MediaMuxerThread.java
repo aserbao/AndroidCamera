@@ -1,21 +1,19 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.util.Log;
 
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.AudioEncoderThread;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.utils.FileUtils;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils.FileUtils;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.util.Vector;
 
-import static com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread.IMAGE_HEIGHT;
-import static com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread.VideoEncoderThread.IMAGE_WIDTH;
+import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.VideoEncoderThread.IMAGE_HEIGHT;
+import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.VideoEncoderThread.IMAGE_WIDTH;
 
 /**
  * 音视频混合线程

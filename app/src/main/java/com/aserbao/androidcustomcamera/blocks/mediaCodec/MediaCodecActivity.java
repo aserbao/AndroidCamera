@@ -1,11 +1,10 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec;
 
-import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.RVBaseActivity;
 import com.aserbao.androidcustomcamera.base.beans.ClassBean;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.primary.PrimaryMediaCodecActivity;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordBaseCamera.RecordBaseCameraActivity;
-import com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.RecordCameraActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.PrimaryMediaCodecActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.RecordCameraActivity;
 
 import java.util.List;
 

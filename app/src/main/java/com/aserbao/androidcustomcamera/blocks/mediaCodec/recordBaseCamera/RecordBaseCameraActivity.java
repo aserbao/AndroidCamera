@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordBaseCamera;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordBaseCamera;
 
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
-import com.aserbao.androidcustomcamera.whole.videoplayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
 
 import java.io.IOException;
 

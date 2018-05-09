@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediacodec.recordCamera.thread;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
