@@ -20,22 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".blocks.BlocksActivity">
-        </activity>
-        <activity android:name=".blocks.mediaCodec.MediaCodecActivity">
-        </activity>
-        <activity android:name=".whole.WholeActivity">
-        </activity>
-        <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity">
-        </activity>
-        <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity">
-        </activity>
-        <activity android:name=".whole.videoPlayer.VideoPlayerActivity">
-        </activity>
-        <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity">
-        </activity>
-        <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity">
-        </activity>
+        <activity android:name=".blocks.BlocksActivity"/>
+        <activity android:name=".blocks.mediaCodec.MediaCodecActivity"/>
+        <activity android:name=".whole.WholeActivity"/>
+        <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity"/>
+        <activity android:name=".blocks.mediaCodec.primary.EncodeAndMuxActivity"/>
+        <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity"/>
+        <activity android:name=".whole.videoPlayer.VideoPlayerActivity"/>
+        <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity"/>
+        <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity"/>
     </application>
 
 </manifest>
