@@ -15,10 +15,9 @@ import java.util.Vector;
  * Created by renhui on 2017/9/25.
  */
 public class FileUtils {
-    private static final String MAIN_DIR_NAME = "/android_records";
-    private static final String BASE_VIDEO = "/video/";
+    private static final String MAIN_DIR_NAME = "/aserbao";
     private static final String BASE_EXT = ".mp4";
-    public  static final String VIDEO_PATH = Environment.getExternalStorageDirectory().getPath() + MAIN_DIR_NAME + BASE_VIDEO;
+    public  static final String VIDEO_PATH = Environment.getExternalStorageDirectory().getPath() + MAIN_DIR_NAME ;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
     private String currentFileName = "-";
@@ -62,9 +61,8 @@ public class FileUtils {
         StringBuilder fullPath = new StringBuilder();
         fullPath.append(getExternalStorageDirectory());
         //检查内置卡剩余空间容量,并清理
-        checkSpace();
+//        checkSpace();
         fullPath.append(MAIN_DIR_NAME);
-        fullPath.append(BASE_VIDEO);
         fullPath.append(fileName);
         fullPath.append(BASE_EXT);
 
@@ -86,7 +84,6 @@ public class FileUtils {
         String checkPath = getExternalStorageDirectory();
         fullPath.append(checkPath);
         fullPath.append(MAIN_DIR_NAME);
-        fullPath.append(BASE_VIDEO);
 
         if (checkCardSpace(checkPath)) {
             File file = new File(fullPath.toString());

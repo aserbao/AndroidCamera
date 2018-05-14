@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
@@ -39,7 +37,7 @@ import android.view.View;
 
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity;
+import com.aserbao.androidcustomcamera.base.utils.FileUtils;
 import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
 
 import java.io.File;
@@ -65,7 +63,7 @@ public class EncodeAndMuxActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_encode_and_mux);
+        setContentView(R.layout.bigflake_item);
         ButterKnife.bind(this);
     }
 
@@ -124,8 +122,8 @@ public class EncodeAndMuxActivity extends AppCompatActivity {
      */
     public void testEncodeVideoToMp4() {
         // QVGA at 2Mbps
-        mWidth = 720;
-        mHeight = 1280;
+        mWidth = 1280;
+        mHeight = 720;
         mBitRate = 3000000;
 
         try {
@@ -194,8 +192,7 @@ public class EncodeAndMuxActivity extends AppCompatActivity {
 
         // Output filename.  Ideally this would use Context.getFilesDir() rather than a
         // hard-coded output directory.
-        mOutputPath = new File(OUTPUT_DIR,
-                "test." + mWidth + "x" + mHeight + ".mp4").toString();
+        mOutputPath = FileUtils.getStorageMp4(EncodeAndMuxActivity.class.getSimpleName());
         Log.d(TAG, "output file is " + mOutputPath);
 
 
@@ -210,7 +207,6 @@ public class EncodeAndMuxActivity extends AppCompatActivity {
         } catch (IOException ioe) {
             throw new RuntimeException("MediaMuxer creation failed", ioe);
         }
-
         mTrackIndex = -1;
         mMuxerStarted = false;
     }

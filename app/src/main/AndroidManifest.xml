@@ -24,11 +24,15 @@
         <activity android:name=".blocks.mediaCodec.MediaCodecActivity"/>
         <activity android:name=".whole.WholeActivity"/>
         <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity"/>
-        <activity android:name=".blocks.mediaCodec.primary.EncodeAndMuxActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.EncodeAndMuxActivity"/>
         <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity"/>
         <activity android:name=".whole.videoPlayer.VideoPlayerActivity"/>
         <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity"/>
         <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.CameraToMpegActivity">
+        </activity>
+        <activity android:name=".blocks.mediaCodec.bigflake.BigflakeActivity">
+        </activity>
     </application>
 
 </manifest>

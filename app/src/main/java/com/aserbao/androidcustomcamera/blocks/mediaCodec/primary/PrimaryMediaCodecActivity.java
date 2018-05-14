@@ -20,6 +20,7 @@ import android.widget.VideoView;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
+import com.aserbao.androidcustomcamera.base.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,7 +71,8 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
             case R.id.btn_recording:
                 if (mBtnRecording.getText().equals("开始录制")) {
                     try {
-                        mOutputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis() + ".mp4");
+//                        mOutputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis() + ".mp4");
+                        mOutputFile = new File(FileUtils.getStorageMp4("PrimaryMediaCodecActivity"));
                         startRecording(mOutputFile);
                         mPrimaryMcTv.setText("文件保存路径为：" + mOutputFile.toString());
                         mBtnRecording.setText("停止录制");
