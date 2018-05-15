@@ -78,10 +78,10 @@ public abstract class BaseFilter {
 
     //纹理坐标
     private float[] coord={
+            0.0f, 1.0f,
             0.0f, 0.0f,
-            0.0f,  1.0f,
-            1.0f,  0.0f,
             1.0f, 1.0f,
+            1.0f, 0.0f,
     };
     private SparseArray<boolean[]> mBools;
     private SparseArray<int[]> mInts;

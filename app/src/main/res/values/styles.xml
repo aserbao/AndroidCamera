@@ -20,4 +20,29 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
+    <declare-styleable name="FocusImageView">
+        <attr name="focus_focusing_id" format="integer" />
+        <attr name="focus_success_id" format="integer" />
+        <attr name="focus_fail_id" format="integer" />
+    </declare-styleable>
+
+    <style name="expression_dialog_anim_style">
+        <item name="android:windowEnterAnimation">@anim/expression_show_anim</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/expression_hidden_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+    <style name="sel_beauty_level_tv_style">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/tv_circle_white10_bg</item>
+        <item name="android:layout_marginRight">9dp</item>
+    </style>
+
 </resources>

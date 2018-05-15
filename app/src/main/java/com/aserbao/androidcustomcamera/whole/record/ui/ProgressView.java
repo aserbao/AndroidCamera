@@ -101,7 +101,7 @@ public class ProgressView extends View {
 			switch (msg.what) {
 				case HANDLER_INVALIDATE_ACTIVE:
 					if (!progressView.mStop)
-						sendEmptyMessageDelayed(0, 50);
+						sendEmptyMessageDelayed(HANDLER_INVALIDATE_ACTIVE, 50);
 					progressView.invalidate();
 					if(!progressView.mProgressChanged) {
 						progressView.mActiveState = !progressView.mActiveState;
@@ -112,7 +112,7 @@ public class ProgressView extends View {
 				case HANDLER_INVALIDATE_RECORDING:
 					progressView.invalidate();
 					if (progressView.mProgressChanged)
-						sendEmptyMessageDelayed(0, 50);
+						sendEmptyMessageDelayed(HANDLER_INVALIDATE_ACTIVE, 50);
 					break;
 			}
 		}
@@ -122,25 +122,23 @@ public class ProgressView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
 		final int width = getMeasuredWidth(), height = getMeasuredHeight();
 		int left = 0, right = 0, duration = 0;
 		if (mMediaObject != null && mMediaObject.getMedaParts() != null) {
-
 			left = right = 0;
 			Iterator<MediaObject.MediaPart> iterator = mMediaObject
 					.getMedaParts().iterator();
 			boolean hasNext = iterator.hasNext();
-			/*if(mIsBack) {
-				mMaxDuration = mMediaObject.getDuration()+ 10;//每次视频合成造成的时长损失
-			}else{
-				mMaxDuration = 15000 + mMediaObject.getListCount() * 230;//每次视频合成造成的时长损失
-			}*/
-			// final int duration = vp.getDuration();
 			int maxDuration = mMaxDuration;
 			boolean hasOutDuration = false;
 			int currentDuration = mMediaObject.getDuration();
 			hasOutDuration = currentDuration > mMaxDuration;
+			if(isNeedCountDown){
+				if (currentDuration > mCountDownTime &&  mOverTimeClickListener != null) {
+					mOverTimeClickListener.isArriveCountDown();
+					isNeedCountDown = false;
+				}
+			}
 			if (hasOutDuration) {
 				Log.e("currentDuration", "onDraw:      " +currentDuration  +"mMaxduration" + mMaxDuration);
 				maxDuration = currentDuration;
@@ -154,8 +152,6 @@ public class ProgressView extends View {
 			while (hasNext) {
 				MediaObject.MediaPart vp = iterator.next();
 				final int partDuration = vp.getDuration();
-				// Logger.e("[ProgressView]partDuration" + partDuration +
-				// " maxDuration:" + maxDuration);
 				left = right;
 				right = left
 						+ (int) (partDuration * 1.0F / maxDuration * width);
@@ -184,10 +180,11 @@ public class ProgressView extends View {
 			left = (int) (5300F / mMaxDuration * width);
 			canvas.drawRect(left, 0.0F, left + mVLineWidth, height, mThreePaint);
 		}else if(!isShowEnoughTime){
-			mOverTimeClickListener.noEnoughTime();
-			isShowEnoughTime = true;
+			if (mOverTimeClickListener != null) {
+				mOverTimeClickListener.noEnoughTime();
+				isShowEnoughTime = true;
+			}
 		}
-
 		// 闪
 		if (mActiveState) {}
 			if (right + 8 >= width)
@@ -196,7 +193,12 @@ public class ProgressView extends View {
 					mActivePaint);
 
 	}
-
+	private float mCountDownTime;
+	private boolean isNeedCountDown = false;
+	public void setCountDownTime(float countTime){
+		mCountDownTime = countTime;
+		isNeedCountDown = true;
+	}
 	public void setShowEnouchTime(boolean is){
 		isShowEnoughTime = is;
 	}
@@ -242,5 +244,6 @@ public class ProgressView extends View {
 	public interface OverTimeClickListener{
 		void overTime();
 		void noEnoughTime();
+		void isArriveCountDown();
 	}
 }

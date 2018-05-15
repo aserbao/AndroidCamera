@@ -14,9 +14,7 @@
         android:id="@+id/matching_back"
         android:layout_width="80dp"
         android:layout_height="80dp">
-
         <ImageView
-            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
@@ -34,7 +32,7 @@
         android:layout_width="65dp"
         android:layout_height="30dp"/>
     <ImageView
-        android:id="@+id/meet_camera"
+        android:id="@+id/switch_camera"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_toLeftOf="@+id/video_record_finish_iv"
@@ -64,16 +62,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <CheckedTextView
-                    android:visibility="gone"
-                    android:id="@+id/record_delete"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bigicon_deletion"
-                    android:button="@null"
-                    />
                 <TextView
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -102,7 +90,7 @@
 
         </FrameLayout>
         <ImageView
-            android:id="@+id/record_iv"
+            android:id="@+id/btn_record_iv"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/index_action3"
             android:layout_width="wrap_content"
@@ -148,5 +136,19 @@
         android:id="@+id/video_record_progress_view"
         android:layout_width="match_parent"
         android:layout_height="6dp" />
-
+    <com.aserbao.androidcustomcamera.whole.record.ui.FocusImageView
+        android:id="@+id/recorder_focus_iv"
+        android:layout_width="70dip"
+        android:layout_height="70dip"
+        android:visibility="invisible"
+        app:focus_fail_id="@drawable/focus_focus_failed"
+        app:focus_focusing_id="@drawable/focus_focusing"
+        app:focus_success_id="@drawable/focus_focused" />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/count_time_down_iv"
+        android:layout_centerInParent="true"
+        android:src="@drawable/bigicon_timeout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

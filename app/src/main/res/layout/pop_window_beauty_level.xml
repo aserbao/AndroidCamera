@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/black_50"
+    android:layout_height="172dp">
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/pop_beauty_ll"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/none_iv"
+            android:src="@drawable/bigicon_no_light"
+            style="@style/sel_beauty_level_tv_style"
+            android:background="@drawable/tv_circle_white40_bg"
+            />
+        <TextView
+            android:id="@+id/one_tv"
+            android:text="1"
+            style="@style/sel_beauty_level_tv_style"/>
+        <TextView
+            android:id="@+id/two_tv"
+            android:text="2"
+            style="@style/sel_beauty_level_tv_style"/>
+        <TextView
+            android:text="3"
+            android:id="@+id/three_tv"
+            style="@style/sel_beauty_level_tv_style"/>
+        <TextView
+            android:id="@+id/four_tv"
+            android:text="4"
+            style="@style/sel_beauty_level_tv_style"/>
+        <TextView
+            android:id="@+id/five_tv"
+            android:text="5"
+            style="@style/sel_beauty_level_tv_style"/>
+    </LinearLayout>
+</RelativeLayout>

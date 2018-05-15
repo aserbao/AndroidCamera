@@ -160,7 +160,7 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
         drawFilter.draw();
         EasyGlUtils.unBindFrameBuffer();
 
-        mBeFilter.setTextureId(fTexture[0]);
+        /*mBeFilter.setTextureId(fTexture[0]);
         mBeFilter.draw();
         if (mBeautyFilter != null && mBeautyFilter.getBeautyLevel() != 0){
             EasyGlUtils.bindFrameTexture(fFrame[0],fTexture[0]);
@@ -175,14 +175,15 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
 
         mSlideFilterGroup.onDrawFrame(mProcessFilter.getOutputTexture());
         mAfFilter.setTextureId(mSlideFilterGroup.getOutputTexture());
-        mAfFilter.draw();
+        mAfFilter.draw();*/
         recording();
         /**绘制显示的filter*/
         GLES20.glViewport(0,0,width,height);
-        showFilter.setTextureId(mAfFilter.getOutputTexture());
+        showFilter.setTextureId(fTexture[0]);
         showFilter.draw();
         if (videoEncoder != null && recordingEnabled && recordingStatus == RECORDING_ON){
-            videoEncoder.setTextureId(mAfFilter.getOutputTexture());
+//            videoEncoder.setTextureId(mAfFilter.getOutputTexture());
+            videoEncoder.setTextureId(fTexture[0]);
             videoEncoder.frameAvailable(mSurfaceTextrue);
         }
     }

@@ -4,11 +4,35 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
+    <!--          白色透明度  40%         -->
+    <color name="colorWhite">#7FFFFFFF</color>
+    <color name="colorWhite00">#00FFFFFF</color>
+    <color name="colorWhite10">#1AFFFFFF</color>
+    <color name="colorWhite15">#26FFFFFF</color>
+    <color name="colorWhite20">#3effffff</color>
+    <color name="colorWhite30">#4dffffff</color>
+    <color name="colorWhite40">#66ffffff</color>
+    <color name="colorWhite50">#7FFFFFFF</color>
+    <color name="colorWhite70">#B3FFFFFF</color>
+    <color name="colorWhite80">#CCFFFFFF</color>
+    <color name="colorWhite90">#E6FFFFFF</color>
+    <color name="colorWhite100">#FFFFFF</color>
+    <!--          黑色透明度    -->
+    <color name="black_10">#1A000000</color>
+    <color name="black_20">#3e000000</color>
+    <color name="black_30">#4d000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_50">#7F000000</color>
+    <color name="black_60">#96000000</color>
+    <color name="black_70">#b3000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="colorBlack">#000000</color>
 
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color> <!--红色 -->
-    <color name="middle_gray">#7f808080</color> <!--灰色 -->
+    <color name="middle_gray">#7f808080</color>
+    <color name="color_454545">#454545</color> <!--灰色 -->
+    <color name="FAE000">#FAE000</color>
 </resources>

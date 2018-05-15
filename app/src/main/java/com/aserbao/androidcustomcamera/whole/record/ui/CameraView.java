@@ -3,8 +3,10 @@ package com.aserbao.androidcustomcamera.whole.record.ui;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.aserbao.androidcustomcamera.whole.record.camera.CameraController;
 import com.aserbao.androidcustomcamera.whole.record.draw.CameraDrawer;
@@ -90,7 +92,86 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer,
         cameraId = cameraId==0?1:0;
         open(cameraId);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isSetParm){
+            open(cameraId);
+        }
+    }
+    public void onDestroy(){
+        if (mCameraController != null){
+            mCameraController.close();
+        }
+    }
+    public int getCameraId(){
+        return cameraId;
+    }
+    public int getBeautyLevel() {
+        return mCameraDrawer.getBeautyLevel();
+    }
 
+    public void changeBeautyLevel(final int level) {
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.changeBeautyLevel(level);
+            }
+        });
+    }
+    public void startRecord(){
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.startRecord();
+            }
+        });
+    }
+
+    public void stopRecord(){
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.stopRecord();
+            }
+        });
+    }
+    public void setSavePath(String path) {
+        mCameraDrawer.setSavePath(path);
+    }
+    public void resume(final boolean auto) {
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.onResume(auto);
+            }
+        });
+    }
+    public void pause(final boolean auto) {
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.onPause(auto);
+            }
+        });
+    }
+    public void onTouch(final MotionEvent event){
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mCameraDrawer.onTouch(event);
+            }
+        });
+    }
+    public void setOnFilterChangeListener(SlideGpuFilterGroup.OnFilterChangeListener listener){
+        mCameraDrawer.setOnFilterChangeListener(listener);
+    }
+    /**
+     * 摄像头聚焦
+     * */
+    public void onFocus(Point point, Camera.AutoFocusCallback callback){
+        mCameraController.onFocus(point,callback);
+    }
 
 
     private void stickerInit(){
