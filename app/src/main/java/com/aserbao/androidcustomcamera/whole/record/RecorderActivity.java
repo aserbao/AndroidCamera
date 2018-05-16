@@ -211,10 +211,16 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
 
                 break;
             case R.id.video_filter:
-                new PopupManager(RecorderActivity.this).showBeautyLevel(3, new PopupManager.SelBeautyLevel() {
+                if (mRecordCameraView.getCameraId() == 0){
+                    Toast.makeText(this, "后置摄像头 不使用美白磨皮功能", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                hideOtherView();
+                new PopupManager(this).showBeautyLevel(mRecordCameraView.getBeautyLevel(), new PopupManager.SelBeautyLevel() {
                     @Override
                     public void selBeautyLevel(int level) {
-
+                        showOtherView();
+                        mRecordCameraView.changeBeautyLevel(level);
                     }
                 });
                 break;
@@ -320,8 +326,17 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onFilterChange(MagicFilterType type) {
-
+    public void onFilterChange(final MagicFilterType type) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (type == MagicFilterType.NONE){
+                    Toast.makeText(RecorderActivity.this,"当前没有设置滤镜--"+type,Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(RecorderActivity.this,"当前滤镜切换为--"+type,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     private static class MyHandler extends Handler {
 

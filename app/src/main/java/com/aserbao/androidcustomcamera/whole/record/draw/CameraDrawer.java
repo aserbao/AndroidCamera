@@ -105,7 +105,7 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
     /**创建显示的texture*/
     private int createTextureID() {
         int[] texture = new int[1];
-        GLES20.glGenTextures(1, texture, 0);
+        GLES20.glGenTextures(1, texture,0);//第一个参数表示创建几个纹理对象，并将创建好的纹理对象放置到第二个参数中去
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, texture[0]);
         GLES20.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
                 GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
@@ -160,13 +160,13 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
         drawFilter.draw();
         EasyGlUtils.unBindFrameBuffer();
 
-        /*mBeFilter.setTextureId(fTexture[0]);
+        mBeFilter.setTextureId(fTexture[0]);
         mBeFilter.draw();
         if (mBeautyFilter != null && mBeautyFilter.getBeautyLevel() != 0){
-            EasyGlUtils.bindFrameTexture(fFrame[0],fTexture[0]);
-            GLES20.glViewport(0,0,mPreviewWidth,mPreviewHeight);
+//            EasyGlUtils.bindFrameTexture(fFrame[0],fTexture[0]);
+//            GLES20.glViewport(0,0,mPreviewWidth,mPreviewHeight);
             mBeautyFilter.onDrawFrame(mBeFilter.getOutputTexture());
-            EasyGlUtils.unBindFrameBuffer();
+//            EasyGlUtils.unBindFrameBuffer();
             mProcessFilter.setTextureId(fTexture[0]);
         }else {
             mProcessFilter.setTextureId(mBeFilter.getOutputTexture());
@@ -175,15 +175,16 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
 
         mSlideFilterGroup.onDrawFrame(mProcessFilter.getOutputTexture());
         mAfFilter.setTextureId(mSlideFilterGroup.getOutputTexture());
-        mAfFilter.draw();*/
+        mAfFilter.draw();
         recording();
         /**绘制显示的filter*/
         GLES20.glViewport(0,0,width,height);
-        showFilter.setTextureId(fTexture[0]);
+        showFilter.setTextureId(mAfFilter.getOutputTexture());
+//        showFilter.setTextureId(fTexture[0]);
         showFilter.draw();
         if (videoEncoder != null && recordingEnabled && recordingStatus == RECORDING_ON){
-//            videoEncoder.setTextureId(mAfFilter.getOutputTexture());
-            videoEncoder.setTextureId(fTexture[0]);
+            videoEncoder.setTextureId(mAfFilter.getOutputTexture());
+//            videoEncoder.setTextureId(fTexture[0]);
             videoEncoder.frameAvailable(mSurfaceTextrue);
         }
     }

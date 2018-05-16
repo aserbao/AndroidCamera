@@ -35,7 +35,6 @@ public class PopupManager {
     public PopupManager(Context context) {
         mContext = context;
     }
-
     //显示倒计时
     public void showCountDown(Resources res, int mStartTime, final SelTimeBackListener pop) {
         View showCountDown = LayoutInflater.from(mContext).inflate(R.layout.pop_window_count_down, null);
@@ -89,7 +88,7 @@ public class PopupManager {
     public void showBeautyLevel(int level, final SelBeautyLevel selBeautyLevel) {
         mCuurLevel = level;
         View beautyLevel = LayoutInflater.from(mContext).inflate(R.layout.pop_window_beauty_level, null);
-//        ButterKnife.bind(this, beautyLevel);
+        ButterKnife.bind(this, beautyLevel);
         final PopupWindow mBeautyLevelPW = new PopupWindow(beautyLevel.getRootView(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mBeautyLevelPW.setOutsideTouchable(true);
         mBeautyLevelPW.setFocusable(true);
