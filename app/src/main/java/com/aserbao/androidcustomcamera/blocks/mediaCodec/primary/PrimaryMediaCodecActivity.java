@@ -33,8 +33,8 @@ import butterknife.OnClick;
 public class PrimaryMediaCodecActivity extends BaseActivity {
     private static final String TAG = "PrimaryMediaCodecActivi";
     private static final String MIME_TYPE = "video/avc";
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+    private static final int WIDTH = 720;
+    private static final int HEIGHT = 1280;
     private static final int BIT_RATE = 4000000;
     private static final int FRAMES_PER_SECOND = 4;
     private static final int IFRAME_INTERVAL = 5;
@@ -194,6 +194,7 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
         ByteBuffer[] encoderOutputBuffers = mMediaCodec.getOutputBuffers();
         while (true) {
             int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, TIMEOUT_USEC);
+            Log.e(TAG, "drainEncoder: " + outputBufferIndex);
             if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {//没有可以输出的数据使用时
                 if (!endOfStream) {
                     break;      // out of while
@@ -238,6 +239,7 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
                     if (!endOfStream) {
                         Log.e(TAG, "意外结束");
                     } else {
+                        Toast.makeText(this, "已完成……", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "正常结束");
                     }
                     isRecording = false;
@@ -283,6 +285,8 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
                     canvas.drawText("aserbao", i * sliceWidth, sliceHeight * frameMod, paint);
                 }
             }
+            paint.setColor(0xff000000);
+            canvas.drawText("第"+ String.valueOf(frameNum) + "帧",width/2,height/2,paint);
         } finally {
             mInputSurface.unlockCanvasAndPost(canvas);
         }

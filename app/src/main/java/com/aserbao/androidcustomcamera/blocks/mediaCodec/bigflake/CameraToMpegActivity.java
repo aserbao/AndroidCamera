@@ -49,11 +49,6 @@ public class CameraToMpegActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.start:
-                /*try {
-                    CameraToMpegWrapper.runTest(CameraToMpegActivity.this);
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }*/
                new Thread(new Runnable() {
                    @Override
                    public void run() {

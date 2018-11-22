@@ -6,17 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.PrimaryMediaCodecActivity">
+
+    <VideoView
+        android:id="@+id/primary_vv"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"/>
+
     <Button
         android:id="@+id/btn_recording"
         android:text="开始录制"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <VideoView
-        android:id="@+id/primary_vv"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"/>
+
     <TextView
         android:id="@+id/primary_mc_tv"
         style="@style/common_text_view"/>
