@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake;
+package com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.encodeAndMux;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -27,26 +27,16 @@ import android.opengl.EGLDisplay;
 import android.opengl.EGLExt;
 import android.opengl.EGLSurface;
 import android.opengl.GLES20;
-import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
-import android.view.View;
-import android.widget.Button;
 
-import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.utils.FileUtils;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.BigFlakeBaseActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Generate an MP4 file using OpenGL ES drawing commands.  Demonstrates the use of MediaMuxer
@@ -58,18 +48,13 @@ import butterknife.OnClick;
  * (This was derived from bits and pieces of CTS tests, and is packaged as such, but is not
  * currently part of CTS.)
  */
-public class EncodeAndMuxActivity extends AppCompatActivity {
-
-    public String mOutputPath;
-    @BindView(R.id.start)
-    Button mStart;
+public class EncodeAndMuxActivity extends BigFlakeBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.bigflake_item);
-        ButterKnife.bind(this);
+    public void excute() throws Throwable {
+        testEncodeVideoToMp4();
     }
+
 
     private static final String TAG = "EncodeAndMuxActivity";
     private static final boolean VERBOSE = false;           // lots of logging
@@ -107,23 +92,6 @@ public class EncodeAndMuxActivity extends AppCompatActivity {
     // allocate one of these up front so we don't need to do it every time
     private MediaCodec.BufferInfo mBufferInfo;
 
-    @OnClick({R.id.start, R.id.player})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.start:
-                if(mStart.getText().equals("开始录制")) {
-                    testEncodeVideoToMp4();
-                }else{
-                    mStart.setText("录制完成");
-                }
-                break;
-            case R.id.player:
-                if (!TextUtils.isEmpty(mOutputPath)) {
-                    VideoPlayerActivity.launch(EncodeAndMuxActivity.this, mOutputPath);
-                }
-                break;
-        }
-    }
 
     /**
      * Tests encoding of AVC video from a Surface.  The output is saved as an MP4 file.

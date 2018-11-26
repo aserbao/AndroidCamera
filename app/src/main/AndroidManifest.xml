@@ -25,17 +25,21 @@
         <activity android:name=".blocks.mediaCodec.MediaCodecActivity"/>
         <activity android:name=".whole.WholeActivity"/>
         <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity"/>
-        <activity android:name=".blocks.mediaCodec.bigflake.EncodeAndMuxActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.encodeAndMux.EncodeAndMuxActivity"/>
         <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity"/>
         <activity android:name=".whole.videoPlayer.VideoPlayerActivity"/>
         <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity"/>
         <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity"/>
-        <activity android:name=".blocks.mediaCodec.bigflake.CameraToMpegActivity">
+        <activity android:name=".blocks.mediaCodec.bigflake.cameraToMpeg.CameraToMpegActivity">
         </activity>
         <activity android:name=".blocks.mediaCodec.bigflake.BigflakeActivity">
         </activity>
         <activity android:name=".whole.record.RecorderActivity">
         </activity>
+        <activity android:name=".blocks.mediaCodec.bigflake.encodeDecode.EncodeDecodeActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.extractDecodeEditEncodeMux.ExtractDecodeEditEncodeMuxActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.decodeEditEncode.DecodeEditEncodeActivity"/>
+        <activity android:name=".blocks.mediaCodec.bigflake.extractMpegFrames.ExtractMpegFramesActivity"/>
     </application>
 
 </manifest>
