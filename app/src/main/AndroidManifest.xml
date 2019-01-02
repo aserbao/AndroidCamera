@@ -40,6 +40,7 @@
         <activity android:name=".blocks.mediaCodec.bigflake.extractDecodeEditEncodeMux.ExtractDecodeEditEncodeMuxActivity"/>
         <activity android:name=".blocks.mediaCodec.bigflake.decodeEditEncode.DecodeEditEncodeActivity"/>
         <activity android:name=".blocks.mediaCodec.bigflake.extractMpegFrames.ExtractMpegFramesActivity"/>
+        <activity android:name=".blocks.mediaCodec.primary.CreatMusicVideoByMediaCodecActivity"/>
     </application>
 
 </manifest>

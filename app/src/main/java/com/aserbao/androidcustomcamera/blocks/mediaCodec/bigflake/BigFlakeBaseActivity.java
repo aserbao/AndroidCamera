@@ -37,7 +37,8 @@ public abstract class BigFlakeBaseActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.start:
                 if(mStart.getText().equals("开始录制")) {
-                    new  Thread(new Runnable() {
+//                    runOnUiThread(new Runnable() {
+                    new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
