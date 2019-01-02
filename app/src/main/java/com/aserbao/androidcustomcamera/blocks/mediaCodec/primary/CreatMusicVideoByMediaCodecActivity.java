@@ -1,9 +1,12 @@
 package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
@@ -107,6 +110,7 @@ public class CreatMusicVideoByMediaCodecActivity extends BaseActivity {
         }
     }
 
+    private Bitmap mBitmap;
     private static class MyHanlder extends Handler {
         private WeakReference<CreatMusicVideoByMediaCodecActivity> mPrimaryMediaCodecActivityWeakReference;
 
@@ -151,6 +155,7 @@ public class CreatMusicVideoByMediaCodecActivity extends BaseActivity {
 
     private void startRecording(File outputFile) throws IOException {
         cuurFrame = 0;
+        mBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.katong);
         prepareEncoder(outputFile);
         mMyHanlder.sendEmptyMessage(START_RECORDING);
     }
@@ -263,10 +268,44 @@ public class CreatMusicVideoByMediaCodecActivity extends BaseActivity {
             }else{
                 color = "#FFF353";
             }
-            canvas.drawColor(Color.parseColor(color));
+            int color1 = Color.parseColor(color);
+            canvas.drawColor(color1);
             paint.setTextSize(100);
             paint.setColor(0xff000000);
             canvas.drawText("第"+ String.valueOf(frameNum) + "帧",width/2,height/2,paint);
+            Rect srcRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+            int margain = 30;
+            Rect decRect = new Rect(margain, margain, width - margain, height-margain);
+            canvas.drawBitmap(mBitmap,srcRect,decRect,paint);
+
+            int roundMargain = 60;
+            int roundHeight = 300;
+            int roundRadius = 25;
+            int roundLineWidth = 10;
+            paint.setStyle(Paint.Style.FILL);//充满
+            paint.setAntiAlias(true);// 设置画笔的锯齿效果
+            RectF roundRect1 = new RectF(roundMargain - roundLineWidth,roundMargain - roundLineWidth,width - roundMargain + roundLineWidth,roundHeight + roundMargain + roundLineWidth);
+            paint.setColor(Color.BLACK);
+            canvas.drawRoundRect(roundRect1,roundRadius,roundRadius,paint);
+            paint.setColor(color1);
+            RectF roundRect2 = new RectF(roundMargain,roundMargain,width - roundMargain,roundHeight + roundMargain);
+            canvas.drawRoundRect(roundRect2,roundRadius,roundRadius,paint);
+
+//            paint.setStyle(Paint.Style.STROKE);//充满
+            int timeMargain = roundMargain + 50;
+            String sTime = "2018/12/29 00:39";
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(40);
+            paint.setColor(Color.BLACK);
+            canvas.drawText(sTime,width/2,timeMargain,paint);
+
+            int soundMargain = timeMargain + 80;
+            String soundTime = "party 是我家";
+            String soundTime2 = "party party 是我家";
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(80);
+            canvas.drawText(soundTime,width/2,soundMargain,paint);
+            canvas.drawText(soundTime2,width/2,soundMargain + 80,paint);
 
         } finally {
             mInputSurface.unlockCanvasAndPost(canvas);
