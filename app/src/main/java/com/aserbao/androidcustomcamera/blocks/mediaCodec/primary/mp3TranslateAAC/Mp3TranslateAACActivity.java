@@ -1,9 +1,12 @@
 package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.mp3TranslateAAC;
 
+import android.media.AudioRecord;
 import android.media.MediaFormat;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import butterknife.OnClick;
 
 public class Mp3TranslateAACActivity extends AppCompatActivity {
 
+    private static final String TAG = "Mp3TranslateAACActivity";
     private AudioCodec audioCodec;
 
     @Override
@@ -33,8 +37,9 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.start1_btn:
                 audioCodec = AudioCodec.newInstance();
-                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_MPEG);
-//        audioCodec.setIOPath(path + "/codec.aac", path + "/five.mp3");
+//                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_MPEG);
+                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_AAC);
+//              audioCodec.setIOPath(path + "/codec.aac", path + "/five.mp3");
                 audioCodec.setIOPath(path + "/five.mp3", path + "/codec.aac");
                 audioCodec.prepare();
                 audioCodec.startAsync();
@@ -47,7 +52,36 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
                 });
                 break;
             case R.id.start2_btn:
+
+                TransAacHandlerPure aacHandlerPure = new TransAacHandlerPure(path + "/five.mp3", path + "/codec.aac");
+                aacHandlerPure.setListener(new TransAacHandlerPure.OnProgressListener() {
+                    @Override
+                    public void onStart() {
+                        Log.e(TAG, "onStart: " );
+                    }
+
+                    @Override
+                    public void onProgress(int max, int progress) {
+                        Log.e(TAG, "onProgress: " + progress);
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.e(TAG, "onSuccess: " );
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Log.e(TAG, "onFail: ");
+                    }
+                });
+                aacHandlerPure.start();
                 break;
         }
+    }
+
+    public void test(){
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        AudioRecord.get
     }
 }

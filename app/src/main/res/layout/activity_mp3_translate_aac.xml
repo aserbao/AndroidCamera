@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".blocks.mediaCodec.primary.mp3TranslateAAC.Mp3TranslateAACActivity">
     <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button

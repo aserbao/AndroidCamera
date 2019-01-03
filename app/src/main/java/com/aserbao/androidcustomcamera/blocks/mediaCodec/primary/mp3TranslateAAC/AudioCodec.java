@@ -221,6 +221,9 @@ public class AudioCodec {
      * @return 是否解码完所有数据
      */
     private void srcAudioFormatToPCM() {
+        if (decodeInputBuffers == null || mediaDecode == null) {
+            return;
+        }
         for (int i = 0; i < decodeInputBuffers.length-1; i++) {
             int inputIndex = mediaDecode.dequeueInputBuffer(-1);//获取可用的inputBuffer -1代表一直等待，0表示不等待 建议-1,避免丢帧
             if (inputIndex < 0) {
