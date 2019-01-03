@@ -32,6 +32,7 @@ public abstract class RVBaseActivity extends AppCompatActivity {
         initView();
     }
 
+
     protected void initView() {
         mCommonAdapter = new CommonAdapter(this, this, initData());
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

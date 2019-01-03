@@ -25,6 +25,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     //=====================================UI
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     //======================================ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
