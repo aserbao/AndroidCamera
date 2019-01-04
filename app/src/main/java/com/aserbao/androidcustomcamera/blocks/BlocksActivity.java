@@ -8,6 +8,7 @@ import com.aserbao.androidcustomcamera.blocks.mediaCodec.MediaCodecActivity;
 import java.util.List;
 
 public class BlocksActivity extends RVBaseActivity {
+
     @Override
     public List<ClassBean> initData() {
         mClassBeans.add(new ClassBean("MediaCodec", MediaCodecActivity.class));

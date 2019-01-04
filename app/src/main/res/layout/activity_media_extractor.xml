@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".blocks.MediaExtractor.MediaExtractorActivity">
     <com.aserbao.androidcustomcamera.base.utils.FlowLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:text="解码"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <Button
             android:text="分离视频中的音视频"
             android:id="@+id/extractor_video_and_audio"
@@ -27,6 +33,28 @@
         <Button
             android:text="解码Mp3格式音频并播放"
             android:id="@+id/decoder_mp3_and_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
+    <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="编码"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="录音编码成aac格式的音频文件"
+            android:id="@+id/record_and_encoder_mp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/record_mp3_stop"
+            android:text="结束录制"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.aserbao.androidcustomcamera.base.utils.FlowLayout>

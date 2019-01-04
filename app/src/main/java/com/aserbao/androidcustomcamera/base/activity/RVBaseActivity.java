@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.adapter.CommonAdapter;
 import com.aserbao.androidcustomcamera.base.beans.ClassBean;
+import com.aserbao.androidcustomcamera.base.utils.APermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public abstract class RVBaseActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mBaseRv.setLayoutManager(mLinearLayoutManager);
         mBaseRv.setAdapter(mCommonAdapter);
+        APermissionUtils.checkPermission(this);
     }
 
     public abstract List<ClassBean> initData();
