@@ -14,6 +14,7 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo.CombineTwoVideos;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,15 +33,15 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
 
     String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-    @OnClick({R.id.start1_btn, R.id.start2_btn})
+    @OnClick({R.id.start1_btn, R.id.start2_btn,R.id.start3_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.start1_btn:
                 audioCodec = AudioCodec.newInstance();
-//                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_MPEG);
-                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_AAC);
-//              audioCodec.setIOPath(path + "/codec.aac", path + "/five.mp3");
-                audioCodec.setIOPath(path + "/five.mp3", path + "/codec.aac");
+                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_MPEG);
+//                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_AAC);
+              audioCodec.setIOPath(path + "/123.aac", path + "/456.mp3");
+//                audioCodec.setIOPath(path + "/five.mp3", path + "/codec.aac");
                 audioCodec.prepare();
                 audioCodec.startAsync();
                 audioCodec.setOnCompleteListener(new AudioCodec.OnCompleteListener() {
@@ -77,11 +78,29 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
                 });
                 aacHandlerPure.start();
                 break;
+            case R.id.start3_btn:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            AudioDecoder audioDecoder = new AudioDecoder(path + "/five.mp3");
+                            audioDecoder.setOnCapturePCMListener(new AudioDecoder.OnCapturePCMListener() {
+                                @Override
+                                public void capturePCM(byte[] pcm, int sampleRate, int channel) {
+                                    Log.e(TAG, "capturePCM: " + pcm  + " sampleRate = " + sampleRate + " channel = " + channel);
+                                }
+                            });
+                            audioDecoder.decode();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+                break;
         }
     }
 
     public void test(){
         MediaPlayer mediaPlayer = new MediaPlayer();
-        AudioRecord.get
     }
 }

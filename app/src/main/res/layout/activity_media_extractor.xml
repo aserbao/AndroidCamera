@@ -19,5 +19,15 @@
             android:id="@+id/extractor_start2_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:text="解码AAC格式音频并播放"
+            android:id="@+id/decoder_aac_and_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="解码Mp3格式音频并播放"
+            android:id="@+id/decoder_mp3_and_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
 </RelativeLayout>
