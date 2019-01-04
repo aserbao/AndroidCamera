@@ -1,6 +1,5 @@
 package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.mp3TranslateAAC;
 
-import android.media.AudioRecord;
 import android.media.MediaFormat;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,9 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo.CombineTwoVideos;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.TransAacHandlerPure;
 
-import java.io.File;
 import java.io.IOException;
 
 import butterknife.ButterKnife;
@@ -40,7 +38,7 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
                 audioCodec = AudioCodec.newInstance();
                 audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_MPEG);
 //                audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_AAC);
-              audioCodec.setIOPath(path + "/123.aac", path + "/456.mp3");
+                audioCodec.setIOPath(path + "/123.aac", path + "/456.mp3");
 //                audioCodec.setIOPath(path + "/five.mp3", path + "/codec.aac");
                 audioCodec.prepare();
                 audioCodec.startAsync();
@@ -54,7 +52,7 @@ public class Mp3TranslateAACActivity extends AppCompatActivity {
                 break;
             case R.id.start2_btn:
 
-                TransAacHandlerPure aacHandlerPure = new TransAacHandlerPure(path + "/five.mp3", path + "/codec.aac");
+                TransAacHandlerPure aacHandlerPure = new TransAacHandlerPure(path + "/five.mp3", path + "/codec");
                 aacHandlerPure.setListener(new TransAacHandlerPure.OnProgressListener() {
                     @Override
                     public void onStart() {

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".blocks.MediaExtractor.MediaExtractorActivity">
     <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:id="@+id/decoder_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content" />
         <Button
             android:text="合成视频1的音频和视频2的图像"
-            android:id="@+id/extractor_start2_btn"
+            android:id="@+id/exchange_video_and_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
@@ -37,7 +38,8 @@
             android:layout_height="wrap_content" />
     </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
     <com.aserbao.androidcustomcamera.base.utils.FlowLayout
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/decoder_flow"
+        android:id="@+id/encoder_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -55,6 +57,24 @@
         <Button
             android:id="@+id/record_mp3_stop"
             android:text="结束录制"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
+    <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_below="@+id/encoder_flow"
+        android:id="@+id/translate_flow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="转码"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="mp3格式转成aac格式音频"
+            android:id="@+id/mp3_translate_aac_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.aserbao.androidcustomcamera.base.utils.FlowLayout>

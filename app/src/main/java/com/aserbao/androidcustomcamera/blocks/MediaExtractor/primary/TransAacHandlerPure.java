@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediaCodec.primary.mp3TranslateAAC;
+package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -20,7 +20,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * 功能:音频转换成为aac编码
+ * 功能:mp3转换成为aac编码
  *
  * @author aserbao
  * @date : On 2019/1/3 5:37 PM
