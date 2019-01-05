@@ -174,7 +174,7 @@ public class DecoderAudioAndGetDb {
                         }
                         float v = mMediaExtractor.getSampleTime() / (float) (1000 * 1000);
 
-                        calc(mPcmData,KEY_SAMPLE_RATE);
+                        calcFrequency(mPcmData,KEY_SAMPLE_RATE);
 //                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
                         mPcmPlayer.write(mPcmData, 0, mBufferInfo.size);
                     }
@@ -203,7 +203,7 @@ public class DecoderAudioAndGetDb {
         }
     }
 
-    public void calc(byte[] fft,int samplingRate){
+    public void calcFrequency(byte[] fft, int samplingRate){
         float[] magnitudes = new float[fft.length / 2];
         int max = 0;
         for (int i = 0; i < magnitudes.length; i++) {
@@ -227,10 +227,13 @@ public class DecoderAudioAndGetDb {
 
         double volume = 10 * Math.log10(v / (double) fft.length);
         mDbCallBackListener.cuurentFrequenty(currentFrequency,volume);
-        Log.e(TAG, "calc: currentFrequency = " + currentFrequency + "   volume =  " + volume );
+        Log.e(TAG, "calcFrequency: currentFrequency = " + currentFrequency + "   volume =  " + volume );
     }
     private DbCallBackListener mDbCallBackListener;
     public interface  DbCallBackListener{
         void cuurentFrequenty(int cuurentFrequenty,double volume);
     }
+
+
+
 }
