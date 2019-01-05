@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary;
+package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;

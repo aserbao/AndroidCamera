@@ -11,8 +11,9 @@ import android.widget.Toast;
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
 import com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo.CombineTwoVideos;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.DecoderAudio;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.EncoderAudioAAC;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.AMediaExtractorOfficial;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudio;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder.EncoderAudioAAC;
 import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.TransAacHandlerPure;
 
 import java.io.File;
@@ -43,11 +44,13 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 
     String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-    @OnClick({R.id.extractor_video_and_audio, R.id.exchange_video_and_audio, R.id.decoder_aac_and_player, R.id.decoder_mp3_and_player,
+    @OnClick({R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
+            R.id.decoder_aac_and_player, R.id.decoder_mp3_and_player,
             R.id.record_and_encoder_mp3, R.id.record_mp3_stop,R.id.mp3_translate_aac_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.extractor_video_and_audio:
+                AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/cai.mp4");
                 break;
             case R.id.exchange_video_and_audio:
                 CombineTwoVideos.combineTwoVideos(path + "/cai.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
