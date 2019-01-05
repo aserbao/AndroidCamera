@@ -11,10 +11,11 @@ import android.widget.Toast;
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
 import com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo.CombineTwoVideos;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.AMediaExtractorOfficial;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudio;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder.EncoderAudioAAC;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.FrequencyView;
 import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.TransAacHandlerPure;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudio;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudioAndGetDb;
+import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder.EncoderAudioAAC;
 
 import java.io.File;
 
@@ -31,6 +32,8 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
     Button mRecordAndEncoderMp3;
     @BindView(R.id.record_mp3_stop)
     Button mRecordMp3Stop;
+    @BindView(R.id.frequency_view)
+    FrequencyView mFrequencyView;
     private DecoderAudio decoderAAC;
     private EncoderAudioAAC encoderAudioAAC;
     private long startTime;
@@ -46,11 +49,22 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 
     @OnClick({R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
             R.id.decoder_aac_and_player, R.id.decoder_mp3_and_player,
-            R.id.record_and_encoder_mp3, R.id.record_mp3_stop,R.id.mp3_translate_aac_btn})
+            R.id.record_and_encoder_mp3, R.id.record_mp3_stop, R.id.mp3_translate_aac_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.extractor_video_and_audio:
-                AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/cai.mp4");
+//                AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/cai.mp4");
+                String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/five.mp3";
+//                String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aac.aac";
+//                String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/own.m4a";
+                DecoderAudioAndGetDb decoderAudioAndGetDb = new DecoderAudioAndGetDb();
+                decoderAudioAndGetDb.start(audioMp3Path1, MIMETYPE_AUDIO_MPEG, new DecoderAudioAndGetDb.DbCallBackListener() {
+                    @Override
+                    public void cuurentFrequenty(int cuurentFrequenty, double volume) {
+                        mFrequencyView.addInt(cuurentFrequenty/100);
+                    }
+                });
+//                decoderAudioAndGetDb.start(audioMp3Path1, MIMETYPE_AUDIO_MPEG);
                 break;
             case R.id.exchange_video_and_audio:
                 CombineTwoVideos.combineTwoVideos(path + "/cai.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
@@ -93,12 +107,12 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 
                     @Override
                     public void onProgress(int max, int progress) {
-                        Log.e(TAG, "onProgress: " );
+                        Log.e(TAG, "onProgress: ");
                     }
 
                     @Override
                     public void onSuccess() {
-                        float v =  (System.currentTimeMillis() - startTime) / (float)1000;
+                        float v = (System.currentTimeMillis() - startTime) / (float) 1000;
                         Log.d(TAG, "onSuccess() called 一共耗时 ： " + v + "s");// 10s的mp3转aac差不多2.5s
                     }
 
