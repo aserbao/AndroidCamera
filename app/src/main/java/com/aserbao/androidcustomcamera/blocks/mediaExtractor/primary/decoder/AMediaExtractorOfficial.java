@@ -1,10 +1,8 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder;
+package com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder;
 
-import android.media.DrmInitData;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
-import android.media.audiofx.Visualizer;
 import android.util.Log;
 
 import java.io.IOException;

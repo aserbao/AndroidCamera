@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.TransAacHandlerPure;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.TransAacHandlerPure;
 
 import java.io.IOException;
 

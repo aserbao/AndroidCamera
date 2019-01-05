@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".blocks.MediaExtractor.MediaExtractorActivity">
+    tools:context=".blocks.mediaExtractor.MediaExtractorActivity">
     <com.aserbao.androidcustomcamera.base.utils.FlowLayout
         android:id="@+id/decoder_flow"
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
-    <com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.FrequencyView
+    <com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.FrequencyView
         android:id="@+id/frequency_view"
         android:rotation="180"
         android:layout_alignParentBottom="true"

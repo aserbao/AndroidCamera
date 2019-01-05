@@ -313,49 +313,6 @@ public class CreatMusicVideoByMediaCodecActivity extends BaseActivity {
 
     }
 
-    private void generateFrame(int frameNum,int s) {
-        Canvas canvas = mInputSurface.lockCanvas(null);
-        try {
-            int width = canvas.getWidth();
-            int height = canvas.getHeight();
-            float sliceWidth = width / 8;
-            Paint paint = new Paint();
-            for (int i = 0; i < 8; i++) {
-                int color = 0xff000000;
-                if ((i & 0x01) != 0) {
-                    color |= 0x00ff0000;
-                }
-                if ((i & 0x02) != 0) {
-                    color |= 0x0000ff00;
-                }
-                if ((i & 0x04) != 0) {
-                    color |= 0x000000ff;
-                }
-                paint.setColor(color);
-                canvas.drawRect(sliceWidth * i, 0, sliceWidth * (i + 1), height, paint);
-            }
-
-            paint.setColor(0x80808080);
-            float sliceHeight = height / 8;
-            int frameMod = frameNum % 8;
-            canvas.drawRect(0, sliceHeight * frameMod, width, sliceHeight * (frameMod + 1), paint);
-            paint.setTextSize(50);
-            paint.setColor(0xffffffff);
-
-            for (int i = 0; i < 8; i++) {
-                if(i % 2 == 0){
-                    canvas.drawText("aserbao", i * sliceWidth, sliceHeight * (frameMod + 1), paint);
-                }else{
-                    canvas.drawText("aserbao", i * sliceWidth, sliceHeight * frameMod, paint);
-                }
-            }
-            paint.setColor(0xff000000);
-            canvas.drawText("第"+ String.valueOf(frameNum) + "帧",width/2,height/2,paint);
-        } finally {
-            mInputSurface.unlockCanvasAndPost(canvas);
-        }
-    }
-
     private void releaseEncoder() {
         if (mMediaCodec != null) {
             mMediaCodec.stop();

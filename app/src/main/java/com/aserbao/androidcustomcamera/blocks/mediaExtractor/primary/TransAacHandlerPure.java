@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary;
+package com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;

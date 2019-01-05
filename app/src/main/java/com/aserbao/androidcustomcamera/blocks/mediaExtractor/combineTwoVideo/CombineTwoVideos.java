@@ -1,11 +1,10 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo;
+package com.aserbao.androidcustomcamera.blocks.mediaExtractor.combineTwoVideo;
 
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
 

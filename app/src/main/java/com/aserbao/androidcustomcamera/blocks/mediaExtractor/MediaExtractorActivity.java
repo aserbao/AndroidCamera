@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor;
+package com.aserbao.androidcustomcamera.blocks.mediaExtractor;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,12 +10,12 @@ import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.combineTwoVideo.CombineTwoVideos;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.FrequencyView;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.TransAacHandlerPure;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudio;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.decoder.DecoderAudioAndGetDb;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder.EncoderAudioAAC;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.combineTwoVideo.CombineTwoVideos;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.FrequencyView;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.TransAacHandlerPure;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudio;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudioAndGetDb;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.encoder.EncoderAudioAAC;
 
 import java.io.File;
 

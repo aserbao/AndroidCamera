@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary.encoder;
+package com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.encoder;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -6,7 +6,6 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.FileNotFoundException;

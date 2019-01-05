@@ -2,7 +2,7 @@ package com.aserbao.androidcustomcamera.blocks;
 
 import com.aserbao.androidcustomcamera.base.activity.RVBaseActivity;
 import com.aserbao.androidcustomcamera.base.beans.ClassBean;
-import com.aserbao.androidcustomcamera.blocks.MediaExtractor.MediaExtractorActivity;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.MediaExtractorActivity;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.MediaCodecActivity;
 
 import java.util.List;
