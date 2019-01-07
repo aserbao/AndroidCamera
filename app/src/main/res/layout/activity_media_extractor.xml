@@ -17,6 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
+            android:text="分离Mp4中的音频生成Mp3"
+            android:id="@+id/extractor_mp3_from_mp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="分离Mp4中的视频生成无声音的Mp4"
+            android:id="@+id/extractor_no_voice_mp4_from_mp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
             android:text="分离视频中的音视频"
             android:id="@+id/extractor_video_and_audio"
             android:layout_width="wrap_content"
@@ -83,5 +93,5 @@
         android:rotation="180"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="100dp" />
 </RelativeLayout>

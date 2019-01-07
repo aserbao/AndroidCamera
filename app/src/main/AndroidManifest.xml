@@ -10,10 +10,10 @@
     <application
         android:name=".base.MyApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:hardwareAccelerated="true"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
         <activity android:name=".MainActivity">
@@ -41,7 +41,8 @@
         <activity android:name=".blocks.mediaCodec.bigflake.extractMpegFrames.ExtractMpegFramesActivity" />
         <activity android:name=".blocks.mediaCodec.primary.CreatMusicVideoByMediaCodecActivity" />
         <activity android:name=".blocks.mediaCodec.primary.mp3TranslateAAC.Mp3TranslateAACActivity" />
-        <activity android:name=".blocks.mediaExtractor.MediaExtractorActivity"></activity>
+        <activity android:name=".blocks.mediaExtractor.MediaExtractorActivity" />
+        <activity android:name=".blocks.mediaMuxer.MediaMuxerActivity"></activity>
     </application>
 
 </manifest>

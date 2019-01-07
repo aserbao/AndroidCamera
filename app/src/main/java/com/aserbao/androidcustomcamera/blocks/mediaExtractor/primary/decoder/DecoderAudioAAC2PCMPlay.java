@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * 功能: 解码AAC 格式音频成PCM
+ * 功能: 解码AAC 格式音频成PCM并播放
  * @author aserbao
  * @date : On 2019/1/4 4:05 PM
  * @email: 1142803753@qq.com
@@ -21,9 +21,9 @@ import java.nio.ByteBuffer;
  * @package:com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary
  * @Copyright: 个人版权所有
  */
-public class DecoderAudio {
-    private static final String TAG = "DecoderAudio";
-    public DecoderAudio() {
+public class DecoderAudioAAC2PCMPlay {
+    private static final String TAG = "DecoderAudioAAC2PCMPlay";
+    public DecoderAudioAAC2PCMPlay() {
     }
 
     private DecoderAACThread mDecoderAACThread;

@@ -10,11 +10,14 @@ import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
+import com.aserbao.androidcustomcamera.blocks.interfaces.ICallBackListener;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.combineTwoVideo.CombineTwoVideos;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.FrequencyView;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.TransAacHandlerPure;
-import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudio;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudioAAC2PCMPlay;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudioAndGetDb;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderMp3FromMp4;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderNoVoiceMp4FromMp4;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.encoder.EncoderAudioAAC;
 
 import java.io.File;
@@ -34,7 +37,7 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
     Button mRecordMp3Stop;
     @BindView(R.id.frequency_view)
     FrequencyView mFrequencyView;
-    private DecoderAudio decoderAAC;
+    private DecoderAudioAAC2PCMPlay decoderAAC;
     private EncoderAudioAAC encoderAudioAAC;
     private long startTime;
 
@@ -47,11 +50,37 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 
     String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-    @OnClick({R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
+    @OnClick({R.id.extractor_mp3_from_mp4,R.id.extractor_no_voice_mp4_from_mp4,R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
             R.id.decoder_aac_and_player, R.id.decoder_mp3_and_player,
             R.id.record_and_encoder_mp3, R.id.record_mp3_stop, R.id.mp3_translate_aac_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.extractor_mp3_from_mp4:
+                new DecoderMp3FromMp4(path + "/aserbao.mp4", path + "/out_aserbao.mp3", new ICallBackListener() {
+                    @Override
+                    public void success() {
+                        Toast.makeText(MediaExtractorActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failed(Exception e) {
+                        Toast.makeText(MediaExtractorActivity.this, "失败" + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }).start();
+                break;
+            case R.id.extractor_no_voice_mp4_from_mp4:
+                new DecoderNoVoiceMp4FromMp4(path + "/lan.mp4", path + "/out_aserbao", new ICallBackListener() {
+                    @Override
+                    public void success() {
+                        Toast.makeText(MediaExtractorActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failed(Exception e) {
+                        Toast.makeText(MediaExtractorActivity.this, "失败" + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }).start();
+                break;
             case R.id.extractor_video_and_audio:
 //                AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/cai.mp4");
                 String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/five.mp3";
@@ -67,16 +96,16 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 //                decoderAudioAndGetDb.start(audioMp3Path1, MIMETYPE_AUDIO_MPEG);
                 break;
             case R.id.exchange_video_and_audio:
-                CombineTwoVideos.combineTwoVideos(path + "/cai.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
+                CombineTwoVideos.combineTwoVideos(path + "/aserbao.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
                 break;
             case R.id.decoder_aac_and_player:
                 String audioPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aac.aac";
-                decoderAAC = new DecoderAudio();
+                decoderAAC = new DecoderAudioAAC2PCMPlay();
                 decoderAAC.start(audioPath, MIMETYPE_AUDIO_AAC);
                 break;
             case R.id.decoder_mp3_and_player:
                 String audioMp3Path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/five.mp3";
-                decoderAAC = new DecoderAudio();
+                decoderAAC = new DecoderAudioAAC2PCMPlay();
                 decoderAAC.start(audioMp3Path, MIMETYPE_AUDIO_MPEG);
                 break;
             case R.id.record_and_encoder_mp3:

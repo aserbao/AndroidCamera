@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".blocks.mediaMuxer.MediaMuxerActivity">
+    <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/muxer_aac_video_to_mp4"
+            android:text="将aac音频和视频画面合成mp4文件"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/muxer_aac_db_to_mp4"
+            android:text="根据音频振幅合成mp4文件"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
+</RelativeLayout>

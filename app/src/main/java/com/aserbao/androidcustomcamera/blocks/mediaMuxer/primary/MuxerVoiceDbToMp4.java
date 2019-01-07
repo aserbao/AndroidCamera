@@ -1,4 +1,4 @@
-package com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder;
+package com.aserbao.androidcustomcamera.blocks.mediaMuxer.primary;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -11,8 +11,6 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 
 import static java.lang.Math.log10;
 
@@ -25,9 +23,9 @@ import static java.lang.Math.log10;
  * @package:com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary
  * @Copyright: 个人版权所有
  */
-public class DecoderAudioAndGetDb {
+public class MuxerVoiceDbToMp4 {
     private static final String TAG = "DecoderAudioAAC2PCMPlay";
-    public DecoderAudioAndGetDb() {
+    public MuxerVoiceDbToMp4() {
     }
 
     private DecoderAACThread mDecoderAACThread;
@@ -70,7 +68,7 @@ public class DecoderAudioAndGetDb {
         private MediaExtractor mMediaExtractor;
         private MediaCodec mMediaCodec;
         private AudioTrack mPcmPlayer;
-        private MediaCodec.BufferInfo mBufferInfo;
+        private MediaCodec.BufferInfo mAudioBufferInfo;
         private boolean running;
 
         private void setRunning(boolean running) {
@@ -96,7 +94,7 @@ public class DecoderAudioAndGetDb {
 
 
         public boolean prepare(){
-            mBufferInfo = new MediaCodec.BufferInfo();
+            mAudioBufferInfo = new MediaCodec.BufferInfo();
             mMediaExtractor = new MediaExtractor();
             mPcmPlayer = new AudioTrack(AudioManager.STREAM_MUSIC, KEY_SAMPLE_RATE,
                     AudioFormat.CHANNEL_OUT_STEREO,
@@ -158,32 +156,32 @@ public class DecoderAudioAndGetDb {
                         mMediaExtractor.advance();
                     }
                 }
-                int outputIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, WAIT_TIME);
+                int outputIndex = mMediaCodec.dequeueOutputBuffer(mAudioBufferInfo, WAIT_TIME);
                 ByteBuffer outputBuffer;
                 if (outputIndex >= 0) {
                     // Simply ignore codec config buffers.
-                    if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                    if ((mAudioBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
                         Log.i(TAG, "audio encoder: codec config buffer");
                         mMediaCodec.releaseOutputBuffer(outputIndex, false);
                         continue;
                     }
-                    if (mBufferInfo.size != 0) {
+                    if (mAudioBufferInfo.size != 0) {
                         outputBuffer = mMediaCodec.getOutputBuffer(outputIndex);
-                        if (mPcmData == null || mPcmData.length < mBufferInfo.size) {
-                            mPcmData = new byte[mBufferInfo.size];
+                        if (mPcmData == null || mPcmData.length < mAudioBufferInfo.size) {
+                            mPcmData = new byte[mAudioBufferInfo.size];
                         }
                         if (outputBuffer != null) {
-                            outputBuffer.get(mPcmData, 0, mBufferInfo.size);
+                            outputBuffer.get(mPcmData, 0, mAudioBufferInfo.size);
                             outputBuffer.clear();
                         }
                         float v = mMediaExtractor.getSampleTime() / (float) (1000 * 1000);
 
                         calcFrequency(mPcmData,KEY_SAMPLE_RATE);
-//                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
-                        mPcmPlayer.write(mPcmData, 0, mBufferInfo.size);
+//                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mAudioBufferInfo "  + mAudioBufferInfo.toString());
+                        mPcmPlayer.write(mPcmData, 0, mAudioBufferInfo.size);
                     }
                     mMediaCodec.releaseOutputBuffer(outputIndex, false);
-                    if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                    if ((mAudioBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
                         Log.i(TAG, "saw output EOS.");
                     }
                 }
@@ -232,19 +230,6 @@ public class DecoderAudioAndGetDb {
     }
 
 
-   /* public void calcFrequency2(char pcmdata,int sample) {
-            if (sample > 0){
-                int sum = 0;
-                for (int i = 0; i < sample; i++){
-                    sum += Math.abs(pcmdata);
-                    pos++;
-                }
-                int ret = sum * 500.0 / (sample * VOLUMEMAX);
-                if (ret >= 100){
-                    ret = 100;
-                }
-            }
-    }*/
 
     private DbCallBackListener mDbCallBackListener;
     public interface DbCallBackListener {
