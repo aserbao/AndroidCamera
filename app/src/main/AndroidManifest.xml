@@ -43,6 +43,8 @@
         <activity android:name=".blocks.mediaCodec.primary.mp3TranslateAAC.Mp3TranslateAACActivity" />
         <activity android:name=".blocks.mediaExtractor.MediaExtractorActivity" />
         <activity android:name=".blocks.mediaMuxer.MediaMuxerActivity"></activity>
+
+        <activity android:name=".blocks.mediaMuxer.functions.CreateVideoAddAudioToMp4"/>
     </application>
 
 </manifest>

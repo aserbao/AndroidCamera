@@ -9,9 +9,12 @@ import android.widget.Toast;
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.blocks.interfaces.ICallBackListener;
 import com.aserbao.androidcustomcamera.blocks.mediaMuxer.primary.MuxerVoiceAndVideoToMp4;
+import com.aserbao.androidcustomcamera.blocks.mediaMuxer.primary.MuxerVoiceDbToMp4;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.media.MediaFormat.MIMETYPE_AUDIO_AAC;
 
 public class MediaMuxerActivity extends AppCompatActivity {
 
@@ -40,6 +43,12 @@ public class MediaMuxerActivity extends AppCompatActivity {
                 }).start();
                 break;
             case R.id.muxer_aac_db_to_mp4:
+                new MuxerVoiceDbToMp4().start(path + "/own.m4a", path + "/output_aserbao1.mp4", MIMETYPE_AUDIO_AAC, new MuxerVoiceDbToMp4.DbCallBackListener() {
+                    @Override
+                    public void cuurentFrequenty(int cuurentFrequenty, double volume) {
+
+                    }
+                });
                 break;
         }
     }

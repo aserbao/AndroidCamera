@@ -94,7 +94,7 @@ public class AudioEncoderThread extends Thread {
         mMediaCodec = MediaCodec.createEncoderByType(MIME_TYPE);
         mMediaCodec.configure(audioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mMediaCodec.start();
-        Log.i(TAG, "prepare finishing");
+        Log.i(TAG, "prepareAudio finishing");
 
         prepareAudioRecord();
 
