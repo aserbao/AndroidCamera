@@ -294,9 +294,9 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
             int height = canvas.getHeight();
             String  color = "#FFCA39";
             if (frameNum %2 == 0 ){
-                color = "#FFCA39";
+                color = "#FFF757";
             }else{
-                color = "#FFF353";
+                color = "#FFF757";
             }
             int color1 = Color.parseColor(color);
             canvas.drawColor(color1);
@@ -342,6 +342,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         }
 
     }
+
 
     private void releaseEncoder() {
         if (mMediaCodec != null) {

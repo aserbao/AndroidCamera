@@ -231,19 +231,10 @@ public class DecoderAndGetAudioDb {
     }
 
 
-   /* public void calcFrequency2(char pcmdata,int sample) {
-            if (sample > 0){
-                int sum = 0;
-                for (int i = 0; i < sample; i++){
-                    sum += Math.abs(pcmdata);
-                    pos++;
-                }
-                int ret = sum * 500.0 / (sample * VOLUMEMAX);
-                if (ret >= 100){
-                    ret = 100;
-                }
-            }
-    }*/
+    public void calcFrequency2(byte[] pcmdata,int sample) {
+        short[] pcmData = new short[pcmdata.length/2];
+
+    }
 
     private DbCallBackListener mDbCallBackListener;
     public interface DbCallBackListener {

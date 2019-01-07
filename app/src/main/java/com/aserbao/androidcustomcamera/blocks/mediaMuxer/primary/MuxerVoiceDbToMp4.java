@@ -52,9 +52,9 @@ public class MuxerVoiceDbToMp4 {
     public void start(String inputAudioPath,String outputVideoPath,String mimeType,DbCallBackListener dbCallBackListener){
         initMediaMux(outputVideoPath);
         mDbCallBackListener  = dbCallBackListener;
-        mEncoderThread = new EncoderThread();
+        /*mEncoderThread = new EncoderThread();
         mEncoderThread.start();
-        mEncoderThread.prepareVideo();
+        mEncoderThread.prepareVideo();*/
         for (int i = 0; i < 50; i++) {
             if (i == 49){
                 mEncoderThread.start(true,i);
@@ -455,7 +455,166 @@ public class MuxerVoiceDbToMp4 {
         }
     }
 
+    private Surface mInputSurface;
+    private static final int WIDTH = 720;
+    private static final int HEIGHT = 1280;
+    private static final int BIT_RATE = 4000000;
+    private static final int FRAMES_PER_SECOND = 4;
+    private static final int IFRAME_INTERVAL = 5;
+    public boolean prepareVideo(){
+        try {
+            mVideoBufferInfo = new MediaCodec.BufferInfo();
+            MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, WIDTH, HEIGHT);
 
+            //1. 设置一些属性。没有指定其中的一些可能会导致MediaCodec.configure()调用抛出一个无用的异常。
+            format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+            format.setInteger(MediaFormat.KEY_BIT_RATE, BIT_RATE);//比特率(比特率越高，音视频质量越高，编码文件越大)
+            format.setInteger(MediaFormat.KEY_FRAME_RATE, FRAMES_PER_SECOND);//设置帧速
+            format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);//设置关键帧间隔时间
+
+            //2.创建一个MediaCodec编码器，并配置格式。获取一个我们可以用于输入的表面，并将其封装到处理EGL工作的类中。
+            mVideoMediaCodec = MediaCodec.createEncoderByType("video/avc");
+            mVideoMediaCodec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+            mInputSurface = mVideoMediaCodec.createInputSurface();
+            mVideoMediaCodec.start();
+
+
+            MediaFormat newFormat = mVideoMediaCodec.getOutputFormat();
+            mWriteVideoTrackIndex = mediaMuxer.addTrack(newFormat);
+            mediaMuxer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private long mFakePts;
+    private void drainEncoder(boolean endOfStream) {
+        final int TIMEOUT_USEC = 10000;
+        if (endOfStream) {
+            mVideoMediaCodec.signalEndOfInputStream();//在输入信号end-of-stream。相当于提交一个空缓冲区。视频编码完结
+        }
+        ByteBuffer[] encoderOutputBuffers = mVideoMediaCodec.getOutputBuffers();
+        while (true) {
+            int outputBufferIndex = mVideoMediaCodec.dequeueOutputBuffer(mVideoBufferInfo, TIMEOUT_USEC);
+            Log.e(TAG, "drainEncoder: " + outputBufferIndex);
+            if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {//没有可以输出的数据使用时
+                if (!endOfStream) {
+                    break;      // out of while
+                }
+            } else if (outputBufferIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+                //输出缓冲区已经更改，客户端必须引用新的
+                encoderOutputBuffers = mVideoMediaCodec.getOutputBuffers();
+            } else if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+
+            } else if (outputBufferIndex < 0) {
+            } else {
+                ByteBuffer encodedData = encoderOutputBuffers[outputBufferIndex];
+                if (encodedData == null) {
+                    throw new RuntimeException("encoderOutputBuffer " + outputBufferIndex +
+                            " was null");
+                }
+                if ((mVideoBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                    //当我们得到的时候，编解码器的配置数据被拉出来，并给了muxer。这时候可以忽略。
+                    mVideoBufferInfo.size = 0;
+                }
+                if (mVideoBufferInfo.size != 0) {
+                    //调整ByteBuffer值以匹配BufferInfo。
+                    encodedData.position(mVideoBufferInfo.offset);
+                    encodedData.limit(mVideoBufferInfo.offset + mVideoBufferInfo.size);
+                    mVideoBufferInfo.presentationTimeUs = mFakePts;
+                    mFakePts += 1000000L / FRAMES_PER_SECOND;
+
+                    mediaMuxer.writeSampleData(mWriteVideoTrackIndex, encodedData, mVideoBufferInfo);
+                }
+                mVideoMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
+                if ((mVideoBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                    if (!endOfStream) {
+                        Log.e(TAG, "意外结束");
+                    } else {
+                        Log.e(TAG, "正常结束");
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+
+    private void generateFrame(int frameNum){
+
+        Canvas canvas = mInputSurface.lockCanvas(null);
+        Paint paint = new Paint();
+        try {
+            int width = canvas.getWidth();
+            int height = canvas.getHeight();
+            String  color = "#FFCA39";
+            if (frameNum %2 == 0 ){
+                color = "#FFCA39";
+            }else{
+                color = "#FFF353";
+            }
+            int color1 = Color.parseColor(color);
+            canvas.drawColor(color1);
+            paint.setTextSize(100);
+            paint.setColor(0xff000000);
+            canvas.drawText("第"+ String.valueOf(frameNum) + "帧",width/2,height/2,paint);
+            Rect srcRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+            int margain = 30;
+            Rect decRect = new Rect(margain, margain, width - margain, height-margain);
+            canvas.drawBitmap(mBitmap,srcRect,decRect,paint);
+
+            int roundMargain = 60;
+            int roundHeight = 300;
+            int roundRadius = 25;
+            int roundLineWidth = 10;
+            paint.setStyle(Paint.Style.FILL);//充满
+            paint.setAntiAlias(true);// 设置画笔的锯齿效果
+            RectF roundRect1 = new RectF(roundMargain - roundLineWidth,roundMargain - roundLineWidth,width - roundMargain + roundLineWidth,roundHeight + roundMargain + roundLineWidth);
+            paint.setColor(Color.BLACK);
+            canvas.drawRoundRect(roundRect1,roundRadius,roundRadius,paint);
+            paint.setColor(color1);
+            RectF roundRect2 = new RectF(roundMargain,roundMargain,width - roundMargain,roundHeight + roundMargain);
+            canvas.drawRoundRect(roundRect2,roundRadius,roundRadius,paint);
+
+//            paint.setStyle(Paint.Style.STROKE);//充满
+            int timeMargain = roundMargain + 50;
+            String sTime = "2018/12/29 00:39";
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(40);
+            paint.setColor(Color.BLACK);
+            canvas.drawText(sTime,width/2,timeMargain,paint);
+
+            int soundMargain = timeMargain + 80;
+            String soundTime = "party 是我家";
+            String soundTime2 = "party party 是我家";
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(80);
+            canvas.drawText(soundTime,width/2,soundMargain,paint);
+            canvas.drawText(soundTime2,width/2,soundMargain + 80,paint);
+
+        } finally {
+            mInputSurface.unlockCanvasAndPost(canvas);
+        }
+
+    }
+    private void releaseEncoder() {
+        if (mVideoMediaCodec != null) {
+            mVideoMediaCodec.stop();
+            mVideoMediaCodec.release();
+            mVideoMediaCodec = null;
+        }
+
+        if (mInputSurface != null) {
+            mInputSurface.release();
+            mInputSurface = null;
+        }
+        if (mediaMuxer != null) {
+            mediaMuxer.stop();
+            mediaMuxer.release();
+            mediaMuxer = null;
+        }
+    }
 
 
 
@@ -463,8 +622,6 @@ public class MuxerVoiceDbToMp4 {
     public interface IRefreshCallBack{
         void refresh(boolean isEnd);
     }
-
-
 
     private DbCallBackListener mDbCallBackListener;
     public interface DbCallBackListener {

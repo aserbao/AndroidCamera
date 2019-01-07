@@ -42,9 +42,12 @@
         <activity android:name=".blocks.mediaCodec.primary.CreatMusicVideoByMediaCodecActivity" />
         <activity android:name=".blocks.mediaCodec.primary.mp3TranslateAAC.Mp3TranslateAACActivity" />
         <activity android:name=".blocks.mediaExtractor.MediaExtractorActivity" />
-        <activity android:name=".blocks.mediaMuxer.MediaMuxerActivity"></activity>
-
-        <activity android:name=".blocks.mediaMuxer.functions.CreateVideoAddAudioToMp4"/>
+        <activity android:name=".blocks.mediaMuxer.MediaMuxerActivity" />
+        <activity android:name=".blocks.mediaMuxer.functions.CreateVideoAddAudioToMp4" />
+        <activity android:name=".blocks.audioRecord.AudioRecordActivity" />
+        <activity android:name=".blocks.others.changeHue.ChangeHueActivity" />
+        <activity android:name=".blocks.others.OthersActivity" />
+        <activity android:name=".blocks.others.audioStyle.AudioStyleActivity"></activity>
     </application>
 
 </manifest>

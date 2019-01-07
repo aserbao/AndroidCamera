@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".blocks.others.changeHue.ChangeHueActivity">
+    <ImageView
+        android:id="@+id/change_hue_iv"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/katong"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/change_hue_tv"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <SeekBar
+        android:id="@+id/change_hue_sb"
+        android:max="360"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>
