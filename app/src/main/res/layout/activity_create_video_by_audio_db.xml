@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".whole.createVideoByVoice.CreateVideoByAudioDbActivity">
+    <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/create_video_analyze_btn"
+            android:text="解析音频"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="播放"
+            android:id="@+id/play_video_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
+</RelativeLayout>

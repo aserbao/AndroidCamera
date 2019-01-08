@@ -20,8 +20,10 @@ import java.nio.ByteBuffer;
  */
 public class AMediaExtractorOfficial {
     private static final String TAG = "AMediaExtractorOfficial";
+    private static long mStartTime;
 
     public static void mediaExtractorDecoderAudio(String inputAudioPath){
+        mStartTime = System.currentTimeMillis();
         MediaExtractor extractor = new MediaExtractor();
         try {
             extractor.setDataSource(inputAudioPath);
@@ -50,9 +52,8 @@ public class AMediaExtractorOfficial {
         }
 
         extractor.release();
+        Log.e(TAG, "mediaExtractorDecoderAudio: " + (System.currentTimeMillis() - mStartTime)/(float)1000 + "s" );
         extractor = null;
-
-        int maxAmplitude = new MediaRecorder().getMaxAmplitude();
     }
 
 }

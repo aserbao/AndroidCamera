@@ -19,6 +19,7 @@ import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.Dec
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderMp3FromMp4;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderNoVoiceMp4FromMp4;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.encoder.EncoderAudioAAC;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.official.AMediaExtractorOfficial;
 
 import java.io.File;
 
@@ -50,11 +51,14 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 
     String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-    @OnClick({R.id.extractor_mp3_from_mp4,R.id.extractor_no_voice_mp4_from_mp4,R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
+    @OnClick({R.id.audio_extractor_data,R.id.extractor_mp3_from_mp4,R.id.extractor_no_voice_mp4_from_mp4,R.id.extractor_video_and_audio, R.id.exchange_video_and_audio,
             R.id.decoder_aac_and_player, R.id.decoder_mp3_and_player,
             R.id.record_and_encoder_mp3, R.id.record_mp3_stop, R.id.mp3_translate_aac_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.audio_extractor_data:
+                    AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/dj_dance.mp3");
+                break;
             case R.id.extractor_mp3_from_mp4:
                 new DecoderMp3FromMp4(path + "/aserbao.mp4", path + "/out_aserbao.mp3", new ICallBackListener() {
                     @Override
@@ -82,7 +86,6 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
                 }).start();
                 break;
             case R.id.extractor_video_and_audio:
-//                AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/cai.mp4");
                 String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/five.mp3";
 //                String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aac.aac";
 //                String audioMp3Path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/own.m4a";

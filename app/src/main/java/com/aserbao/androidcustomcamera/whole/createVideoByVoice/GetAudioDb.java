@@ -1,20 +1,16 @@
-package com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder;
+package com.aserbao.androidcustomcamera.whole.createVideoByVoice;
 
 import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
 
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IGetVideoDbCallBackListener;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-
-import static java.lang.Math.log10;
 
 /**
  * 功能: 解码获取音频帧分贝大小
@@ -25,18 +21,18 @@ import static java.lang.Math.log10;
  * @package:com.aserbao.androidcustomcamera.blocks.MediaExtractor.primary
  * @Copyright: 个人版权所有
  */
-public class DecoderAudioAndGetDb {
-    private static final String TAG = "DecoderAudioAAC2PCMPlay";
-    public DecoderAudioAndGetDb() {
+public class GetAudioDb {
+    private static final String TAG = "GetAudioDb";
+    public GetAudioDb() {
     }
 
     private DecoderAACThread mDecoderAACThread;
     private byte[] mPcmData;
-    
-    public void start(String inputAudioPath,String mimeType,DbCallBackListener dbCallBackListener){
+
+    public void start(String inputAudioPath,IGetVideoDbCallBackListener dbCallBackListener){
         mDbCallBackListener  = dbCallBackListener;
         if (mDecoderAACThread == null) {
-            mDecoderAACThread = new DecoderAACThread(inputAudioPath,mimeType);
+            mDecoderAACThread = new DecoderAACThread(inputAudioPath);
             mDecoderAACThread.setRunning(true);
             try {
                 mDecoderAACThread.start();
@@ -69,24 +65,20 @@ public class DecoderAudioAndGetDb {
         private String mInputAudioMimeType;
         private MediaExtractor mMediaExtractor;
         private MediaCodec mMediaCodec;
-        private AudioTrack mPcmPlayer;
         private MediaCodec.BufferInfo mBufferInfo;
         private boolean running;
-        private long mStartTime;
 
         private void setRunning(boolean running) {
             this.running = running;
         }
 
-        public DecoderAACThread(String inputAudioPath,String mimeType) {
+        public DecoderAACThread(String inputAudioPath) {
             mInputAudioPath = inputAudioPath;
-            mInputAudioMimeType = mimeType;
         }
 
         @Override
         public void run() {
             super.run();
-            mStartTime = System.currentTimeMillis();
             if (!prepare()) {
                 running = false;
                 Log.e(TAG, "音频解码器初始化失败");
@@ -96,21 +88,18 @@ public class DecoderAudioAndGetDb {
             release();
         }
 
+
         public boolean prepare(){
             mBufferInfo = new MediaCodec.BufferInfo();
             mMediaExtractor = new MediaExtractor();
-            mPcmPlayer = new AudioTrack(AudioManager.STREAM_MUSIC, KEY_SAMPLE_RATE,
-                    AudioFormat.CHANNEL_OUT_STEREO,
-                    AUDIO_FORMAT, BUFFFER_SIZE, AudioTrack.MODE_STREAM);
-            mPcmPlayer.play();
             try {
                 mMediaExtractor.setDataSource(mInputAudioPath);
                 int audioIndex = -1;//音频通道
                 int trackCount = mMediaExtractor.getTrackCount();//获取通道总数
                 for (int i = 0; i < trackCount; i++) {
                     MediaFormat trackFormat = mMediaExtractor.getTrackFormat(i);
-                    String string = trackFormat.getString(MediaFormat.KEY_MIME);
-                    if (string.startsWith("audio/")) {
+                    mInputAudioMimeType = trackFormat.getString(MediaFormat.KEY_MIME);
+                    if (mInputAudioMimeType.startsWith("audio/")) {
                         audioIndex = i;
                     }
                 }
@@ -129,7 +118,6 @@ public class DecoderAudioAndGetDb {
             mMediaCodec.start();
             return true;
         }
-
 
         private void decode() {
             while (running) {
@@ -152,12 +140,11 @@ public class DecoderAudioAndGetDb {
                 int outputIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, WAIT_TIME);
                 ByteBuffer outputBuffer;
                 if (outputIndex >= 0) {
-                    // Simply ignore codec config buffers.
                     if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
-                        Log.i(TAG, "audio encoder: codec config buffer");
                         mMediaCodec.releaseOutputBuffer(outputIndex, false);
                         continue;
                     }
+                    float cuurGetSampleTime = 0;
                     if (mBufferInfo.size != 0) {
                         outputBuffer = mMediaCodec.getOutputBuffer(outputIndex);
                         if (mPcmData == null || mPcmData.length < mBufferInfo.size) {
@@ -167,20 +154,17 @@ public class DecoderAudioAndGetDb {
                             outputBuffer.get(mPcmData, 0, mBufferInfo.size);
                             outputBuffer.clear();
                         }
-                        float v = mMediaExtractor.getSampleTime() / (float) (1000 * 1000);
-
-//                        calcFrequency(mPcmData,KEY_SAMPLE_RATE);
-                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
-//                        mPcmPlayer.write(mPcmData, 0, mBufferInfo.size);
+                        cuurGetSampleTime = mMediaExtractor.getSampleTime() / (float) (1000);
+                        calcFrequency2(mPcmData,cuurGetSampleTime);
+                        Log.e(TAG, "解析到的时间点为："+ cuurGetSampleTime + "ms     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
                     }
                     mMediaCodec.releaseOutputBuffer(outputIndex, false);
                     if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
-                        Log.i(TAG, "saw output EOS.");
+                        mDbCallBackListener.cuurentFrequenty(true,0,cuurGetSampleTime);
                     }
                 }
             }
             mMediaExtractor.release();
-            Log.e(TAG, "decode: " + (System.currentTimeMillis() - mStartTime)/1000 + "s" );
         }
 
         /**
@@ -191,42 +175,60 @@ public class DecoderAudioAndGetDb {
                 mMediaCodec.stop();
                 mMediaCodec.release();
             }
-            if (mPcmPlayer != null) {
-                mPcmPlayer.stop();
-                mPcmPlayer.release();
-                mPcmPlayer = null;
-            }
         }
     }
 
-    public void calcFrequency(byte[] fft, int samplingRate){
-        float[] magnitudes = new float[fft.length / 2];
-        int max = 0;
-        for (int i = 0; i < magnitudes.length; i++) {
-            magnitudes[i] = (float) Math.hypot(fft[2 * i], fft[2 * i + 1]);
-            if (magnitudes[max] < magnitudes[i]) {
-                max = i;
-            }
-        }
 
-        int  currentFrequency = max * samplingRate / fft.length;
-        if (currentFrequency<0){
-            return;
-        }
-        long v = 0;
-        for (int i = 0; i < fft.length; i++) {
-            v += Math.pow(fft[i], 2);
-        }
-
-        double volume = 10 * log10(v / (double) fft.length);
-        mDbCallBackListener.cuurentFrequenty(currentFrequency,volume);
-        Log.e(TAG, "calcFrequency: currentFrequency = " + currentFrequency + "   volume =  " + volume + "  max =  " + max );
+    /**
+     * 获取的值范围0 ~ 24366
+     * @param pcmdata
+     * @param v
+     */
+    public void calcFrequency2(byte[] pcmdata, float v) {
+        short[] music = (!isBigEnd()) ? byteArray2ShortArrayLittle( pcmdata,  pcmdata.length / 2) :
+                byteArray2ShortArrayBig( pcmdata,  pcmdata.length / 2);
+        calculateRealVolume(music,music.length,v);
     }
 
-    private DbCallBackListener mDbCallBackListener;
-    public interface DbCallBackListener {
-        void cuurentFrequenty(int cuurentFrequenty, double volume);
+    private boolean isBigEnd() {
+        short i = 0x1;
+        boolean bRet = ((i >> 8) == 0x1);
+        return bRet;
     }
+
+    private short[] byteArray2ShortArrayBig(byte[] data, int items) {
+        short[] retVal = new short[items];
+        for (int i = 0; i < retVal.length; i++)
+            retVal[i] = (short) ((data[i * 2 + 1] & 0xff) | (data[i * 2] & 0xff) << 8);
+
+        return retVal;
+    }
+
+    private short[] byteArray2ShortArrayLittle(byte[] data, int items) {
+        short[] retVal = new short[items];
+        for (int i = 0; i < retVal.length; i++)
+            retVal[i] = (short) ((data[i * 2] & 0xff) | (data[i * 2 + 1] & 0xff) << 8);
+
+        return retVal;
+    }
+
+    private int maxVolume = 0;
+    protected void calculateRealVolume(short[] buffer, int readSize, float v) {
+        double sum = 0;
+        for (int i = 0; i < readSize; i++) {
+            sum += buffer[i] * buffer[i];
+        }
+        if (readSize > 0) {
+            double amplitude = sum / readSize;
+            int mVolume = (int) Math.sqrt(amplitude);
+            Log.e(TAG, "calculateRealVolume: " + mVolume);
+            maxVolume = Math.max(mVolume,maxVolume);
+            mDbCallBackListener.cuurentFrequenty(false,mVolume,v);
+        }
+    }
+
+    private IGetVideoDbCallBackListener mDbCallBackListener;
+
 
 
 

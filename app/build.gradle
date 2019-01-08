@@ -29,5 +29,5 @@ dependencies {
     //======================================ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.github.yangjie10930:EpMedia:v0.9.5'
+    compile 'com.github.yangjie10930:EpMedia:v0.9.5'
 }

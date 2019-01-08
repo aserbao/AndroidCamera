@@ -1,5 +1,6 @@
-package com.aserbao.androidcustomcamera.blocks.mediaMuxer.functions;
+package com.aserbao.androidcustomcamera.whole.createVideoByVoice;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,192 +12,90 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
-import com.aserbao.androidcustomcamera.base.utils.FileUtils;
-import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudioAndGetDb;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IEncoderVideoCallBackListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 
-import VideoHandle.EpEditor;
-import VideoHandle.OnEditorListener;
-import butterknife.BindView;
-import butterknife.OnClick;
-
-import static android.media.MediaFormat.MIMETYPE_AUDIO_AAC;
-import static android.media.MediaFormat.MIMETYPE_AUDIO_MPEG;
-
-public class CreateVideoAddAudioToMp4 extends BaseActivity {
-    private static final String TAG = "PrimaryMediaCodecActivi";
+/**
+ * 功能:
+ *
+ * @author aserbao
+ * @date : On 2019/1/8 3:59 PM
+ * @email: 1142803753@qq.com
+ * @project:AndroidCamera
+ * @package:com.aserbao.androidcustomcamera.whole.createVideoByVoice
+ * @Copyright: 个人版权所有
+ */
+public class EncoderVideo {
     private static final String MIME_TYPE = "video/avc";
     private static final int WIDTH = 720;
     private static final int HEIGHT = 1280;
     private static final int BIT_RATE = 4000000;
-    private static final int FRAMES_PER_SECOND = 30;
+    public static final int FRAMES_PER_SECOND = 30;
     private static final int IFRAME_INTERVAL = 5;
-
-    private static final int NUM_FRAMES = 1 * 100;
-    private static final int START_RECORDING = 0;
-    private static final int STOP_RECORDING = 1;
-
-    @BindView(R.id.btn_recording)
-    Button mBtnRecording;
-    @BindView(R.id.btn_watch)
-    Button mBtnWatch;
-    @BindView(R.id.primary_mc_tv)
-    TextView mPrimaryMcTv;
-    public MediaCodec.BufferInfo mBufferInfo;
-    public MediaCodec mMediaCodec;
-    @BindView(R.id.primary_vv)
-    VideoView mPrimaryVv;
+    private static final int MEDIA_MAX_TIME = 10 * 1000; // 生成视频的最大长度
     private Surface mInputSurface;
     public MediaMuxer mMuxer;
     private boolean mMuxerStarted;
     private int mTrackIndex;
     private long mFakePts;
     private boolean isRecording;
+    private Bitmap mBitmap;
 
     private int cuurFrame = 0;
+    private MediaCodec.BufferInfo mBufferInfo;
+    private MediaCodec mMediaCodec;
+    private float finalMediaTime = 0;//最终生成的视频长度
+    private IEncoderVideoCallBackListener mIEncoderVideoCallBackListener;
 
-    private MyHanlder mMyHanlder = new MyHanlder(this);
-    public File mOutputFile;
-    private double mVolume;
-    private float mMusictime;
-    @OnClick({R.id.btn_recording, R.id.btn_watch})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_recording:
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-                if (mBtnRecording.getText().equals("开始录制")) {
-                    try {
-//                        mOutputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis() + ".mp4");
-                        mOutputFile = new File(FileUtils.getStorageMp4("PrimaryMediaCodecActivity"));
-                        startRecording(mOutputFile);
-                        mPrimaryMcTv.setText("文件保存路径为：" + mOutputFile.toString());
-                        mBtnRecording.setText("停止录制");
-                        isRecording = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        mBtnRecording.setText("出现异常了，请查明原因");
-                    }
-                } else if (mBtnRecording.getText().equals("停止录制")) {
-                    mBtnRecording.setText("开始录制");
-                    stopRecording();
-                }
-//                new DecoderAndGetAudioDb().start(path + "/own.m4a", MIMETYPE_AUDIO_AAC, new DecoderAndGetAudioDb.IGetVideoDbCallBackListener() {
-                new DecoderAndGetAudioDb().start(path + "/five.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
-//                new DecoderAndGetAudioDb().start(path + "/dj_dance.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.IGetVideoDbCallBackListener() {
-                    @Override
-                    public void cuurentFrequenty(final int cuurentFrequenty, final double volume, final float decoderTime) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(volume != -1 && isRecording) {
-                                    mVolume = volume / 100;
-                                    mMusictime = decoderTime;
-                                    int i = cuurFrame * 1000 / FRAMES_PER_SECOND;
-                                    if(decoderTime > i) {
-                                        update();
-                                        Log.e(TAG, "run:volume =  " +mVolume + "  decoderTime = " + decoderTime + " 第"+ cuurFrame + "帧时间为："+ i);
-                                    }
-                                }else{
-                                    Log.e(TAG, "run: out"  );
-                                    if (isRecording) {
-                                        drainEncoder(true);
-                                    }
-                                    releaseEncoder();
-                                }
-                            }
-                        });
-                    }
-                });
-                break;
-            case R.id.btn_watch:
-               /* String absolutePath = mOutputFile.getAbsolutePath();
-                if (!TextUtils.isEmpty(absolutePath)) {
-                    if(mBtnWatch.getText().equals("查看视频")) {
-                        mBtnWatch.setText("删除视频");
-                        mPrimaryVv.setVideoPath(absolutePath);
-                        mPrimaryVv.start();
-                    }else if(mBtnWatch.getText().equals("删除视频")){
-                        if (mOutputFile.exists()){
-                            mOutputFile.delete();
-                            mBtnWatch.setText("查看视频");
-                        }
-                    }
-                }else{
-                    Toast.makeText(this, "请先录制", Toast.LENGTH_SHORT).show();
-                }*/
-                addMusicToMp4();
-                break;
-        }
+    public EncoderVideo(IEncoderVideoCallBackListener iEncoderVideoCallBackListener) {
+        mIEncoderVideoCallBackListener = iEncoderVideoCallBackListener;
     }
 
-    public void update(){
-        drainEncoder(false);
-        generateFrame(cuurFrame);
-        cuurFrame++;
-        Log.e(TAG, "handleMessage: " + cuurFrame);
-    }
-    private Bitmap mBitmap;
-    private static class MyHanlder extends Handler {
-        private WeakReference<CreateVideoAddAudioToMp4> mPrimaryMediaCodecActivityWeakReference;
-
-        public MyHanlder(CreateVideoAddAudioToMp4 activity) {
-            mPrimaryMediaCodecActivityWeakReference = new WeakReference<CreateVideoAddAudioToMp4>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            CreateVideoAddAudioToMp4 activity = mPrimaryMediaCodecActivityWeakReference.get();
-            if (activity != null) {
-                switch (msg.what) {
-                    case START_RECORDING:
-                        activity.update();
-                        break;
-                    case STOP_RECORDING:
-                        Log.e(TAG, "handleMessage: STOP_RECORDING");
-                        activity.drainEncoder(true);
-                        activity.mBtnRecording.setText("开始录制");
-                        activity.releaseEncoder();
-                        break;
-                }
-            }
-        }
-    }
-
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_primary_media_codec;
-    }
-
-
-    private void startRecording(File outputFile) throws IOException {
+    private File mOutputFile;
+    public void startRecording(Resources resources,File outputFile) {
+        mOutputFile = outputFile;
         cuurFrame = 0;
-        mBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.katong);
-        prepareEncoder(outputFile);
-        mMyHanlder.sendEmptyMessage(START_RECORDING);
+        mBitmap = BitmapFactory.decodeResource(resources, R.drawable.katong);
+        try {
+            prepareEncoder(outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        isRecording = true;
     }
 
-    private void stopRecording() {
-        mMyHanlder.removeMessages(START_RECORDING);
-        mMyHanlder.sendEmptyMessage(STOP_RECORDING);
+    private static final String TAG = "EncoderVideo";
+    public void update(boolean isEnd,float volume,float cuurTime){
+        if (cuurTime < MEDIA_MAX_TIME){
+            if (!isEnd && isRecording) {
+                if (cuurTime > 1000 / FRAMES_PER_SECOND * cuurFrame) {
+                    drainEncoder(false);
+                    generateFrame(cuurFrame, volume);
+                    cuurFrame++;
+                    Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume);
+                }
+            }else{
+                Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
+                finalMediaTime = cuurTime;
+                stopRecording();
+            }
+        }else{
+            Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
+            finalMediaTime = MEDIA_MAX_TIME;
+            stopRecording();
+        }
+    }
+    public void stopRecording() {
         isRecording = false;
+        drainEncoder(true);
+        releaseEncoder();
     }
 
     /**
@@ -205,7 +104,6 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
     private void prepareEncoder(File outputFile) throws IOException {
         mBufferInfo = new MediaCodec.BufferInfo();
         MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, WIDTH, HEIGHT);
-
         //1. 设置一些属性。没有指定其中的一些可能会导致MediaCodec.configure()调用抛出一个无用的异常。
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BIT_RATE);//比特率(比特率越高，音视频质量越高，编码文件越大)
@@ -220,9 +118,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         //3. 创建一个MediaMuxer。我们不能在这里添加视频跟踪和开始合成，因为我们的MediaFormat里面没有缓冲数据。
         // 只有在编码器开始处理数据后才能从编码器获得这些数据。我们实际上对多路复用音频没有兴趣。我们只是想要
         // 将从MediaCodec获得的原始H.264基本流转换为.mp4文件。
-//        mMuxer = new MediaMuxer(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output_aserbao.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-        String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mMuxer = new MediaMuxer(absolutePath+ "/input_aserbao1.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+        mMuxer = new MediaMuxer(outputFile.toString(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
 
         mMuxerStarted = false;
         mTrackIndex = -1;
@@ -236,7 +132,6 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         ByteBuffer[] encoderOutputBuffers = mMediaCodec.getOutputBuffers();
         while (true) {
             int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, TIMEOUT_USEC);
-            Log.e(TAG, "drainEncoder: " + outputBufferIndex);
             if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {//没有可以输出的数据使用时
                 if (!endOfStream) {
                     break;      // out of while
@@ -279,10 +174,9 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                 mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
                     if (!endOfStream) {
-                        Log.e(TAG, "意外结束");
+                        mIEncoderVideoCallBackListener.failed();
                     } else {
-                        Toast.makeText(this, "已完成……", Toast.LENGTH_SHORT).show();
-//
+                        mIEncoderVideoCallBackListener.success(mOutputFile.toString(),finalMediaTime);
                     }
                     isRecording = false;
                     break;
@@ -290,13 +184,13 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
             }
         }
     }
-    private void generateFrame(int frameNum){
+    private void generateFrame(int frameNum,float volume){
         Canvas canvas = mInputSurface.lockCanvas(null);
         Paint paint = new Paint();
         try {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
-            int color1 = changeHue((float) mVolume);
+            int color1 = changeHue(volume);
             canvas.drawColor(color1);
             paint.setTextSize(100);
             paint.setColor(0xff000000);
@@ -371,29 +265,4 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
             mMuxer = null;
         }
     }
-
-    private String outputVideoPath;
-    public void addMusicToMp4(){
-        String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String inputMusic = absolutePath + "/five.mp3";
-        outputVideoPath = absolutePath + "/output_aserbao1.mp4";
-        String inputVideo = absolutePath+ "/input_aserbao1.mp4";
-        String cmd = "-y -i "+ inputVideo + " -ss 0 -t "+ 35 + " -i "+ inputMusic + " -acodec copy -vcodec copy "+ outputVideoPath;
-        EpEditor.execCmd(cmd, 10000,new OnEditorListener() {
-            @Override
-            public void onSuccess() {
-                Log.e(TAG, "sssshahhah onSuccess: " );
-            }
-
-            @Override
-            public void onFailure() {
-                Log.e(TAG, "sssshahhah  onFailure: " );
-            }
-
-            @Override
-            public void onProgress(float v) {
-            }
-        });
-    }
-
 }
