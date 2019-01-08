@@ -34,6 +34,9 @@ import java.nio.ByteBuffer;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 生成视频文件
+ */
 public class CreateVideoAddAudio extends BaseActivity {
     private static final String TAG = "PrimaryMediaCodecActivi";
     private static final String MIME_TYPE = "video/avc";
