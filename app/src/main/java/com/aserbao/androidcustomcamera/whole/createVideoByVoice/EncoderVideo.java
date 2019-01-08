@@ -83,12 +83,12 @@ public class EncoderVideo {
                 }
             }else{
                 Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
-                finalMediaTime = cuurTime;
+                finalMediaTime = cuurTime / (float) 1000;
                 stopRecording();
             }
         }else{
             Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
-            finalMediaTime = MEDIA_MAX_TIME;
+            finalMediaTime = MEDIA_MAX_TIME/ (float) 1000;
             stopRecording();
         }
     }

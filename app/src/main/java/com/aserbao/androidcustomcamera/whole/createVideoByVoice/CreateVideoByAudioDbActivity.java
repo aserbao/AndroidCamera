@@ -55,7 +55,7 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
                 mMuxerVoiceAndVideo = new MuxerVoiceAndVideo(new IMuxerVideoCallBackListener() {
                     @Override
                     public void success() {
-                        Log.e(TAG, "合成 success: " + (System.currentTimeMillis() - mStartTime) / (float) 1000 + "s");
+                        Log.e(TAG, "合成 success: " + (System.currentTimeMillis() - mStartTime)+ "s");
                     }
 
                     @Override
@@ -68,7 +68,6 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
                     @Override
                     public void success(final String outputMeidaPath, final float finalMediaTime) {
                         mGetAudioDb.stop();
-//                        mPlayVideoBtn.performClick();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -76,7 +75,7 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
                             }
                         });
 
-                        Log.e(TAG, "编码 success: 耗时： " + (System.currentTimeMillis() - mStartTime) / (float) 1000 + "s");
+                        Log.e(TAG, "编码 success: 耗时： " + (System.currentTimeMillis() - mStartTime) + "s");
                     }
 
                     @Override
