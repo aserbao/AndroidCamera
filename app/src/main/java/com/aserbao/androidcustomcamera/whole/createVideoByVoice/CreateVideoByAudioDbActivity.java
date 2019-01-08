@@ -1,13 +1,20 @@
 package com.aserbao.androidcustomcamera.whole.createVideoByVoice;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.frameData.BackgroundFrame;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.frameData.MapFrame;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.frameData.TopPopFrame;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IEncoderVideoCallBackListener;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IGetVideoDbCallBackListener;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IMuxerVideoCallBackListener;
@@ -33,6 +40,7 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
     public String inputAudioPath, outputMediaPath;
     private GetAudioDb mGetAudioDb;
     private File encoderOutputFile;
+    private boolean isEncoderFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,34 +63,51 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
                 mMuxerVoiceAndVideo = new MuxerVoiceAndVideo(new IMuxerVideoCallBackListener() {
                     @Override
                     public void success() {
-                        Log.e(TAG, "合成 success: " + (System.currentTimeMillis() - mStartTime)+ "s");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CreateVideoByAudioDbActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Log.e(TAG, "update 合成 success: " + (System.currentTimeMillis() - mStartTime)+ "s");
                     }
 
                     @Override
                     public void failed() {
-                        Log.e(TAG, "合成failed: ");
+                        Log.e(TAG, "update 合成failed: ");
                     }
                 });
 //                mMuxerVoiceAndVideo.startMuxer(encoderOutputFile.toString(), inputAudioPath,10,outputMediaPath);
                 mEncoderVideo = new EncoderVideo(new IEncoderVideoCallBackListener() {
                     @Override
                     public void success(final String outputMeidaPath, final float finalMediaTime) {
+                        isEncoderFinish = true;
                         mGetAudioDb.stop();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mMuxerVoiceAndVideo.startMuxer(outputMeidaPath, inputAudioPath,finalMediaTime,outputMediaPath);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CreateVideoByAudioDbActivity.this, "编码成功", Toast.LENGTH_SHORT).show();
+                                        mMuxerVoiceAndVideo.startMuxer(outputMeidaPath, inputAudioPath,finalMediaTime,outputMediaPath);
+                                        Log.e(TAG, "update 编码 success: 耗时： " + (System.currentTimeMillis() - mStartTime) + "s");
+                                    }
+                                },100);
                             }
                         });
-
-                        Log.e(TAG, "编码 success: 耗时： " + (System.currentTimeMillis() - mStartTime) + "s");
                     }
 
                     @Override
                     public void failed() {
-                        Log.e(TAG, "编码 failed: ");
+                        Log.e(TAG, "update 编码 failed: ");
                     }
                 });
+
+                mEncoderVideo.addBaseDataFrameData(new BackgroundFrame());
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.katong);
+                mEncoderVideo.addBaseDataFrameData(new MapFrame(bitmap));
+                mEncoderVideo.addBaseDataFrameData(new TopPopFrame("party 是我家，party party 是我家"));
 
                 mEncoderVideo.startRecording(getResources(), encoderOutputFile);
 
@@ -91,8 +116,12 @@ public class CreateVideoByAudioDbActivity extends AppCompatActivity {
                     @Override
                     public void cuurentFrequenty(boolean isEnd, double volume, float cuurTime) {
                         float volume1 = (float) volume / 100;
-                        mEncoderVideo.update(isEnd, volume1, cuurTime);
-                        Log.e(TAG, "cuurentFrequenty: isEnd : " + isEnd + " volume1 = " + volume1 + " cuurTime = " + cuurTime);
+                        if (!isEncoderFinish) {
+                            mEncoderVideo.update(isEnd, volume1, cuurTime);
+                            if (cuurTime > 950) {
+                                Log.e(TAG, "update cuurentFrequenty: isEnd : " + isEnd + " volume1 = " + volume1 + " cuurTime = " + cuurTime);
+                            }
+                        }
                     }
                 });
 

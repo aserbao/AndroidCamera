@@ -3,6 +3,7 @@ package com.aserbao.androidcustomcamera.blocks.mediaMuxer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +11,10 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.blocks.interfaces.ICallBackListener;
 import com.aserbao.androidcustomcamera.blocks.mediaMuxer.primary.MuxerVoiceAndVideoToMp4;
 import com.aserbao.androidcustomcamera.blocks.mediaMuxer.primary.MuxerVoiceDbToMp4;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,4 +56,6 @@ public class MediaMuxerActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 }

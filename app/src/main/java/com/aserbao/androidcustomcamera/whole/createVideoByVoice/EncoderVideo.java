@@ -3,19 +3,17 @@ package com.aserbao.androidcustomcamera.whole.createVideoByVoice;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Surface;
 
 import com.aserbao.androidcustomcamera.R;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.frameData.BaseFrameData;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.frameData.FrameDataManager;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.interfaces.IEncoderVideoCallBackListener;
 
 import java.io.File;
@@ -39,7 +37,7 @@ public class EncoderVideo {
     private static final int BIT_RATE = 4000000;
     public static final int FRAMES_PER_SECOND = 30;
     private static final int IFRAME_INTERVAL = 5;
-    private static final int MEDIA_MAX_TIME = 10 * 1000; // 生成视频的最大长度
+    private static final int MEDIA_MAX_TIME = 1 * 1000; // 生成视频的最大长度
     private Surface mInputSurface;
     public MediaMuxer mMuxer;
     private boolean mMuxerStarted;
@@ -53,9 +51,15 @@ public class EncoderVideo {
     private MediaCodec mMediaCodec;
     private float finalMediaTime = 0;//最终生成的视频长度
     private IEncoderVideoCallBackListener mIEncoderVideoCallBackListener;
+    private FrameDataManager mFrameDataManager;
 
     public EncoderVideo(IEncoderVideoCallBackListener iEncoderVideoCallBackListener) {
         mIEncoderVideoCallBackListener = iEncoderVideoCallBackListener;
+        mFrameDataManager = new FrameDataManager();
+    }
+
+    public void addBaseDataFrameData(BaseFrameData baseFrameData){
+        mFrameDataManager.addBaseFrameData(baseFrameData);
     }
 
     private File mOutputFile;
@@ -74,20 +78,22 @@ public class EncoderVideo {
     private static final String TAG = "EncoderVideo";
     public void update(boolean isEnd,float volume,float cuurTime){
         if (cuurTime < MEDIA_MAX_TIME){
-            if (!isEnd && isRecording) {
-                if (cuurTime > 1000 / FRAMES_PER_SECOND * cuurFrame) {
-                    drainEncoder(false);
-                    generateFrame(cuurFrame, volume);
-                    cuurFrame++;
-                    Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume);
+            if (isRecording) {
+                if (!isEnd) {
+                    if (cuurTime > 1000 / FRAMES_PER_SECOND * cuurFrame) {
+                        drainEncoder(false);
+                        mFrameDataManager.drawFrame(mInputSurface, cuurFrame, volume);
+                        cuurFrame++;
+                        Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = " + volume);
+                    }
+                } else {
+                    Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = " + volume + " over1 ");
+                    finalMediaTime = cuurTime / (float) 1000;
+                    stopRecording();
                 }
-            }else{
-                Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
-                finalMediaTime = cuurTime / (float) 1000;
-                stopRecording();
             }
         }else{
-            Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over ");
+            Log.e(TAG, "update: " + cuurTime + " cuurFrame = " + cuurFrame + " volume = "+ volume + " over2 ");
             finalMediaTime = MEDIA_MAX_TIME/ (float) 1000;
             stopRecording();
         }
@@ -176,6 +182,7 @@ public class EncoderVideo {
                     if (!endOfStream) {
                         mIEncoderVideoCallBackListener.failed();
                     } else {
+                        Log.e(TAG, "update   drainEncoder: success" );
                         mIEncoderVideoCallBackListener.success(mOutputFile.toString(),finalMediaTime);
                     }
                     isRecording = false;
@@ -184,70 +191,7 @@ public class EncoderVideo {
             }
         }
     }
-    private void generateFrame(int frameNum,float volume){
-        Canvas canvas = mInputSurface.lockCanvas(null);
-        Paint paint = new Paint();
-        try {
-            int width = canvas.getWidth();
-            int height = canvas.getHeight();
-            int color1 = changeHue(volume);
-            canvas.drawColor(color1);
-            paint.setTextSize(100);
-            paint.setColor(0xff000000);
-            canvas.drawText("第"+ String.valueOf(frameNum) + "帧",width/2,height/2,paint);
-            Rect srcRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
-            int margain = 30;
-            Rect decRect = new Rect(margain, margain, width - margain, height-margain);
-            canvas.drawBitmap(mBitmap,srcRect,decRect,paint);
 
-            int roundMargain = 60;
-            int roundHeight = 300;
-            int roundRadius = 25;
-            int roundLineWidth = 10;
-            paint.setStyle(Paint.Style.FILL);//充满
-            paint.setAntiAlias(true);// 设置画笔的锯齿效果
-            RectF roundRect1 = new RectF(roundMargain - roundLineWidth,roundMargain - roundLineWidth,width - roundMargain + roundLineWidth,roundHeight + roundMargain + roundLineWidth);
-            paint.setColor(Color.BLACK);
-            canvas.drawRoundRect(roundRect1,roundRadius,roundRadius,paint);
-            paint.setColor(color1);
-            RectF roundRect2 = new RectF(roundMargain,roundMargain,width - roundMargain,roundHeight + roundMargain);
-            canvas.drawRoundRect(roundRect2,roundRadius,roundRadius,paint);
-
-//            paint.setStyle(Paint.Style.STROKE);//充满
-            int timeMargain = roundMargain + 50;
-            String sTime = "2018/12/29 00:39";
-            paint.setTextAlign(Paint.Align.CENTER);
-            paint.setTextSize(40);
-            paint.setColor(Color.BLACK);
-            canvas.drawText(sTime,width/2,timeMargain,paint);
-
-            int soundMargain = timeMargain + 80;
-            String soundTime = "party 是我家";
-            String soundTime2 = "party party 是我家";
-            paint.setTextAlign(Paint.Align.CENTER);
-            paint.setTextSize(80);
-            canvas.drawText(soundTime,width/2,soundMargain,paint);
-            canvas.drawText(soundTime2,width/2,soundMargain + 80,paint);
-
-        } finally {
-            mInputSurface.unlockCanvasAndPost(canvas);
-        }
-
-    }
-
-    /**
-     * @param progress 0 ~ 360
-     * @return
-     */
-    public int changeHue(float progress){
-        float[] hsbVals = new float[3];
-        int inputColor = Color.parseColor("#FFF757");
-        Color.colorToHSV(inputColor,hsbVals);
-        float v = (float) progress / (float) 360;
-        hsbVals[0] = progress;
-        int color = Color.HSVToColor(hsbVals);
-        return color;
-    }
 
     private void releaseEncoder() {
         if (mMediaCodec != null) {
