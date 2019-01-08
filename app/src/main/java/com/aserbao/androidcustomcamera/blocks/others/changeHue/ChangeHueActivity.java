@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import javax.*;
 
 import com.aserbao.androidcustomcamera.R;
 
@@ -34,16 +35,14 @@ public class ChangeHueActivity extends AppCompatActivity {
     }
 
     private void init() {
-
-
         mChangeHueSb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.change_hue);
-                Bitmap hue = hue(bitmap, progress);
-                mChangeHueIv.setImageBitmap(hue);
+//                Bitmap hue = hue(bitmap, progress);
+//                mChangeHueIv.setImageBitmap(hue);
                 mChangeHueTv.setText(String.valueOf(progress));
-
+                changeHue(progress);
 //                ColorFilter colorFilter = ColorFilterGenerator.adjustHue(progress);
 //                mChangeHueIv.setColorFilter(colorFilter);
             }
@@ -79,5 +78,16 @@ public class ChangeHueActivity extends AppCompatActivity {
 //        bitmap = null;
 
         return newBitmap;
+    }
+
+
+    public void changeHue(int progress){
+        float[] hsbVals = new float[3];
+        int inputColor = Color.parseColor("#FEFF6D");
+        Color.colorToHSV(inputColor,hsbVals);
+        float v = (float) progress / (float) 360;
+        hsbVals[0] = (float) progress;
+        int color = Color.HSVToColor(hsbVals);
+        mChangeHueTv.setBackgroundColor(color);
     }
 }
