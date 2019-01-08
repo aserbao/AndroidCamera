@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 
+import VideoHandle.EpEditor;
+import VideoHandle.OnEditorListener;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -45,7 +47,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
     private static final int WIDTH = 720;
     private static final int HEIGHT = 1280;
     private static final int BIT_RATE = 4000000;
-    private static final int FRAMES_PER_SECOND = 4;
+    private static final int FRAMES_PER_SECOND = 30;
     private static final int IFRAME_INTERVAL = 5;
 
     private static final int NUM_FRAMES = 1 * 100;
@@ -73,7 +75,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
 
     private MyHanlder mMyHanlder = new MyHanlder(this);
     public File mOutputFile;
-
+    private double mVolume;
     @OnClick({R.id.btn_recording, R.id.btn_watch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -95,25 +97,21 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                     mBtnRecording.setText("开始录制");
                     stopRecording();
                 }
-               /* for (int i = 0; i < 100; i++) {
-                    if (i < 99) {
-                        update();
-                    }else{
-                        stopRecording();
-                    }
-                }*/
 //                new DecoderAndGetAudioDb().start(path + "/own.m4a", MIMETYPE_AUDIO_AAC, new DecoderAndGetAudioDb.DbCallBackListener() {
 //                new DecoderAndGetAudioDb().start(path + "/five.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
                 new DecoderAndGetAudioDb().start(path + "/dj_dance.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
                     @Override
-                    public void cuurentFrequenty(final int cuurentFrequenty, double volume) {
-                        Log.e(TAG, "cuurentFrequenty: " + volume );
+                    public void cuurentFrequenty(final int cuurentFrequenty, final double volume, final float decoderTime) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(cuurentFrequenty != -1 && isRecording) {
-                                    update();
-                                    Log.e(TAG, "run: " +cuurentFrequenty );
+                                if(volume != -1 && isRecording) {
+                                    mVolume = volume / 100;
+                                    int i = cuurFrame * 1000 / FRAMES_PER_SECOND;
+                                    if(decoderTime > i) {
+                                        update();
+                                        Log.e(TAG, "run:volume =  " +mVolume + "  decoderTime = " + decoderTime + " 第"+ cuurFrame + "帧时间为："+ i);
+                                    }
                                 }else{
                                     Log.e(TAG, "run: out"  );
                                     if (isRecording) {
@@ -127,7 +125,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                 });
                 break;
             case R.id.btn_watch:
-                String absolutePath = mOutputFile.getAbsolutePath();
+               /* String absolutePath = mOutputFile.getAbsolutePath();
                 if (!TextUtils.isEmpty(absolutePath)) {
                     if(mBtnWatch.getText().equals("查看视频")) {
                         mBtnWatch.setText("删除视频");
@@ -141,7 +139,8 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                     }
                 }else{
                     Toast.makeText(this, "请先录制", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                addMusicToMp4();
                 break;
         }
     }
@@ -149,6 +148,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
     public void update(){
         drainEncoder(false);
         generateFrame(cuurFrame);
+        cuurFrame++;
         Log.e(TAG, "handleMessage: " + cuurFrame);
     }
     private Bitmap mBitmap;
@@ -219,7 +219,8 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         // 只有在编码器开始处理数据后才能从编码器获得这些数据。我们实际上对多路复用音频没有兴趣。我们只是想要
         // 将从MediaCodec获得的原始H.264基本流转换为.mp4文件。
 //        mMuxer = new MediaMuxer(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output_aserbao.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-        mMuxer = new MediaMuxer(outputFile.toString(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+        String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mMuxer = new MediaMuxer(absolutePath+ "/input_aserbao.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
 
         mMuxerStarted = false;
         mTrackIndex = -1;
@@ -279,7 +280,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                         Log.e(TAG, "意外结束");
                     } else {
                         Toast.makeText(this, "已完成……", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "正常结束");
+//
                     }
                     isRecording = false;
                     break;
@@ -288,6 +289,29 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         }
     }
 
+    private String outputVideoPath;
+    public void addMusicToMp4(){
+        String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String inputMusic = absolutePath + "/dj_dance.mp3";
+        outputVideoPath = absolutePath + "/output_aserbao.mp4";
+        String inputVideo = absolutePath+ "/input_aserbao.mp4";
+        String cmd = "-y -i "+ inputVideo + " -ss 0 -t "+ 13.3 + " -i "+ inputMusic + " -acodec copy -vcodec copy "+ outputVideoPath;
+        EpEditor.execCmd(cmd, 10000,new OnEditorListener() {
+            @Override
+            public void onSuccess() {
+                Log.e(TAG, "sssshahhah onSuccess: " );
+            }
+
+            @Override
+            public void onFailure() {
+                Log.e(TAG, "sssshahhah  onFailure: " );
+            }
+
+            @Override
+            public void onProgress(float v) {
+            }
+        });
+    }
 
     private void generateFrame(int frameNum){
         Canvas canvas = mInputSurface.lockCanvas(null);
@@ -295,13 +319,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         try {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
-            String  color = "#FFCA39";
-            if (frameNum %2 == 0 ){
-                color = "#FFF757";
-            }else{
-                color = "#FFF757";
-            }
-            int color1 = Color.parseColor(color);
+            int color1 = changeHue((float) mVolume);
             canvas.drawColor(color1);
             paint.setTextSize(100);
             paint.setColor(0xff000000);
@@ -346,6 +364,19 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
 
     }
 
+    /**
+     * @param progress 0 ~ 360
+     * @return
+     */
+    public int changeHue(float progress){
+        float[] hsbVals = new float[3];
+        int inputColor = Color.parseColor("#FFF757");
+        Color.colorToHSV(inputColor,hsbVals);
+        float v = (float) progress / (float) 360;
+        hsbVals[0] = progress;
+        int color = Color.HSVToColor(hsbVals);
+        return color;
+    }
 
     private void releaseEncoder() {
         if (mMediaCodec != null) {

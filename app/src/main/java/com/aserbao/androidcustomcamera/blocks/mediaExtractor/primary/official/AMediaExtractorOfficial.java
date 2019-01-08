@@ -40,7 +40,6 @@ public class AMediaExtractorOfficial {
             int readSampleData = extractor.readSampleData(inputBuffer, 0);
             while (readSampleData >= 0) {
                 int trackIndex = extractor.getSampleTrackIndex();
-//                int length = inputBuffer.toString().length();
                 long presentationTimeUs = extractor.getSampleTime(); // 拿到解析到音频的时间
                 Log.e(TAG,  "meidaExtractorDecoderAudio: trackIndex = " +  trackIndex + " presentationTimeUs = " + presentationTimeUs + "   readSampleData =" + readSampleData );
                 extractor.advance();

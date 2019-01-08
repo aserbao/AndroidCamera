@@ -175,11 +175,11 @@ public class DecoderAndGetAudioDb {
                             outputBuffer.get(mPcmData, 0, mBufferInfo.size);
                             outputBuffer.clear();
                         }
-                        float v = mMediaExtractor.getSampleTime() / (float) (1000 * 1000);
+                        float v = mMediaExtractor.getSampleTime() / (float) (1000);
 
 //                        calcFrequency(mPcmData,KEY_SAMPLE_RATE);
-                        calcFrequency2(mPcmData);
-//                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
+                        calcFrequency2(mPcmData,v);
+                        Log.e(TAG, "解析到的时间点为："+ v + "ms     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
                         mPcmPlayer.write(mPcmData, 0, mBufferInfo.size);
                     }
                     mMediaCodec.releaseOutputBuffer(outputIndex, false);
@@ -188,7 +188,7 @@ public class DecoderAndGetAudioDb {
                     }
                 }
             }
-            mDbCallBackListener.cuurentFrequenty(-1,-1);
+            mDbCallBackListener.cuurentFrequenty(-1,-1,-1);
             mMediaExtractor.release();
             Log.e(TAG, "decode: maxVolume = " + maxVolume );
         }
@@ -229,7 +229,6 @@ public class DecoderAndGetAudioDb {
         }
 
         double volume = 10 * log10(v / (double) fft.length);
-        mDbCallBackListener.cuurentFrequenty(currentFrequency,volume);
         Log.e(TAG, "calcFrequency: currentFrequency = " + currentFrequency + "   volume =  " + volume + "  max =  " + max );
     }
 
@@ -237,11 +236,12 @@ public class DecoderAndGetAudioDb {
     /**
      * 获取的值范围0 ~ 24366
      * @param pcmdata
+     * @param v
      */
-    public void calcFrequency2(byte[] pcmdata) {
+    public void calcFrequency2(byte[] pcmdata, float v) {
         short[] music = (!isBigEnd()) ? byteArray2ShortArrayLittle( pcmdata,  pcmdata.length / 2) :
                 byteArray2ShortArrayBig( pcmdata,  pcmdata.length / 2);
-        calculateRealVolume(music,music.length);
+        calculateRealVolume(music,music.length,v);
     }
 
     private boolean isBigEnd() {
@@ -267,7 +267,7 @@ public class DecoderAndGetAudioDb {
     }
 
     private int maxVolume = 0;
-    protected void calculateRealVolume(short[] buffer, int readSize) {
+    protected void calculateRealVolume(short[] buffer, int readSize, float v) {
         double sum = 0;
         for (int i = 0; i < readSize; i++) {
             // 这里没有做运算的优化，为了更加清晰的展示代码
@@ -278,12 +278,13 @@ public class DecoderAndGetAudioDb {
             int mVolume = (int) Math.sqrt(amplitude);
             Log.e(TAG, "calculateRealVolume: " + mVolume);
             maxVolume = Math.max(mVolume,maxVolume);
+            mDbCallBackListener.cuurentFrequenty(-1,mVolume,v);
         }
     }
 
     private DbCallBackListener mDbCallBackListener;
     public interface DbCallBackListener {
-        void cuurentFrequenty(int cuurentFrequenty, double volume);
+        void cuurentFrequenty(int cuurentFrequenty, double volume,float cuurTime);
     }
 
 

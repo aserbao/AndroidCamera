@@ -83,7 +83,7 @@ public class ChangeHueActivity extends AppCompatActivity {
 
     public void changeHue(int progress){
         float[] hsbVals = new float[3];
-        int inputColor = Color.parseColor("#FEFF6D");
+        int inputColor = Color.parseColor("#FFF757");
         Color.colorToHSV(inputColor,hsbVals);
         float v = (float) progress / (float) 360;
         hsbVals[0] = (float) progress;
