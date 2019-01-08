@@ -76,6 +76,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
     private MyHanlder mMyHanlder = new MyHanlder(this);
     public File mOutputFile;
     private double mVolume;
+    private float mMusictime;
     @OnClick({R.id.btn_recording, R.id.btn_watch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -98,8 +99,8 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                     stopRecording();
                 }
 //                new DecoderAndGetAudioDb().start(path + "/own.m4a", MIMETYPE_AUDIO_AAC, new DecoderAndGetAudioDb.DbCallBackListener() {
-//                new DecoderAndGetAudioDb().start(path + "/five.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
-                new DecoderAndGetAudioDb().start(path + "/dj_dance.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
+                new DecoderAndGetAudioDb().start(path + "/five.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
+//                new DecoderAndGetAudioDb().start(path + "/dj_dance.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
                     @Override
                     public void cuurentFrequenty(final int cuurentFrequenty, final double volume, final float decoderTime) {
                         runOnUiThread(new Runnable() {
@@ -107,6 +108,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                             public void run() {
                                 if(volume != -1 && isRecording) {
                                     mVolume = volume / 100;
+                                    mMusictime = decoderTime;
                                     int i = cuurFrame * 1000 / FRAMES_PER_SECOND;
                                     if(decoderTime > i) {
                                         update();
@@ -220,7 +222,7 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
         // 将从MediaCodec获得的原始H.264基本流转换为.mp4文件。
 //        mMuxer = new MediaMuxer(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output_aserbao.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
         String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mMuxer = new MediaMuxer(absolutePath+ "/input_aserbao.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+        mMuxer = new MediaMuxer(absolutePath+ "/input_aserbao1.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
 
         mMuxerStarted = false;
         mTrackIndex = -1;
@@ -292,10 +294,10 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
     private String outputVideoPath;
     public void addMusicToMp4(){
         String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String inputMusic = absolutePath + "/dj_dance.mp3";
-        outputVideoPath = absolutePath + "/output_aserbao.mp4";
-        String inputVideo = absolutePath+ "/input_aserbao.mp4";
-        String cmd = "-y -i "+ inputVideo + " -ss 0 -t "+ 13.3 + " -i "+ inputMusic + " -acodec copy -vcodec copy "+ outputVideoPath;
+        String inputMusic = absolutePath + "/five.mp3";
+        outputVideoPath = absolutePath + "/output_aserbao1.mp4";
+        String inputVideo = absolutePath+ "/input_aserbao1.mp4";
+        String cmd = "-y -i "+ inputVideo + " -ss 0 -t "+ 35 + " -i "+ inputMusic + " -acodec copy -vcodec copy "+ outputVideoPath;
         EpEditor.execCmd(cmd, 10000,new OnEditorListener() {
             @Override
             public void onSuccess() {
