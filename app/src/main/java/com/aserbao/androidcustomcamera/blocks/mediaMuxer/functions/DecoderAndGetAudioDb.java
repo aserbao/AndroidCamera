@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import static java.lang.Math.log10;
+import static java.lang.Math.max;
 
 /**
  * 功能: 解码获取音频帧分贝大小
@@ -176,7 +177,8 @@ public class DecoderAndGetAudioDb {
                         }
                         float v = mMediaExtractor.getSampleTime() / (float) (1000 * 1000);
 
-                        calcFrequency(mPcmData,KEY_SAMPLE_RATE);
+//                        calcFrequency(mPcmData,KEY_SAMPLE_RATE);
+                        calcFrequency2(mPcmData);
 //                        Log.e(TAG, "解析到的时间点为："+ v + "s     decode:  mPcmData.length  = " + mPcmData.length + " mBufferInfo "  + mBufferInfo.toString());
                         mPcmPlayer.write(mPcmData, 0, mBufferInfo.size);
                     }
@@ -188,6 +190,7 @@ public class DecoderAndGetAudioDb {
             }
             mDbCallBackListener.cuurentFrequenty(-1,-1);
             mMediaExtractor.release();
+            Log.e(TAG, "decode: maxVolume = " + maxVolume );
         }
 
         /**
@@ -231,9 +234,51 @@ public class DecoderAndGetAudioDb {
     }
 
 
-    public void calcFrequency2(byte[] pcmdata,int sample) {
-        short[] pcmData = new short[pcmdata.length/2];
+    /**
+     * 获取的值范围0 ~ 24366
+     * @param pcmdata
+     */
+    public void calcFrequency2(byte[] pcmdata) {
+        short[] music = (!isBigEnd()) ? byteArray2ShortArrayLittle( pcmdata,  pcmdata.length / 2) :
+                byteArray2ShortArrayBig( pcmdata,  pcmdata.length / 2);
+        calculateRealVolume(music,music.length);
+    }
 
+    private boolean isBigEnd() {
+        short i = 0x1;
+        boolean bRet = ((i >> 8) == 0x1);
+        return bRet;
+    }
+
+    private short[] byteArray2ShortArrayBig(byte[] data, int items) {
+        short[] retVal = new short[items];
+        for (int i = 0; i < retVal.length; i++)
+            retVal[i] = (short) ((data[i * 2 + 1] & 0xff) | (data[i * 2] & 0xff) << 8);
+
+        return retVal;
+    }
+
+    private short[] byteArray2ShortArrayLittle(byte[] data, int items) {
+        short[] retVal = new short[items];
+        for (int i = 0; i < retVal.length; i++)
+            retVal[i] = (short) ((data[i * 2] & 0xff) | (data[i * 2 + 1] & 0xff) << 8);
+
+        return retVal;
+    }
+
+    private int maxVolume = 0;
+    protected void calculateRealVolume(short[] buffer, int readSize) {
+        double sum = 0;
+        for (int i = 0; i < readSize; i++) {
+            // 这里没有做运算的优化，为了更加清晰的展示代码
+            sum += buffer[i] * buffer[i];
+        }
+        if (readSize > 0) {
+            double amplitude = sum / readSize;
+            int mVolume = (int) Math.sqrt(amplitude);
+            Log.e(TAG, "calculateRealVolume: " + mVolume);
+            maxVolume = Math.max(mVolume,maxVolume);
+        }
     }
 
     private DbCallBackListener mDbCallBackListener;

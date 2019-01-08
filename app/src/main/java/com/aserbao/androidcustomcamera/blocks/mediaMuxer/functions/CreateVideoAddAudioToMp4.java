@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.media.MediaFormat.MIMETYPE_AUDIO_AAC;
+import static android.media.MediaFormat.MIMETYPE_AUDIO_MPEG;
 
 public class CreateVideoAddAudioToMp4 extends BaseActivity {
     private static final String TAG = "PrimaryMediaCodecActivi";
@@ -101,7 +102,9 @@ public class CreateVideoAddAudioToMp4 extends BaseActivity {
                         stopRecording();
                     }
                 }*/
-                new DecoderAndGetAudioDb().start(path + "/own.m4a", MIMETYPE_AUDIO_AAC, new DecoderAndGetAudioDb.DbCallBackListener() {
+//                new DecoderAndGetAudioDb().start(path + "/own.m4a", MIMETYPE_AUDIO_AAC, new DecoderAndGetAudioDb.DbCallBackListener() {
+//                new DecoderAndGetAudioDb().start(path + "/five.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
+                new DecoderAndGetAudioDb().start(path + "/dj_dance.mp3", MIMETYPE_AUDIO_MPEG, new DecoderAndGetAudioDb.DbCallBackListener() {
                     @Override
                     public void cuurentFrequenty(final int cuurentFrequenty, double volume) {
                         Log.e(TAG, "cuurentFrequenty: " + volume );

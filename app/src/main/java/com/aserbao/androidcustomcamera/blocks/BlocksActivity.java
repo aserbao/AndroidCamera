@@ -20,7 +20,7 @@ public class BlocksActivity extends RVBaseActivity {
         mClassBeans.add(new ClassBean("MediaCodec", MediaCodecActivity.class));
         mClassBeans.add(new ClassBean("MediaExtractor", MediaExtractorActivity.class));
         mClassBeans.add(new ClassBean("MediaMuxer", MediaMuxerActivity.class));
-        mClassBeans.add(new ClassBean("MediaMuxer", CreateVideoAddAudioToMp4.class));
+        mClassBeans.add(new ClassBean("合成", CreateVideoAddAudioToMp4.class));
         return mClassBeans;
     }
 

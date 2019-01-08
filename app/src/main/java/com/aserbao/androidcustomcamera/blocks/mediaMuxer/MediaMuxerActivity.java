@@ -46,7 +46,6 @@ public class MediaMuxerActivity extends AppCompatActivity {
                 new MuxerVoiceDbToMp4().start(path + "/own.m4a", path + "/output_aserbao1.mp4", MIMETYPE_AUDIO_AAC, new MuxerVoiceDbToMp4.DbCallBackListener() {
                     @Override
                     public void cuurentFrequenty(int cuurentFrequenty, double volume) {
-
                     }
                 });
                 break;
