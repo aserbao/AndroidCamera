@@ -1,6 +1,7 @@
 
 # 作者简介 
 Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来工作刚刚好。对视频音视频处理，硬编码这一块有一定的研究。之前北漂，现在深漂。同名微信公众号aserbao的维护者，喜欢看书，摄影，交友，目前生活这样子。
+
 |公众号(aserbao)|个人微信号(小老头)|
 |--|--|
 |![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/we_chat.jpg)|
