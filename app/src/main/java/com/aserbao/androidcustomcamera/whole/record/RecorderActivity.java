@@ -421,15 +421,10 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                     for (VideoFile file : list) {
                         videoFileName = file.getPath();
                     }
-                    Intent intent = new Intent(RecorderActivity.this, LocalVideoActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(StaticFinalValues.VIDEOFILEPATH, videoFileName);
-                    bundle.putInt(StaticFinalValues.MISNOTCOMELOCAL, 0);
-                    intent.putExtra(StaticFinalValues.BUNDLE, bundle);
-                    startActivity(intent);
+
 
                     //这一段用来判断视频时间的
-                    /*try {
+                    try {
                         MediaPlayer player = new MediaPlayer();
                         player.setDataSource(videoFileName);
                         player.prepare();
@@ -442,12 +437,23 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                         Log.e(TAG, "视频文件长度,分钟: " + minute + "视频有" + s + "秒");
                         if (s >= 120) {
                             Toast.makeText(this, "视频剪辑不能超过2分钟", Toast.LENGTH_LONG).show();
+                            return;
                         } else if (s < 5) {
                             Toast.makeText(this, "视频剪辑不能少于5秒", Toast.LENGTH_LONG).show();
+                            return;
+                        }else{
+                            Intent intent = new Intent(RecorderActivity.this, LocalVideoActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(StaticFinalValues.VIDEOFILEPATH, videoFileName);
+                            bundle.putInt(StaticFinalValues.MISNOTCOMELOCAL, 0);
+                            intent.putExtra(StaticFinalValues.BUNDLE, bundle);
+                            startActivity(intent);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }*/
+                    }
+
+
                 }
                 break;
         }
