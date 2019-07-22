@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity">
-    <VideoView
-        android:id="@+id/video_player_vv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
 
-</FrameLayout>
+
+    <com.ych.matching.view.FullScreenVideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/picture_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="30dp"
+         />
+
+    <ImageView
+        android:id="@+id/meet_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+         />
+
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp"
+        android:layout_marginRight="40dp"
+        android:layout_toLeftOf="@+id/meet_download"
+        android:textColor="@color/colorWhite100"
+        android:textSize="24sp" />
+
+</RelativeLayout>

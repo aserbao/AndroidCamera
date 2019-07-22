@@ -29,7 +29,7 @@
         <activity android:name=".blocks.mediaCodec.primary.PrimaryMediaCodecActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.encodeAndMux.EncodeAndMuxActivity" />
         <activity android:name=".blocks.mediaCodec.recordCamera.RecordCameraActivity" />
-        <activity android:name=".whole.videoPlayer.VideoPlayerActivity" />
+        <activity android:name=".whole.videoPlayer.VideoViewPlayerActivity" />
         <activity android:name=".blocks.mediaCodec.recordBaseCamera.RecordBaseCameraActivity" />
         <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.cameraToMpeg.CameraToMpegActivity" />

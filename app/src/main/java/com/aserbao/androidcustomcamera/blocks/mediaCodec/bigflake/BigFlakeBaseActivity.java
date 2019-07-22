@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.decodeEditEncode.DecodeEditEncodeActivity;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +58,7 @@ public abstract class BigFlakeBaseActivity extends AppCompatActivity {
                 break;
             case R.id.player:
                 if (!TextUtils.isEmpty(mOutputPath)) {
-                    VideoPlayerActivity.launch(BigFlakeBaseActivity.this, mOutputPath);
+                    VideoViewPlayerActivity.launch(BigFlakeBaseActivity.this, mOutputPath);
                 }
                 break;
         }

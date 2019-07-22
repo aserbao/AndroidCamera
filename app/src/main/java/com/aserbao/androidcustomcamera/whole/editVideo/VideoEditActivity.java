@@ -1,7 +1,6 @@
 package com.aserbao.androidcustomcamera.whole.editVideo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
@@ -46,7 +45,7 @@ import com.aserbao.androidcustomcamera.whole.editVideo.view.VideoEditView;
 import com.aserbao.androidcustomcamera.whole.record.filters.GifDecoder;
 import com.aserbao.androidcustomcamera.whole.record.other.MagicFilterType;
 import com.aserbao.androidcustomcamera.whole.record.ui.SlideGpuFilterGroup;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -257,7 +256,7 @@ public class VideoEditActivity extends FragmentActivity implements PopBubbleView
                 clipper.setOnVideoCutFinishListener(new VideoClipper.OnVideoCutFinishListener() {
                     @Override
                     public void onFinish() {
-                            VideoPlayerActivity.launch(VideoEditActivity.this,outputPath);
+                            VideoViewPlayerActivity.launch(VideoEditActivity.this,outputPath);
                             mHandler.sendEmptyMessage(VIDEO_CUT_FINISH);
                     }
 

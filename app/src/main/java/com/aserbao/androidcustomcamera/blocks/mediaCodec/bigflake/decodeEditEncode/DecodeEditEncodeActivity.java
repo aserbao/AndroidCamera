@@ -19,21 +19,11 @@ import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
 import android.media.MediaFormat;
 import android.opengl.GLES20;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.test.AndroidTestCase;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.BigFlakeBaseActivity;
-import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.encodeDecode.EncodeDecodeActivity;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.encodeDecode.InputSurface;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.encodeDecode.OutputSurface;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -42,10 +32,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;

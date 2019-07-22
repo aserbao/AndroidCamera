@@ -1,7 +1,6 @@
 package com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -32,7 +31,7 @@ import com.aserbao.androidcustomcamera.base.MyApplication;
 import com.aserbao.androidcustomcamera.base.utils.DisplayUtil;
 import com.aserbao.androidcustomcamera.base.utils.StaticFinalValues;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.adapter.ThumbAdapter;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -385,9 +384,9 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
                         if (new File(mOutVideoPath).exists()) {
                             new File(mOutVideoPath).delete();
                         }
-                        VideoPlayerActivity.launch(LocalVideoActivity.this,mSavevideotemp);
+                        VideoViewPlayerActivity.launch(LocalVideoActivity.this,mSavevideotemp);
                     } else {
-                        VideoPlayerActivity.launch(LocalVideoActivity.this,mOutVideoPath);
+                        VideoViewPlayerActivity.launch(LocalVideoActivity.this,mOutVideoPath);
                     }
                    myHandler.sendEmptyMessage(CLIPPER_GONE);
                 } else {
