@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/emoji_01"
+            android:drawableTop="@drawable/camera_sticker"
             android:gravity="center"
             android:text="贴纸"
             android:textColor="@color/white" />
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/emoji_00"
+            android:drawableTop="@drawable/camera_subtitle"
             android:gravity="center"
             android:text="字幕"
             android:textColor="@color/white" />
