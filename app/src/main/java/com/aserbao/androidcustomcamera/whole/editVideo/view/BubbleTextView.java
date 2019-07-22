@@ -156,6 +156,7 @@ public class BubbleTextView extends BaseImageView {
     private boolean isFaceBottom = true;//边角是否在底部
     private boolean isFaceRight = false;//边角是否在右边
     protected Matrix rotateMatrix = new Matrix();
+    private long mTouchDownTime;
 
 
     public BubbleTextView(Context context, AttributeSet attrs) {
@@ -614,6 +615,7 @@ public class BubbleTextView extends BaseImageView {
         isInBitmap = false;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                mTouchDownTime = System.currentTimeMillis();
                 if (isInButton(event, dst_delete)) {
                     if (operationListener != null) {
                         operationListener.onDeleteClick();
@@ -635,22 +637,10 @@ public class BubbleTextView extends BaseImageView {
                     isInRomate = false;
                     invalidate();
                 } else if (isInButton(event, dst_top)) {
-//                    //置顶
-//                    bringToFront();
                     if (operationListener != null) {
                         operationListener.onTop(this);
                     }
                     isDown = false;
-//                    PointF localPointF = new PointF();
-//                    midDiagonalPoint(localPointF);
-//                    switch (direction % 2) {
-//                        case 0:
-//                            matrix.postScale(-1.0F, 1.0F, localPointF.x, localPointF.y);
-//                            break;
-//                        case 1:
-//                            matrix.postScale(1.0F, -1.0F, localPointF.x, localPointF.y);
-//                            break;
-//                    }
                     direction++;
                     X = (dst_top.left + dst_resize.right) / 2;
                     Y = (dst_top.top + dst_resize.bottom) / 2;
@@ -670,19 +660,6 @@ public class BubbleTextView extends BaseImageView {
                     isInBitmap = true;
                     isInputEdit = true;
 
-//                    long currentTime = System.currentTimeMillis();
-//                    Log.d(TAG, (currentTime - preClicktime) + "");
-//                    if (currentTime - preClicktime > doubleClickTimeLimit) {
-//                        preClicktime = currentTime;
-//                    } else {
-//                        if (isInEdit && operationListener != null) {
-//                            operationListener.onClick(this);
-//                        }
-//                    }
-//                    if (isInEdit && operationListener != null) {
-//                        operationListener.onClick(this);
-//                    }
-
                 } else {
                     isInRomate = false;
                     handled = false;
@@ -701,7 +678,9 @@ public class BubbleTextView extends BaseImageView {
                 isInRomate = false;
                 break;
             case MotionEvent.ACTION_MOVE:
-                isInputEdit = false;
+                if(System.currentTimeMillis() - mTouchDownTime > 200) {
+                    isInputEdit = false;
+                }
                 //双指缩放
                 if (isPointerDown) {
                     float scale;
@@ -905,7 +884,9 @@ public class BubbleTextView extends BaseImageView {
                 + Math.sqrt(u2 * (u2 - a2) * (u2 - b2) * (u2 - b3))
                 + Math.sqrt(u3 * (u3 - a3) * (u3 - b3) * (u3 - b4))
                 + Math.sqrt(u4 * (u4 - a4) * (u4 - b4) * (u4 - b1));
-        return Math.abs(s - ss) < 0.5;
+        double distance = Math.abs(s - ss);
+        Log.e(TAG, "pointInRect: " + distance );
+        return distance < 0.5;
 
 
     }

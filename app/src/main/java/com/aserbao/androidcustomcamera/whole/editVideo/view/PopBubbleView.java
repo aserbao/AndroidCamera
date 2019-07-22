@@ -165,10 +165,12 @@ public class PopBubbleView {
         return popupWindow.isShowing();
     }
 
-    ;
 
     public void show() {
-        Toast.makeText(context, "show something", Toast.LENGTH_SHORT).show();
+        if (popupWindow != null && !popupWindow.isShowing()) {
+            popupWindow.showAtLocation(LayoutInflater.from(context).inflate(R.layout.activity_update_personal_info, null),
+                    Gravity.BOTTOM, 0, 0);
+        }
     }
 
     public interface BubbleSelectListener {

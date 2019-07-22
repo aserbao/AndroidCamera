@@ -1,17 +1,12 @@
 package com.aserbao.androidcustomcamera.whole.videoPlayer;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,17 +30,11 @@ import com.aserbao.androidcustomcamera.whole.jiaozivideo.JZVideoPlayer;
 import com.aserbao.androidcustomcamera.whole.jiaozivideo.PublicVideoJZVideo;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils.FileUtils.VIDEO_PATH;
 
 
 public class VideoPlayerActivity2 extends AppCompatActivity  {
@@ -83,27 +72,23 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
         StatusBarUtil.transparencyBar(this);
     }
 
-
-
-
-
-
-
     private void initData() {
         videoFilePath = getIntent().getStringExtra(StaticFinalValues.VIDEOFILEPATH);
-        mPublicVideoJZVideo.setUp(videoFilePath, JZVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
-        mPublicVideoJZVideo.startVideo();
-
+        playVideo();
     }
 
+
+
+    private void playVideo() {
+        mPublicVideoJZVideo.setUp(videoFilePath, JZVideoPlayer.SCREEN_LAYOUT_NORMAL, "");
+        mPublicVideoJZVideo.startVideo();
+    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mPublicVideoJZVideo != null) {
-            mPublicVideoJZVideo.startVideo();
-        }
+        playVideo();
     }
 
     @Override
