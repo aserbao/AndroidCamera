@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:drawable="@drawable/jz_pause_pressed" android:state_pressed="true" />
+    <item android:drawable="@drawable/jz_pause_normal" />-->
+    <item android:drawable="@drawable/index_timeout" android:state_pressed="true" />
+    <item android:drawable="@drawable/index_timeout" />
+
+</selector>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="id_circle_menu_item_image" type="id"/>
+    <item name="id_circle_menu_item_text" type="id"/>
+    <item name="id_circle_menu_item_center" type="id"/>
+    <item name="decode" type="id"/>
+    <item name="decode_failed" type="id"/>
+    <item name="decode_succeeded" type="id"/>
+    <item name="quit" type="id"/>
+    <item name="restart_preview" type="id"/>
+    <item name="return_scan_result" type="id"/>
+
+    <item type="id" name= "isChecked"/>
+    <item type="id" name= "rbId"/>
+
+    <item name="jz_fullscreen_id" type="id"/>
+    <item name="jz_tiny_id" type="id"/>
+    <item name="image_key" type="id" />
+</resources>

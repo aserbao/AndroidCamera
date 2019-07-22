@@ -62,6 +62,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".whole.editVideo.VideoEditActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".whole.videoPlayer.VideoPlayerActivity2"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

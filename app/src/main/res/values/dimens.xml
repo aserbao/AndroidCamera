@@ -8,4 +8,5 @@
     <dimen name="dp5">5dp</dimen>
     <dimen name="rl_challenge_padding_left">10dp</dimen>
     <dimen name="rl_challenge_padding_right">10dp</dimen>
+    <dimen name="jz_start_button_w_h_normal">45dp</dimen>
 </resources>

@@ -32,4 +32,5 @@ dependencies {
     implementation 'com.github.yangjie10930:EpMedia:v0.9.5'
     implementation 'pub.devrel:easypermissions:0.3.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.danikula:videocache:2.7.0'
 }
