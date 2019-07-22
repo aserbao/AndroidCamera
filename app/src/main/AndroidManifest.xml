@@ -64,6 +64,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".whole.videoPlayer.VideoPlayerActivity2"
             android:screenOrientation="portrait"/>
+        <activity android:name=".whole.selCover.SelCoverTimeActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

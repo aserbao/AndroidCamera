@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.MyApplication;
@@ -28,6 +29,7 @@ import com.aserbao.androidcustomcamera.base.utils.StatusBarUtil;
 import com.aserbao.androidcustomcamera.whole.editVideo.VideoEditActivity;
 import com.aserbao.androidcustomcamera.whole.jiaozivideo.JZVideoPlayer;
 import com.aserbao.androidcustomcamera.whole.jiaozivideo.PublicVideoJZVideo;
+import com.aserbao.androidcustomcamera.whole.selCover.SelCoverTimeActivity;
 
 
 import java.io.File;
@@ -35,6 +37,9 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.COMR_FROM_SEL_COVER_TIME_ACTIVITY;
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.COMR_FROM_VIDEO_EDIT_TIME_ACTIVITY;
 
 
 public class VideoPlayerActivity2 extends AppCompatActivity  {
@@ -162,7 +167,6 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
 
 
 
-    public String mCopyVideoPath;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -181,12 +185,12 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
             case R.id.video_player2_edit_video_tv:
                 Intent intent = new Intent(MyApplication.getContext(), VideoEditActivity.class);
                 intent.putExtra(StaticFinalValues.VIDEOFILEPATH,videoFilePath);
-                startActivity(intent);
+                startActivityForResult(intent,COMR_FROM_VIDEO_EDIT_TIME_ACTIVITY);
                 break;
             case R.id.video_player2_sel_cover:
-                /*Intent intent2 = new Intent(VideoPlayerActivity2.this, SelCoverTimeActivity.class);
+                Intent intent2 = new Intent(VideoPlayerActivity2.this, SelCoverTimeActivity.class);
                 intent2.putExtra(StaticFinalValues.VIDEOFILEPATH, videoFilePath);
-                startActivityForResult(intent2, SUBMIT3_TO_SELCOVERTIME);*/
+                startActivityForResult(intent2, COMR_FROM_SEL_COVER_TIME_ACTIVITY);
                 break;
             case R.id.back_iv:
                 onBackPressed();
@@ -208,6 +212,27 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
         }
         if (mPopVideoLoadingFl!= null && mPopVideoLoadingFl.getVisibility() != View.VISIBLE) {
             super.onBackPressed();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        switch (requestCode){
+            case StaticFinalValues.COMR_FROM_VIDEO_EDIT_TIME_ACTIVITY:
+                videoFilePath = data.getStringExtra(StaticFinalValues.VIDEOFILEPATH);
+                playVideo();
+                break;
+            case StaticFinalValues.COMR_FROM_SEL_COVER_TIME_ACTIVITY:
+                videoFilePath = data.getStringExtra(StaticFinalValues.VIDEOFILEPATH);
+                int selTime = data.getIntExtra(StaticFinalValues.CUT_TIME, 0);
+                Toast.makeText(mContext, String.valueOf(selTime), Toast.LENGTH_SHORT).show();
+                playVideo();
+                break;
         }
     }
 

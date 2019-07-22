@@ -813,6 +813,7 @@ public class VideoEditActivity extends FragmentActivity implements PopBubbleView
 
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
+        setResult(StaticFinalValues.COMR_FROM_VIDEO_EDIT_TIME_ACTIVITY,getIntent());
+        super.onBackPressed();
     }
 }

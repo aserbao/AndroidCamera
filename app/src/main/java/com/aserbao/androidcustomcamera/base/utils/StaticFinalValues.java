@@ -30,8 +30,13 @@ public class StaticFinalValues {
     public static final String VIDEOFILEPATH = "VideoFilePath";
     public static final String MISNOTCOMELOCAL = "mIsNotComeLocal";//0表示本地视频，1表示非本地视频
     public static final String BUNDLE = "bundle";
+    public static final String CUT_TIME = "cut_time";
     private static final String VIDEO_PATH = "video_path";
 
+
+    //=======================requestCode and resultCode
+    public static final int COMR_FROM_SEL_COVER_TIME_ACTIVITY = 1;
+    public static final int COMR_FROM_VIDEO_EDIT_TIME_ACTIVITY = 2;
     //======================int
     public static final int REQUEST_CODE_PICK_VIDEO = 0x200;
     public static final int REQUEST_CODE_TAKE_VIDEO = 0x201;

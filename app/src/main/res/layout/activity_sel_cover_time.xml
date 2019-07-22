@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0E0517">
+    <RelativeLayout
+        android:layout_marginTop="24dp"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/bigicon_backwhite" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择封面"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/cut_time_finish_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/btn_edit_next_bg"
+            android:text="完成"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/sel_cover_tv"
+        android:layout_below="@+id/rl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <VideoView
+            android:layout_gravity="center"
+            android:id="@+id/sel_cover_video_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/sel_cover_tv"
+        android:layout_above="@+id/sel_cover_frame_layout"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:text="已选封面"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:id="@+id/sel_cover_frame_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="63dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cut_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"/>
+        <com.aserbao.androidcustomcamera.whole.selCover.view.ThumbnailSelTimeView
+            android:id="@+id/thumb_sel_time_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+</RelativeLayout>
