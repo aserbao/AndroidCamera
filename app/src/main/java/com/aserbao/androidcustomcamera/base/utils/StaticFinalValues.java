@@ -1,5 +1,9 @@
 package com.aserbao.androidcustomcamera.base.utils;
 
+import android.os.Environment;
+
+import com.aserbao.androidcustomcamera.whole.record.other.MagicFilterType;
+
 /**
  * description:
  * Created by aserbao on 2018/5/15.
@@ -18,6 +22,7 @@ public class StaticFinalValues {
     public static final String SAVETOPHOTOPATH = "/storage/emulated/0/DCIM/Camera/";//保存至本地相册路径
     public static final String ISSAVEVIDEOTEMPEXIST = "/storage/emulated/0/ych/drafts";
     public static final String VIDEOTEMP = "/storage/emulated/0/ych/videotemp/";
+    public static final String STORAGE_TEMP_VIDEO_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123.mp4";
 
     //======================string
     public static final String MAX_NUMBER = "MaxNumber";
@@ -30,4 +35,16 @@ public class StaticFinalValues {
     //======================int
     public static final int REQUEST_CODE_PICK_VIDEO = 0x200;
     public static final int REQUEST_CODE_TAKE_VIDEO = 0x201;
+    public static float VIDEO_WIDTH_HEIGHT = 0.85f;
+
+
+    //滤镜效果
+    public static MagicFilterType[] types = new MagicFilterType[]{
+            MagicFilterType.NONE,
+            MagicFilterType.WARM,
+            MagicFilterType.COOL,//淡雅
+            MagicFilterType.HUDSON,//粉嫩
+            MagicFilterType.WARM,
+            MagicFilterType.N1977,//红润
+    };
 }

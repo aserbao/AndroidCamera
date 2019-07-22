@@ -56,8 +56,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".whole.pickvideo.VideoPickActivity"/>
-        <activity android:name=".whole.createVideoByVoice.localEdit.LocalVideoActivity"/>
+        <activity android:name=".whole.pickvideo.VideoPickActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".whole.createVideoByVoice.localEdit.LocalVideoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".whole.editVideo.VideoEditActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

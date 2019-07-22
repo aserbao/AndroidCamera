@@ -60,4 +60,18 @@
         <attr name="mhl_HeightRatio" format="reference|float" />
         <attr name="mhl_HeightDimen" format="reference|dimension" />
     </declare-styleable>
+
+
+    <style name="TopSelectAnimationShow">
+        <item name="android:windowEnterAnimation">@anim/top_enter</item>
+        <item name="android:windowExitAnimation">@anim/top_exit</item>
+    </style>
+
+
+    <style name="BottomDialog" parent="@style/AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

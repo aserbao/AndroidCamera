@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_above="@+id/ll_edit_seekbar"
+    android:layout_below="@+id/rl_title"
+    android:layout_centerHorizontal="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.VideoPreviewView
+        android:layout_gravity="center"
+        android:id="@+id/video_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/rl_content_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</FrameLayout>

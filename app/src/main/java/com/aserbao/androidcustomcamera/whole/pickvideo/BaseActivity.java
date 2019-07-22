@@ -15,7 +15,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-//import com.ych.R;
+//
 
 /**
  * Created by Vincent Woo
