@@ -13,7 +13,7 @@ import com.aserbao.androidcustomcamera.whole.record.filters.BaseFilter;
 import com.aserbao.androidcustomcamera.whole.record.filters.CameraFilter;
 import com.aserbao.androidcustomcamera.whole.record.filters.GroupFilter;
 import com.aserbao.androidcustomcamera.whole.record.filters.NoneFilter;
-import com.aserbao.androidcustomcamera.whole.record.filters.ProcessFilter;
+import com.aserbao.androidcustomcamera.whole.record.filters.CameraDrawProcessFilter;
 import com.aserbao.androidcustomcamera.whole.record.filters.gpuFilters.baseFilter.MagicBeautyFilter;
 import com.aserbao.androidcustomcamera.whole.record.ui.SlideGpuFilterGroup;
 import com.aserbao.androidcustomcamera.whole.record.utils.EasyGlUtils;
@@ -69,7 +69,7 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
         //初始化一个滤镜 也可以叫控制器
         showFilter = new NoneFilter(resources);
         drawFilter = new CameraFilter(resources);
-        mProcessFilter=new ProcessFilter(resources);
+        mProcessFilter=new CameraDrawProcessFilter(resources);
         mBeFilter = new GroupFilter(resources);
         mAfFilter = new GroupFilter(resources);
         mBeautyFilter = new MagicBeautyFilter();

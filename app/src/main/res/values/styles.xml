@@ -54,4 +54,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/dp20</item>
     </style>
+
+    <!-- MaxHeightLayout属性 -->
+    <declare-styleable name="MaxHeightLayout">
+        <attr name="mhl_HeightRatio" format="reference|float" />
+        <attr name="mhl_HeightDimen" format="reference|dimension" />
+    </declare-styleable>
 </resources>

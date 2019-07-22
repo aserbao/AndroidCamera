@@ -17,8 +17,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class GroupFilter extends BaseFilter{
-    private Queue<BaseFilter> mFilterQueue;
-    private List<BaseFilter> mFilters;
+    private Queue<AFilter> mFilterQueue;
+    private List<AFilter> mFilters;
     private int width=0, height=0;
     private int size=0;
 
@@ -29,7 +29,7 @@ public class GroupFilter extends BaseFilter{
     }
 
 
-    public void addFilter(final BaseFilter filter){
+    public void addFilter(final AFilter filter){
         MatrixUtils.flip(filter.getMatrix(),false,true);
         mFilterQueue.add(filter);
     }
@@ -41,8 +41,8 @@ public class GroupFilter extends BaseFilter{
         return b;
     }
 
-    public BaseFilter removeFilter(int index){
-        BaseFilter f=mFilters.remove(index);
+    public AFilter removeFilter(int index){
+        AFilter f= mFilters.remove(index);
         if(f!=null){
             size--;
         }
@@ -51,10 +51,10 @@ public class GroupFilter extends BaseFilter{
     /**
      * 双Texture,一个输入一个输出,循环往复
      */
-    public void draw(){
+    public void draw(long time){
         updateFilter();
         textureIndex=0;
-        for (BaseFilter filter:mFilters){
+        for (AFilter filter:mFilters){
             GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fFrame[0]);
             GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0,
                     GLES20.GL_TEXTURE_2D, fTexture[textureIndex%2], 0);
@@ -66,14 +66,14 @@ public class GroupFilter extends BaseFilter{
             }else{
                 filter.setTextureId(fTexture[(textureIndex-1)%2]);
             }
-            filter.draw();
+            filter.draw(time);
             unBindFrame();
             textureIndex++;
         }
     }
 
     private void updateFilter(){
-        BaseFilter f;
+        AFilter f;
         while ((f=mFilterQueue.poll())!=null){
             f.create();
             f.setSize(width,height);

@@ -34,7 +34,8 @@
         <activity android:name=".blocks.mediaCodec.recordCameraOpenGl.RecordCameraOpenGlActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.cameraToMpeg.CameraToMpegActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.BigflakeActivity" />
-        <activity android:name=".whole.record.RecorderActivity" />
+        <activity android:name=".whole.record.RecorderActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".blocks.mediaCodec.bigflake.encodeDecode.EncodeDecodeActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.extractDecodeEditEncodeMux.ExtractDecodeEditEncodeMuxActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.decodeEditEncode.DecodeEditEncodeActivity" />
@@ -55,6 +56,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".whole.pickvideo.VideoPickActivity"/>
+        <activity android:name=".whole.createVideoByVoice.localEdit.LocalVideoActivity"/>
     </application>
 
 </manifest>

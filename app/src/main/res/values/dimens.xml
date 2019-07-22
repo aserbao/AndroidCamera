@@ -5,4 +5,5 @@
     <dimen name="dp10">10dp</dimen>
     <dimen name="dp20">20dp</dimen>
     <dimen name="dp40">40dp</dimen>
+    <dimen name="dp5">5dp</dimen>
 </resources>

@@ -1,9 +1,13 @@
 package com.aserbao.androidcustomcamera.whole.record;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +23,10 @@ import com.aserbao.androidcustomcamera.base.MyApplication;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 import com.aserbao.androidcustomcamera.base.pop.PopupManager;
 import com.aserbao.androidcustomcamera.base.utils.FileUtils;
+import com.aserbao.androidcustomcamera.base.utils.StaticFinalValues;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.LocalVideoActivity;
+import com.aserbao.androidcustomcamera.whole.pickvideo.VideoPickActivity;
+import com.aserbao.androidcustomcamera.whole.pickvideo.beans.VideoFile;
 import com.aserbao.androidcustomcamera.whole.record.beans.MediaObject;
 import com.aserbao.androidcustomcamera.whole.record.other.MagicFilterType;
 import com.aserbao.androidcustomcamera.whole.record.ui.CameraView;
@@ -27,6 +35,7 @@ import com.aserbao.androidcustomcamera.whole.record.ui.ProgressView;
 import com.aserbao.androidcustomcamera.whole.record.ui.SlideGpuFilterGroup;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,8 +44,11 @@ import butterknife.OnClick;
 
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.CHANGE_IMAGE;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.DELAY_DETAL;
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.MAX_NUMBER;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.OVER_CLICK;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.RECORD_MIN_TIME;
+import static com.aserbao.androidcustomcamera.whole.pickvideo.BaseActivity.IS_NEED_FOLDER_LIST;
+import static com.aserbao.androidcustomcamera.whole.pickvideo.VideoPickActivity.IS_NEED_CAMERA;
 
 public class RecorderActivity extends BaseActivity implements View.OnTouchListener, SlideGpuFilterGroup.OnFilterChangeListener {
     private static final int VIDEO_MAX_TIME = 30 * 1000;
@@ -168,7 +180,11 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                 }
                 break;
             case R.id.index_album:
-                Toast.makeText(this, "稍后编写", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(this, VideoPickActivity.class);
+                intent2.putExtra(IS_NEED_CAMERA, false);
+                intent2.putExtra(MAX_NUMBER, 1);
+                intent2.putExtra(IS_NEED_FOLDER_LIST, true);
+                startActivityForResult(intent2, StaticFinalValues.REQUEST_CODE_PICK_VIDEO);
                 break;
             case R.id.btn_record_iv:
                 if(!isRecording) {
@@ -392,4 +408,48 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
         }
     }
 
+    private static final String TAG = "RecorderActivity";
+
+    String videoFileName;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case StaticFinalValues.REQUEST_CODE_PICK_VIDEO:
+                if (resultCode == RESULT_OK) {
+                    ArrayList<VideoFile> list = data.getParcelableArrayListExtra(StaticFinalValues.RESULT_PICK_VIDEO);
+                    for (VideoFile file : list) {
+                        videoFileName = file.getPath();
+                    }
+                    Intent intent = new Intent(RecorderActivity.this, LocalVideoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StaticFinalValues.VIDEOFILEPATH, videoFileName);
+                    bundle.putInt(StaticFinalValues.MISNOTCOMELOCAL, 0);
+                    intent.putExtra(StaticFinalValues.BUNDLE, bundle);
+                    startActivity(intent);
+
+                    //这一段用来判断视频时间的
+                    /*try {
+                        MediaPlayer player = new MediaPlayer();
+                        player.setDataSource(videoFileName);
+                        player.prepare();
+                        int duration = player.getDuration();
+                        player.release();
+                        int s = duration / 1000;
+                        int hour = s / 3600;
+                        int minute = s % 3600 / 60;
+                        int second = s % 60;
+                        Log.e(TAG, "视频文件长度,分钟: " + minute + "视频有" + s + "秒");
+                        if (s >= 120) {
+                            Toast.makeText(this, "视频剪辑不能超过2分钟", Toast.LENGTH_LONG).show();
+                        } else if (s < 5) {
+                            Toast.makeText(this, "视频剪辑不能少于5秒", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }*/
+                }
+                break;
+        }
+    }
 }

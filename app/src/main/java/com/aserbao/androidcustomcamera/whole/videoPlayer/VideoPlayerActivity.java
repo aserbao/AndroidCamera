@@ -11,9 +11,11 @@ import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 
 import butterknife.BindView;
 
+import static com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils.FileUtils.VIDEO_PATH;
+
 public class VideoPlayerActivity extends BaseActivity {
 
-    private static final String VIDEO_PATH = "video_path";
+
     @BindView(R.id.video_player_vv)
     VideoView mVideoPlayerVv;
 
