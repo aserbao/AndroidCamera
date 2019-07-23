@@ -7,11 +7,36 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 |![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/we_chat.jpg)|
 
 # 项目介绍
-项目是有空闲时间就完善，目前所有功能没有全做完，先留个坑！
-有什么问题，可以私聊我！
+项目目前功能有：
+- 分段录制        RecorderActivity
+- 多段视频合成    RecorderActivity
+- 倒计时录制      RecorderActivity
+- 删除回滚        RecorderActivity
+- 添加滤镜        RecorderActivity
+- 视频裁剪            LocalVideoActivity
+- 视频方向横竖屏切换   LocalVideoActivity
+- 视频旋转            LocalVideoActivity
+- 视频帧处理          SelCoverTimeActivity
+- 添加水印        VideoEditActivity
+- 添加动态贴纸    VideoEditActivity
+- 添加动态字幕    VideoEditActivity
+- 文字转视频      PrimaryMediaCodecActivity
 
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/1.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/%E9%80%89%E5%B0%81%E9%9D%A22.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/%E7%BC%96%E8%BE%913.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/%E6%9C%AC%E5%9C%B0%E7%BC%96%E8%BE%91.gif)
+## 整体功能点效果图：
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/录制.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/摄像头切换.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/倒计时.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/回删功能.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/本地编辑.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/编辑界面.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/选封面.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/添加贴纸.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/添加字幕.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/保存到相册.gif)
+
+
+
+## 单个功能点：
+单个点主要是包括MediaCodec，AudioRecord,MediaExtractor,MediaMuxer的使用,界面效果如下：
+
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/Mediacodec的基本用法.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/EncodeDecode.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/ExtractDecode.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/DecodeEditEncode.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/Mediacodec录制随音乐改变.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/MediaExtractor.gif)
+![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/MediaMuxer.gif)
+
 
