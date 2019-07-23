@@ -84,9 +84,6 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
         MatrixUtils.flip(OM,false,false);//矩阵上下翻转
         showFilter.setMatrix(OM);
     }
-
-
-
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         textureID = createTextureID();
