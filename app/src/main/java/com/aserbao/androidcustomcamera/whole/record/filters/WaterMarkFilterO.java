@@ -46,7 +46,7 @@ public class WaterMarkFilterO extends NoneFilter{
             GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, mBitmap, 0);
             //对画面进行矩阵旋转
-            MatrixUtils.flip(mFilter.getMatrix(),false,true);
+//            MatrixUtils.flip(mFilter.getMatrix(),false,true);
 
             mFilter.setTextureId(textures[0]);
         }

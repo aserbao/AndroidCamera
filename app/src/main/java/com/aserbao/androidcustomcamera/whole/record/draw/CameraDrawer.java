@@ -76,7 +76,7 @@ public class CameraDrawer implements GLSurfaceView.Renderer{
 //        mBeautyFilter = new MagicAntiqueFilter();
         mSlideFilterGroup = new SlideGpuFilterGroup();
         OM = MatrixUtils.getOriginalMatrix();
-        MatrixUtils.flip(OM,false,true);//矩阵上下翻转
+        MatrixUtils.flip(OM,false,false);//矩阵上下翻转
         showFilter.setMatrix(OM);
     }
 
