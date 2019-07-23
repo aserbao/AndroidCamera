@@ -33,4 +33,6 @@ dependencies {
     implementation 'pub.devrel:easypermissions:0.3.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.danikula:videocache:2.7.0'
+    //==================mp4parser====================
+    implementation 'com.googlecode.mp4parser:isoparser:1.1.21'
 }

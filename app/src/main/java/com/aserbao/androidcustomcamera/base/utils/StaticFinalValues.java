@@ -14,6 +14,7 @@ public class StaticFinalValues {
     //int final
     public static final int RECORD_MIN_TIME = 5 * 1000;
     //=======================handler
+    public static final int EMPTY = 0;
     public static final int DELAY_DETAL = 1;
     public static final int MY_TOPIC_ADAPTER = 9;
     public static final int CHANGE_IMAGE = 10;
@@ -21,7 +22,7 @@ public class StaticFinalValues {
     //================================================path
     public static final String SAVETOPHOTOPATH = "/storage/emulated/0/DCIM/Camera/";//保存至本地相册路径
     public static final String ISSAVEVIDEOTEMPEXIST = "/storage/emulated/0/ych/drafts";
-    public static final String VIDEOTEMP = "/storage/emulated/0/ych/videotemp/";
+    public static final String VIDEOTEMP = "/storage/emulated/0/aserbaoCamera/videotemp/";
     public static final String STORAGE_TEMP_VIDEO_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123.mp4";
 
     //======================string
@@ -31,6 +32,7 @@ public class StaticFinalValues {
     public static final String MISNOTCOMELOCAL = "mIsNotComeLocal";//0表示本地视频，1表示非本地视频
     public static final String BUNDLE = "bundle";
     public static final String CUT_TIME = "cut_time";
+
     private static final String VIDEO_PATH = "video_path";
 
 
