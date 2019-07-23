@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="44dp">
             <TextView
+                android:visibility="gone"
                 android:id="@+id/video_player_tv_storage"
                 android:textSize="15sp"
                 android:layout_weight="1"
@@ -50,7 +51,7 @@
                 android:id="@+id/video_player_tv_public"
                 android:textSize="15sp"
                 android:gravity="center"
-                android:text="发布"
+                android:text="保存到相册"
                 android:textColor="@color/white"
                 android:background="@drawable/color_fc4253_radius_5_bg"
                 android:layout_width="match_parent"

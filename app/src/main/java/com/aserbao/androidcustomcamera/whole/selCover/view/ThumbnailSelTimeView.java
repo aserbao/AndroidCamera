@@ -27,13 +27,11 @@ public class ThumbnailSelTimeView extends View {
     public int mDp2;
 
     public ThumbnailSelTimeView(Context context) {
-        super(context);
-        init();
+        this(context,null);
     }
 
     public ThumbnailSelTimeView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs,0);
     }
 
     public ThumbnailSelTimeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {

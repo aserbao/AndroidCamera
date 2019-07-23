@@ -157,7 +157,6 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                 if (mMediaObject != null) {
                     videoFileName = mMediaObject.mergeVideo();
                 }
-
                 VideoPlayerActivity2.launch(RecorderActivity.this,videoFileName);
                 break;
             case R.id.switch_camera:

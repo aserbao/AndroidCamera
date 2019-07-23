@@ -79,7 +79,6 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
 
     private void initData() {
         videoFilePath = getIntent().getStringExtra(StaticFinalValues.VIDEOFILEPATH);
-        playVideo();
     }
 
 
@@ -199,7 +198,7 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
             case R.id.video_player_tv_storage:
                 break;
             case R.id.video_player_tv_public:
-
+                storeToPhoto(videoFilePath);
                 break;
         }
     }
@@ -242,6 +241,7 @@ public class VideoPlayerActivity2 extends AppCompatActivity  {
         String filename = task.getFilename();*/
         ContentValues localContentValues = getVideoContentValues(this, new File(path), System.currentTimeMillis());
         Uri localUri = localContentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, localContentValues);
+        Toast.makeText(mContext, "保存到相册成功，路径为"+ path, Toast.LENGTH_SHORT).show();
     }
 
 

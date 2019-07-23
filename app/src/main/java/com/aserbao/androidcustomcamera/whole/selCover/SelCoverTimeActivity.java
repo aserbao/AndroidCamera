@@ -203,7 +203,7 @@ public class SelCoverTimeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         if(mIsSelTime){
             if(mSelStartTime < 0.5f){
                 mSelStartTime = 0.5f;

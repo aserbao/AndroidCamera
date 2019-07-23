@@ -11,7 +11,6 @@ import android.opengl.GLUtils;
 import java.io.InputStream;
 
 /**
- * Created by qqche_000 on 2017/8/20.
  * 水印的Filter
  */
 
