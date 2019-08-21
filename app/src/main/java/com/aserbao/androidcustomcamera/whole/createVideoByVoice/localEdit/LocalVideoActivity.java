@@ -32,7 +32,6 @@ import com.aserbao.androidcustomcamera.base.utils.DisplayUtil;
 import com.aserbao.androidcustomcamera.base.utils.StaticFinalValues;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.adapter.ThumbAdapter;
 import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity2;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -47,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.ISSAVEVIDEOTEMPEXIST;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.VIDEOTEMP;
 
 public class LocalVideoActivity extends AppCompatActivity implements MediaPlayerWrapper.IMediaCallback {
@@ -100,6 +100,7 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
     private boolean isClickRotate = false;//是否点击了旋转按钮
     public AsyncTask<Void, Void, Boolean> mAsyncTask;
     private int mRotate = 0;
+    private String DIR;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -341,7 +342,12 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
                         cmd.append("ultrafast");
                         break;
                 }
-                mOutVideoPath = "/storage/emulated/0/ych/videotemp/" + System.currentTimeMillis() + ".mp4";
+
+                File file = new File(ISSAVEVIDEOTEMPEXIST);
+                if (!file.exists()){
+                    file.mkdir();
+                }
+                mOutVideoPath = ISSAVEVIDEOTEMPEXIST + System.currentTimeMillis() + ".mp4";
                 if (!new File(VIDEOTEMP).exists()) {
                     new File(VIDEOTEMP).mkdirs();
                 }

@@ -21,7 +21,7 @@ public class StaticFinalValues {
     public static final int OVER_CLICK = 11;//视频定时结束
     //================================================path
     public static final String SAVETOPHOTOPATH = "/storage/emulated/0/DCIM/Camera/";//保存至本地相册路径
-    public static final String ISSAVEVIDEOTEMPEXIST = "/storage/emulated/0/ych/drafts";
+    public static final String ISSAVEVIDEOTEMPEXIST = "/storage/emulated/0/aserbaoCamera/";
     public static final String VIDEOTEMP = "/storage/emulated/0/aserbaoCamera/videotemp/";
     public static final String STORAGE_TEMP_VIDEO_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123.mp4";
 
