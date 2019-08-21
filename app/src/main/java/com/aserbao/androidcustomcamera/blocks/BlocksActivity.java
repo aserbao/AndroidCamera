@@ -23,5 +23,4 @@ public class BlocksActivity extends RVBaseActivity {
         mClassBeans.add(new ClassBean("合成", CreateVideoAddAudioToMp4.class));
         return mClassBeans;
     }
-
 }

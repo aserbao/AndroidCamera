@@ -31,6 +31,7 @@ import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.VIDEO
 
 
 public class MediaObject implements Serializable{
+    private static final String TAG = "MediaObject";
     /** 获取所有分块 */
     private LinkedList<MediaPart> mMediaList = new LinkedList<MediaPart>();
     private LinkedList<String> paths = new LinkedList<>();
@@ -88,8 +89,15 @@ public class MediaObject implements Serializable{
             if (part != null ) {
                 MediaMetadataRetriever mediaMetadata = new MediaMetadataRetriever();
                 mediaMetadata.setDataSource(context, Uri.parse(part.getMediaPath()));
-                int mVideoDuration = Integer.parseInt(mediaMetadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                part.duration = mVideoDuration;
+                String s = mediaMetadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                int mVideoDuration = 0;
+                try {
+                    mVideoDuration = Integer.parseInt(s);
+                    part.duration = mVideoDuration;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "stopRecord: 是不是int型，打个日志自己查看一下" );
+                }
             }
         }
     }
