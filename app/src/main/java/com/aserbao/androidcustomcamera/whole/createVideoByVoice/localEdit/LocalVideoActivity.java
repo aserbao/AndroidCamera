@@ -80,7 +80,7 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
     TextView mTvHint;
     @BindView(R.id.pop_video_loading_fl)
     FrameLayout mPopVideoLoadingFl;
-    private String mInputVideoPath = "/storage/emulated/0/ych/321.mp4";
+    private String mInputVideoPath = "/storage/emulated/0/aserbaoCamera/321.mp4";
     private String mOutVideoPath;
     private int rotate;
     public ThumbAdapter mThumbAdapter;
@@ -367,7 +367,11 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
         cmd.append("vflip,hflip");
         cmd.append("-preset");
         cmd.append("ultrafast");
-        mSavevideotemp = "/storage/emulated/0/ych/videotemp/" + System.currentTimeMillis() + ".mp4";
+        File file = new File(ISSAVEVIDEOTEMPEXIST);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        mSavevideotemp = ISSAVEVIDEOTEMPEXIST+ System.currentTimeMillis() + ".mp4";
         cmd.append(mSavevideotemp);
         isLocalPortrait = false;
         exec(cmd);
