@@ -46,4 +46,9 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 ![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/Mediacodec录制随音乐改变.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaExtractor.gif)
 ![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaMuxer.gif)
 
+## 打赏
+开源不易，若有帮助就打赏一下呗，打赏请备注ID。
+
+![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F.jpeg)![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F.jpeg)
+
 
