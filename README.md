@@ -30,20 +30,20 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 - 文字转视频      PrimaryMediaCodecActivity
 
 ## 整体功能点效果图：
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/录制.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/摄像头切换.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/倒计时.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/回删功能.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/本地编辑.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/编辑界面.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/选封面.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/添加贴纸.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/添加字幕.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/保存到相册.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/录制.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/摄像头切换.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/倒计时.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/回删功能.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/本地编辑.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/编辑界面.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/选封面.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/添加贴纸.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/添加字幕.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/保存到相册.gif)
 
 
 
 ## 单个功能点：
 单个点主要是包括MediaCodec，AudioRecord,MediaExtractor,MediaMuxer的使用,界面效果如下：
 
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/Mediacodec的基本用法.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/EncodeDecode.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/ExtractDecode.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/DecodeEditEncode.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/Mediacodec录制随音乐改变.gif)![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/MediaExtractor.gif)
-![](https://github.com/aserbao/AndroidCamera/blob/master/app/src/main/assets/images/MediaMuxer.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/Mediacodec的基本用法.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/EncodeDecode.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/ExtractDecode.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/DecodeEditEncode.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/Mediacodec录制随音乐改变.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaExtractor.gif)
+![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaMuxer.gif)
 
 
