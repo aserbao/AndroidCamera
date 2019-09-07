@@ -9,7 +9,7 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 - [Android 自定义相机开发（三) —— 了解下EGL](https://www.jianshu.com/p/1e82021b10b4)
 
 # 欢迎关注公众号领取更多openGl,相机相关学习资料
-|公众号(aserbao)|个人微信号(小老头)|微信交流群|
+|公众号(aserbao)|个人微信号(小老头)|交流群(若过期加个人微信拉群)|
 |--|--|--|
 |![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/we_chat.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/Android%E4%BA%A4%E6%B5%81%E7%BE%A4.jpg)|
 
