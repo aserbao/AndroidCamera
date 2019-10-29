@@ -87,7 +87,7 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
                     Camera.Parameters parameters = mCamera.getParameters();
                     parameters = mCamera.getParameters();
                     parameters.setPictureFormat(PixelFormat.JPEG); //图片输出格式
-//                    mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
                     parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);//持续对焦模式
                     mCamera.setParameters(parameters);
                     mCamera.startPreview();
