@@ -6,10 +6,6 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.whole.record.filters.gpuFilters.utils.OpenGlUtils;
 
 
-/**
- * Created by cj on 2017/5/22.
- * 美白的filter
- */
 public class MagicBeautyFilter extends GPUImageFilter {
     private int mSingleStepOffsetLocation;
     private int mParamsLocation;
