@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".blocks.mediaCodec.show.MediaCodecShowOnGlSurfaceView">
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mSurface" />
+    <com.aserbao.androidcustomcamera.base.utils.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/sel_btn"
+            android:text="选择视频"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/decode_show_btn"
+            android:text="视频解码显示"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/detail_video_btn"
+            android:text="视频合成处理"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.aserbao.androidcustomcamera.base.utils.FlowLayout>
+</FrameLayout>

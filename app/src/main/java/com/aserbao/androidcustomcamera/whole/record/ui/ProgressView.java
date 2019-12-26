@@ -102,7 +102,7 @@ public class ProgressView extends View {
 				case HANDLER_INVALIDATE_ACTIVE:
 					if (!progressView.mStop)
 						sendEmptyMessageDelayed(HANDLER_INVALIDATE_ACTIVE, 50);
-					progressView.invalidate();
+						progressView.invalidate();
 					if(!progressView.mProgressChanged) {
 						progressView.mActiveState = !progressView.mActiveState;
 					}else{

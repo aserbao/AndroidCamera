@@ -300,7 +300,6 @@ public class LocalVideoActivity extends AppCompatActivity implements MediaPlayer
                 break;
             case R.id.local_video_next_tv:
                 CmdList cmd = new CmdList();
-//                cmd.append("ffmpeg");
                 cmd.append("-y");
                 cmd.append("-ss").append(String.valueOf((int) mStartTime / 1000)).append("-t").append(String.valueOf(mThumbSelTime)).append("-accurate_seek");
                 cmd.append("-i").append(mInputVideoPath);

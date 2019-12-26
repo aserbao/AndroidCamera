@@ -27,11 +27,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Vincent Woo
- * Date: 2016/10/21
- * Time: 14:02
- */
 
 public class VideoPickActivity extends BaseActivity {
     public static final String THUMBNAIL_PATH = "FilePick";
