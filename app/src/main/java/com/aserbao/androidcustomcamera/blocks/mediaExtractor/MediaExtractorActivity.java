@@ -60,7 +60,8 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
                     AMediaExtractorOfficial.mediaExtractorDecoderAudio(path + "/dj_dance.mp3");
                 break;
             case R.id.extractor_mp3_from_mp4:
-                new DecoderMp3FromMp4(path + "/aserbao.mp4", path + "/out_aserbao.mp3", new ICallBackListener() {
+//                new DecoderMp3FromMp4(path + "/123.mp4", path + "/out_aserbao.mp3", new ICallBackListener() {
+                new DecoderMp3FromMp4(path + "/123.mp4", path + "/out_aserbao.pcm", new ICallBackListener() {
                     @Override
                     public void success() {
                         Toast.makeText(MediaExtractorActivity.this, "成功", Toast.LENGTH_SHORT).show();

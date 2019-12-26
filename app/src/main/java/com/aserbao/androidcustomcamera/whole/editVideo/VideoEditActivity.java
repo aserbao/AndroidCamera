@@ -268,7 +268,8 @@ public class VideoEditActivity extends FragmentActivity implements PopBubbleView
                     }
                 });
                 try {
-                    clipper.clipVideo(0, mVideoView.getVideoDuration() * 1000, mViews, getResources());
+                    int clipDur = mVideoView.getVideoDuration() * 1000;
+                    clipper.clipVideo(0, clipDur, mViews, getResources());
 
 //                    progressDialog = new PopupManager(mContext).showLoading();
                     mPopVideoLoadingFl.setVisibility(View.VISIBLE);

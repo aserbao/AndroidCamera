@@ -69,8 +69,7 @@ public class WaterMarkFilter extends NoFilter{
     public void draw() {
         super.draw();
         GLES20.glViewport(x,y,w == 0 ? mBitmap.getWidth():w,h==0?mBitmap.getHeight():h);
-        GLES20.glEnable(GLES20.GL_BLEND);
-        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        blendFunc();
         mFilter.draw();
     }
     @Override
@@ -83,10 +82,15 @@ public class WaterMarkFilter extends NoFilter{
             int i = (int) (mBitmap.getWidth() * 1.15);
             int i1 = (int) (mBitmap.getHeight() * 1.15);
             GLES20.glViewport(x, y, w == 0 ? i : w, h == 0 ? i1 : h);
-            GLES20.glEnable(GLES20.GL_BLEND);
-            GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+            blendFunc();
             mFilter.draw();
         }
+    }
+
+    private void blendFunc() {
+        GLES20.glEnable(GLES20.GL_BLEND);
+//      GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+      GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);//使用这个混合算法可以合成带透明度的贴纸。参考：https://www.jianshu.com/p/2fb9d90b57f0
     }
 
     @Override
