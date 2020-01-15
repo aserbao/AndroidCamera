@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/black_80">
+                android:background="@color/black80">
 
     <TextView
         android:id="@+id/tv_show_count"

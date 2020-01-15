@@ -24,6 +24,7 @@ public class StaticFinalValues {
     public static final String ISSAVEVIDEOTEMPEXIST = "/storage/emulated/0/aserbaoCamera/";
     public static final String VIDEOTEMP = "/storage/emulated/0/aserbaoCamera/videotemp/";
     public static final String STORAGE_TEMP_VIDEO_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123.mp4";
+    public static final String STORAGE_TEMP_VIDEO_PATH1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/1233.mp4";
 
     //======================string
     public static final String MAX_NUMBER = "MaxNumber";
@@ -35,6 +36,14 @@ public class StaticFinalValues {
 
     private static final String VIDEO_PATH = "video_path";
 
+    //-------------type---------------
+    public static final int VIEW_HOLDER_HEAD = 99;
+    public static final int VIEW_HOLDER_TEXT = 100;
+    public static final int VIEW_HOLDER_IMAGE_100H = 101;
+    public static final int VIEW_HOLDER_CIRCLE_IMAGE_ITEM = 1001;
+    public static final int VIEW_FULL_IMAGE_ITEM = 1002;
+    public static final int VIEW_HOLDER_CLASS = 102;
+    public static final int VIEW_BLEND_MODE = 103;
 
     //=======================requestCode and resultCode
     public static final int COMR_FROM_SEL_COVER_TIME_ACTIVITY = 1;

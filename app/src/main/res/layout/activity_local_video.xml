@@ -74,7 +74,7 @@
         android:layout_marginBottom="38dp"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:background="@color/colorWhite30"
+        android:background="@color/white30"
         android:layout_height="67dp">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/local_recycler_view"

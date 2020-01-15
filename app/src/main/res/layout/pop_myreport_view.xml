@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="选择举报的内容"
-            android:textColor="@color/colorWhite100"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -49,7 +49,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:text="发布色情内容"
-                    android:textColor="@color/colorWhite100"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <CheckBox
@@ -78,7 +78,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:text="发布暴力内容"
-                    android:textColor="@color/colorWhite100"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <CheckBox
@@ -107,7 +107,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:text="被骚扰"
-                    android:textColor="@color/colorWhite100"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <CheckBox

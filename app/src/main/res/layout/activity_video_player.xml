@@ -38,7 +38,7 @@
         android:layout_marginBottom="64dp"
         android:layout_marginRight="40dp"
         android:layout_toLeftOf="@+id/meet_download"
-        android:textColor="@color/colorWhite100"
+        android:textColor="@color/white"
         android:textSize="24sp" />
 
 </RelativeLayout>

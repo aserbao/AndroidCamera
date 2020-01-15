@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="标题"
-            android:textColor="@color/colorWhite90"
+            android:textColor="@color/white90"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:textColor="@color/colorWhite90"
+            android:textColor="@color/white90"
             android:textSize="16sp" />
 
     </RelativeLayout>
@@ -95,8 +95,8 @@
                 android:layout_marginTop="38dp"
                 android:background="@null"
                 android:hint="请输入昵称"
-                android:textColor="@color/colorWhite90"
-                android:textColorHint="@color/colorWhite90"
+                android:textColor="@color/white90"
+                android:textColorHint="@color/white90"
                 android:textSize="15sp" />
 
             <View
@@ -104,7 +104,7 @@
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/ed_nick_name"
                 android:layout_centerHorizontal="true"
-                android:background="@color/colorWhite50" />
+                android:background="@color/white50" />
 
             <RelativeLayout
                 android:id="@+id/rl_city_area"
@@ -121,7 +121,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="6dp"
                     android:text="广东"
-                    android:textColor="@color/colorWhite90"
+                    android:textColor="@color/white90"
                     android:textSize="15sp" />
 
                 <TextView
@@ -132,7 +132,7 @@
                     android:layout_marginLeft="22dp"
                     android:layout_toRightOf="@+id/tv_province"
                     android:text="深圳"
-                    android:textColor="@color/colorWhite90"
+                    android:textColor="@color/white90"
                     android:textSize="15sp" />
 
 
@@ -153,7 +153,7 @@
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/rl_city_area"
                 android:layout_centerHorizontal="true"
-                android:background="@color/colorWhite50" />
+                android:background="@color/white50" />
 
             <LinearLayout
                 android:id="@+id/lin_label"
