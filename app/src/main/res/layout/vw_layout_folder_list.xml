@@ -5,7 +5,7 @@
     android:id="@+id/mhl_folder"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/black_20"
+    android:background="@color/black20"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     app:mhl_HeightDimen="190dp">

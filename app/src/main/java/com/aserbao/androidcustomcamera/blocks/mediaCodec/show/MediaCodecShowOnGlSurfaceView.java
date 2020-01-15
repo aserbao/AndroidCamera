@@ -41,6 +41,7 @@ import butterknife.OnClick;
 
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.MAX_NUMBER;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.STORAGE_TEMP_VIDEO_PATH;
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.STORAGE_TEMP_VIDEO_PATH1;
 import static com.aserbao.androidcustomcamera.whole.pickvideo.BaseActivity.IS_NEED_FOLDER_LIST;
 import static com.aserbao.androidcustomcamera.whole.pickvideo.VideoPickActivity.IS_NEED_CAMERA;
 
@@ -53,6 +54,7 @@ public class MediaCodecShowOnGlSurfaceView extends AppCompatActivity implements 
     SurfaceView mSurfaceView;
 
     public SurfaceHolder mHolder;
+    private long mStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,42 +76,28 @@ public class MediaCodecShowOnGlSurfaceView extends AppCompatActivity implements 
                 startActivityForResult(intent2, StaticFinalValues.REQUEST_CODE_PICK_VIDEO);
                 break;
             case R.id.decode_show_btn:
-                MediaCodecUtil1 mediaCodecUtil1 = new MediaCodecUtil1(videoFileName, mHolder.getSurface());
-                mediaCodecUtil1.start();
+                /*MediaCodecUtil1 mediaCodecUtil1 = new MediaCodecUtil1(videoFileName, mHolder.getSurface());
+                mediaCodecUtil1.start();*/
+
                 break;
             case R.id.detail_video_btn:
-                VideoClipper clipper = new VideoClipper();
-                clipper.setInputVideoPath(videoFileName);
-                final String outputPath = STORAGE_TEMP_VIDEO_PATH;
-                clipper.setFilterType(MagicFilterType.NONE);
-                clipper.setOutputVideoPath(outputPath);
-                clipper.setOnVideoCutFinishListener(new VideoClipper.OnVideoCutFinishListener() {
+                new Thread(new Runnable() {
                     @Override
-                    public void onFinish() {
-                        Log.e(TAG, "onFinish: 生成完成" );
-                        VideoPlayerActivity2.launch(MediaCodecShowOnGlSurfaceView.this,outputPath);
+                    public void run() {
+                        final String outputPath1 = STORAGE_TEMP_VIDEO_PATH1;
+                        videoClipper(videoFileName1,outputPath1);
+                        final String outputPath = STORAGE_TEMP_VIDEO_PATH;
+                        videoClipper(videoFileName,outputPath);
                     }
-
-                    @Override
-                    public void onProgress(float percent) {
-                        Log.e(TAG, "onProgress: " +percent );
-                    }
-                });
-                try {
-                    final MediaMetadataRetriever mediaMetadata = new MediaMetadataRetriever();
-                    mediaMetadata.setDataSource(this, Uri.parse(videoFileName));
-                    int clipDur = Integer.parseInt(mediaMetadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                    Log.e(TAG, "onViewClicked: " + clipDur);
-//                    int clipDur = 5032000;
-                    clipper.clipVideo(0, clipDur * 1000,new ArrayList<BaseImageView>(), getResources());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                }).start();
                 break;
+
         }
     }
 
-    String videoFileName = "/storage/emulated/0/123.mp4";
+//    String videoFileName = "/storage/emulated/0/12345.mp4";
+    String videoFileName1 = "/storage/emulated/0/DCIM/Camera/VIDEO_2019122719_06011577444761071.mp4";
+    String videoFileName = "/storage/emulated/0/DCIM/Camera/VIDEO_2019122622_50551577371855425.mp4";
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -224,6 +212,36 @@ public class MediaCodecShowOnGlSurfaceView extends AppCompatActivity implements 
             mIsAvailable = false;
         }
 
+    }
+
+    public void videoClipper(String videoFileName,final String outputPath){
+        mStartTime = System.currentTimeMillis();
+        VideoClipper clipper = new VideoClipper();
+        clipper.setInputVideoPath(videoFileName);
+        clipper.setFilterType(MagicFilterType.NONE);
+        clipper.setOutputVideoPath(outputPath);
+        clipper.setOnVideoCutFinishListener(new VideoClipper.OnVideoCutFinishListener() {
+            @Override
+            public void onFinish() {
+                Log.e(TAG, "onFinish: 生成完成耗时"  +  ((System.currentTimeMillis() - mStartTime) / 1000));
+                VideoPlayerActivity2.launch(MediaCodecShowOnGlSurfaceView.this,outputPath);
+            }
+
+            @Override
+            public void onProgress(float percent) {
+                Log.e(TAG, "onProgress: " +percent );
+            }
+        });
+        try {
+            final MediaMetadataRetriever mediaMetadata = new MediaMetadataRetriever();
+            mediaMetadata.setDataSource(this, Uri.parse(videoFileName));
+            int clipDur = Integer.parseInt(mediaMetadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+            Log.e(TAG, "onViewClicked: 时长 " + clipDur);
+//                    int clipDur = 5032000;
+            clipper.clipVideo(0, clipDur * 1000,new ArrayList<BaseImageView>(), getResources());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

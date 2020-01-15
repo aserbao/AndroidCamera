@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/base_rv_text_item_cv"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white70"
+    android:background="@color/transparent"
+    app:cardCornerRadius="15dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="4dp"
+    android:minHeight="60dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:background="@color/transparent"
+        android:id="@+id/base_recycler_view_item_tv"
+        android:text="测试"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</android.support.v7.widget.CardView>

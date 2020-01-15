@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.aserbao.androidcustomcamera.R;
-import com.aserbao.androidcustomcamera.base.beans.ClassBean;
+import com.aserbao.androidcustomcamera.base.beans.BaseRecyclerBean;
+import com.aserbao.androidcustomcamera.base.utils.StaticFinalValues;
+import com.aserbao.androidcustomcamera.base.viewHolder.IBaseRecyclerItemClickListener;
+import com.aserbao.androidcustomcamera.base.viewHolder.TextViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,53 +26,59 @@ import butterknife.ButterKnife;
  * Created by aserbao on 2018/5/4.
  */
 
-public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonViewHolder> {
+public class CommonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private Activity mActivity;
-    private List<ClassBean> mClassBeen = new ArrayList<>();
-
-    public CommonAdapter(Context context, Activity activity, List<ClassBean> classBeen) {
+    private List<BaseRecyclerBean> mBaseRecyclerBean = new ArrayList<>();
+    protected IBaseRecyclerItemClickListener mIBaseRecyclerItemClickListener;
+    public CommonAdapter(Context context, Activity activity, List<BaseRecyclerBean> classBeen,IBaseRecyclerItemClickListener listener) {
         mContext = context;
         mActivity = activity;
-        mClassBeen = classBeen;
+        mBaseRecyclerBean = classBeen;
+        mIBaseRecyclerItemClickListener = listener;
     }
 
     @Override
-    public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.common_item, parent, false);
-        return new CommonViewHolder(view);
+    public int getItemViewType(int position) {
+        if (mBaseRecyclerBean != null ){
+            return mBaseRecyclerBean.get(position % mBaseRecyclerBean.size()).getViewType();
+        }
+        return StaticFinalValues.VIEW_HOLDER_TEXT;
     }
 
     @Override
-    public void onBindViewHolder(CommonViewHolder holder, int position) {
-        if(mClassBeen != null && position < mClassBeen.size()) {
-            final ClassBean classBean = mClassBeen.get(position);
-            holder.mBtnItemCommon.setText(classBean.getName());
-            holder.mBtnItemCommon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mActivity.startActivity(new Intent(mActivity, classBean.getClazz()));
-                }
-            });
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        switch (viewType){
+            case StaticFinalValues.VIEW_HOLDER_CLASS:
+                view = LayoutInflater.from(mContext).inflate(R.layout.common_item, parent, false);
+                return new CommonViewHolder(view);
+            case StaticFinalValues.VIEW_HOLDER_TEXT:
+                view = LayoutInflater.from(mContext).inflate(R.layout.base_recycler_view_text_item, parent, false);
+                return new TextViewHolder(view);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final BaseRecyclerBean classBean = mBaseRecyclerBean.get(position % mBaseRecyclerBean.size());
+        if (holder instanceof TextViewHolder) {
+            ((TextViewHolder) holder).setDataSource(classBean,holder.getAdapterPosition(),mIBaseRecyclerItemClickListener);
+        }else if (holder instanceof CommonViewHolder){
+            ((CommonViewHolder) holder).setDataSource(classBean,mActivity);
         }
     }
 
     @Override
     public int getItemCount() {
         int ret = 0;
-        if (mClassBeen.size() > 0) {
-            ret = mClassBeen.size();
+        if (mBaseRecyclerBean.size() > 0) {
+            ret = mBaseRecyclerBean.size();
         }
         return ret;
     }
 
-    public static class CommonViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btn_item_common)
-        Button mBtnItemCommon;
-        public CommonViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
+
 
 }

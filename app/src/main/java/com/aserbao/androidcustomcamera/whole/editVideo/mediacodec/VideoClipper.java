@@ -9,6 +9,7 @@ import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaMuxer;
 import android.os.Build;
+import android.util.Log;
 
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.bigflake.encodeDecode.InputSurface;
 import com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.VideoInfo;
@@ -25,12 +26,11 @@ import java.util.concurrent.Executors;
 
 import static android.media.MediaExtractor.SEEK_TO_PREVIOUS_SYNC;
 
-/**
- * Created by Administrator on 2017/6/19 0019.
- * desc：用于视频裁剪的类
- */
+
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class VideoClipper {
+    private static final String TAG = "VideoClipper";
+
     final int TIMEOUT_USEC = 0;
     private String mInputVideoPath;
     private String mOutputVideoPath;
@@ -137,6 +137,7 @@ public class VideoClipper {
                 audioFormat = format;
                 continue;
             }
+            Log.e(TAG, "clipVideo: audioTrackIndex= " + audioTrackIndex + " videoTrackIndex = " + videoTrackIndex);
         }
         executorService.execute(videoCliper);
         executorService.execute(audioCliper);

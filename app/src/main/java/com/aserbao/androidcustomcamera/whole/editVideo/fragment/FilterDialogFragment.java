@@ -257,7 +257,7 @@ public class FilterDialogFragment extends DialogFragment {
                 mFilterTvList.get(i).setAlpha(1);
                 ((TextView) mFilterTvList.get(i)).setTextColor(Color.parseColor("#FFEB58"));
             }else{
-                ((TextView) mFilterTvList.get(i)).setTextColor(getResources().getColor(R.color.colorWhite40));
+                ((TextView) mFilterTvList.get(i)).setTextColor(getResources().getColor(R.color.white40));
                 mFilterTvList.get(i).setAlpha(0.5f);
             }
         }
