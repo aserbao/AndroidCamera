@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0E0517">
+
+    <RelativeLayout
+        android:layout_marginTop="24dp"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@drawable/back_white_no_shadow" />
+
+
+        <TextView
+            android:id="@+id/tv_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="编辑影片"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edit_video_next_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/btn_edit_next_bg"
+            android:text="下一步"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+
+    <com.aserbao.androidcustomcamera.whole.editVideo.view.VideoEditView
+        android:id="@+id/ll_edit_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_above="@+id/ll_select_bar"
+        android:layout_marginBottom="10dp" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_select_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ll_add_sticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/camera_sticker"
+            android:gravity="center"
+            android:text="贴纸"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/ll_add_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/camera_subtitle"
+            android:gravity="center"
+            android:text="字幕"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/ll_add_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/emoji_04"
+            android:gravity="center"
+            android:text="滤镜"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <include layout="@layout/rl_edit_content" />
+    <include layout="@layout/pop_video_loading"/>
+</RelativeLayout>

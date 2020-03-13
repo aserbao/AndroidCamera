@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aserbao.androidcustomcamera.whole.pickvideo.MaxHeightLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mhl_folder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black20"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    app:mhl_HeightDimen="190dp">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_folder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:scrollbars="vertical"
+        android:scrollbarSize="3dp"
+        android:scrollbarStyle="outsideOverlay"/>
+
+</com.aserbao.androidcustomcamera.whole.pickvideo.MaxHeightLayout>

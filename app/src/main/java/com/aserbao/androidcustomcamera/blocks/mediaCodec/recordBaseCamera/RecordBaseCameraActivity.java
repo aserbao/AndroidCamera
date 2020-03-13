@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import java.io.IOException;
 
@@ -146,7 +146,7 @@ public class RecordBaseCameraActivity extends BaseActivity implements SurfaceHol
                 break;
             case R.id.btn_record_base_player:
                 if (mEncoder != null && !TextUtils.isEmpty(mEncoder.getPath())) {
-                    VideoPlayerActivity.launch(RecordBaseCameraActivity.this, mEncoder.getPath());
+                    VideoViewPlayerActivity.launch(RecordBaseCameraActivity.this, mEncoder.getPath());
                 }
                 break;
         }

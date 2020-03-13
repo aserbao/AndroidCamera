@@ -39,7 +39,13 @@ public class SlideGpuFilterGroup {
     private int curIndex = 0;
     private Scroller scroller;
     private OnFilterChangeListener mListener;
-
+    public void setFilter(int i){
+        curIndex = i;
+        locked = true;
+        downX = -1;
+        needSwitch = true;
+        direction = -1;
+    }
     public SlideGpuFilterGroup() {
         initFilter();
         scroller = new Scroller(MyApplication.getContext());
@@ -180,11 +186,11 @@ public class SlideGpuFilterGroup {
         increaseCurIndex();
         leftFilter.destroy();
         leftFilter = curFilter;
-        curFilter = rightFilter;
-        rightFilter = getFilter(getRightIndex());
+        rightFilter = getFilter(curIndex);
         rightFilter.init();
         rightFilter.onDisplaySizeChanged(width, height);
         rightFilter.onInputSizeChanged(width, height);
+        curFilter = rightFilter;
         needSwitch = false;
     }
 

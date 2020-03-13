@@ -43,7 +43,6 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer,
         setRenderMode(RENDERMODE_WHEN_DIRTY);//主动调用渲染
         setPreserveEGLContextOnPause(true);//保存Context当pause时
         setCameraDistance(100);//相机距离
-
         /**初始化Camera的绘制类*/
         mCameraDrawer = new CameraDrawer(getResources());
         /**初始化相机的管理类*/

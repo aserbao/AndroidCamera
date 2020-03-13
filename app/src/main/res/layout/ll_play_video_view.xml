@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_play_video"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:background="#FC4253"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/bigicon_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/camera_play" />
+
+</LinearLayout>

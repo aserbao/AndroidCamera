@@ -12,7 +12,7 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.thread.MediaMuxerThread;
 import com.aserbao.androidcustomcamera.blocks.mediaCodec.recordCamera.utils.FileUtils;
-import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoViewPlayerActivity;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -41,7 +41,7 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
         switch (view.getId()){
             case R.id.btn_record_player:
                 Vector<String> videoFileNameIsMp4 = FileUtils.getVideoFileNameIsMp4(FileUtils.VIDEO_PATH);
-                VideoPlayerActivity.launch(RecordCameraActivity.this,FileUtils.VIDEO_PATH + videoFileNameIsMp4.firstElement());
+                VideoViewPlayerActivity.launch(RecordCameraActivity.this,FileUtils.VIDEO_PATH + videoFileNameIsMp4.firstElement());
                 break;
             case R.id.btn_record_status:
                 if(mBtnRecordStatus.getText().equals("开始录制")){
@@ -87,7 +87,7 @@ public class RecordCameraActivity extends BaseActivity implements SurfaceHolder.
                     Camera.Parameters parameters = mCamera.getParameters();
                     parameters = mCamera.getParameters();
                     parameters.setPictureFormat(PixelFormat.JPEG); //图片输出格式
-//                    mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//预览持续发光
                     parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);//持续对焦模式
                     mCamera.setParameters(parameters);
                     mCamera.startPreview();

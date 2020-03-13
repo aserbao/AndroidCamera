@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black80">
+
+    <TextView
+        android:id="@+id/tv_show_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8b8b8b"
+        android:textSize="15sp"
+        android:text="33"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_action_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#e73a3d"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:textSize="15sp"
+        android:text="完成"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        />
+
+    <EditText
+        android:id="@+id/et_bubble_input"
+        android:layout_below="@id/tv_action_done"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@null"
+        android:textSize="15sp"
+        android:hint="说点什么呗……"
+        android:textColor="@color/white"
+        android:inputType="text|textMultiLine"
+        android:imeOptions="actionDone"
+        android:padding="10dp"
+        android:gravity="center"
+        android:singleLine="false"
+        />
+</RelativeLayout>

@@ -4,14 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_gravity="bottom"
-    android:background="@color/black_50"
+    android:background="@color/black50"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
         android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/colorWhite70"
+        android:textColor="@color/white70"
         android:layout_marginTop="16dp"
         android:text="滑动选择任意位置暂停"
         android:layout_width="match_parent"

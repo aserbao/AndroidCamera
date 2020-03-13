@@ -1,9 +1,13 @@
 package com.aserbao.androidcustomcamera.whole.record;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,14 +23,21 @@ import com.aserbao.androidcustomcamera.base.MyApplication;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 import com.aserbao.androidcustomcamera.base.pop.PopupManager;
 import com.aserbao.androidcustomcamera.base.utils.FileUtils;
+import com.aserbao.androidcustomcamera.base.utils.StaticFinalValues;
+import com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.LocalVideoActivity;
+import com.aserbao.androidcustomcamera.whole.pickvideo.VideoPickActivity;
+import com.aserbao.androidcustomcamera.whole.pickvideo.beans.VideoFile;
 import com.aserbao.androidcustomcamera.whole.record.beans.MediaObject;
 import com.aserbao.androidcustomcamera.whole.record.other.MagicFilterType;
 import com.aserbao.androidcustomcamera.whole.record.ui.CameraView;
+import com.aserbao.androidcustomcamera.whole.record.ui.CustomRecordImageView;
 import com.aserbao.androidcustomcamera.whole.record.ui.FocusImageView;
 import com.aserbao.androidcustomcamera.whole.record.ui.ProgressView;
 import com.aserbao.androidcustomcamera.whole.record.ui.SlideGpuFilterGroup;
+import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity2;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,8 +46,11 @@ import butterknife.OnClick;
 
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.CHANGE_IMAGE;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.DELAY_DETAL;
+import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.MAX_NUMBER;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.OVER_CLICK;
 import static com.aserbao.androidcustomcamera.base.utils.StaticFinalValues.RECORD_MIN_TIME;
+import static com.aserbao.androidcustomcamera.whole.pickvideo.BaseActivity.IS_NEED_FOLDER_LIST;
+import static com.aserbao.androidcustomcamera.whole.pickvideo.VideoPickActivity.IS_NEED_CAMERA;
 
 public class RecorderActivity extends BaseActivity implements View.OnTouchListener, SlideGpuFilterGroup.OnFilterChangeListener {
     private static final int VIDEO_MAX_TIME = 30 * 1000;
@@ -54,8 +68,8 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
     LinearLayout mIndexDelete;
     @BindView(R.id.index_album)
     TextView mIndexAlbum;
-    @BindView(R.id.btn_record_iv)
-    ImageView mBtnRecordIv;
+    @BindView(R.id.custom_record_image_view)
+    CustomRecordImageView mCustomRecordImageView;
     @BindView(R.id.count_down_tv)
     TextView mCountDownTv;
     @BindView(R.id.record_btn_ll)
@@ -100,7 +114,7 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
         mVideoRecordProgressView.setOverTimeClickListener(new ProgressView.OverTimeClickListener() {
             @Override
             public void overTime() {
-                mBtnRecordIv.performClick();
+                mCustomRecordImageView.performClick();
             }
 
             @Override
@@ -110,13 +124,13 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
 
             @Override
             public void isArriveCountDown() {
-                mBtnRecordIv.performClick();
+                mCustomRecordImageView.performClick();
             }
         });
         setBackAlpha(mVideoRecordFinishIv,127);
     }
 
-    @OnClick({R.id.matching_back, R.id.video_record_finish_iv, R.id.switch_camera,  R.id.index_delete, R.id.index_album, R.id.btn_record_iv, R.id.count_down_tv, R.id.meet_mask, R.id.video_filter})
+    @OnClick({R.id.matching_back, R.id.video_record_finish_iv, R.id.switch_camera,  R.id.index_delete, R.id.index_album, R.id.custom_record_image_view, R.id.count_down_tv, R.id.meet_mask, R.id.video_filter})
     public void onViewClicked(View view) {
         if (System.currentTimeMillis() - mLastTime < 500) {
             return;
@@ -139,6 +153,11 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                 onBackPressed();
                 break;
             case R.id.video_record_finish_iv:
+                onStopRecording();
+                if (mMediaObject != null) {
+                    videoFileName = mMediaObject.mergeVideo();
+                }
+                VideoPlayerActivity2.launch(RecorderActivity.this,videoFileName);
                 break;
             case R.id.switch_camera:
                 mRecordCameraView.switchCamera();
@@ -168,24 +187,17 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                 }
                 break;
             case R.id.index_album:
-                Toast.makeText(this, "稍后编写", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(this, VideoPickActivity.class);
+                intent2.putExtra(IS_NEED_CAMERA, false);
+                intent2.putExtra(MAX_NUMBER, 1);
+                intent2.putExtra(IS_NEED_FOLDER_LIST, true);
+                startActivityForResult(intent2, StaticFinalValues.REQUEST_CODE_PICK_VIDEO);
                 break;
-            case R.id.btn_record_iv:
+            case R.id.custom_record_image_view:
                 if(!isRecording) {
-                    isRecording = true;
-                    String storageMp4 = FileUtils.getStorageMp4(String.valueOf(System.currentTimeMillis()));
-                    MediaObject.MediaPart mediaPart = mMediaObject.buildMediaPart(storageMp4);
-                    mRecordCameraView.setSavePath(storageMp4);
-                    mRecordCameraView.startRecord();
-                    mVideoRecordProgressView.start();
-                    alterStatus();
+                    onStartRecording();
                 }else{
-                    isRecording = false;
-                    mRecordCameraView.stopRecord();
-                    mVideoRecordProgressView.stop();
-                    //todo:录制释放有延时，稍后处理
-                    mMyHandler.sendEmptyMessageDelayed(DELAY_DETAL,250);
-                    alterStatus();
+                    onStopRecording();
                 }
                 break;
             case R.id.count_down_tv:
@@ -226,6 +238,27 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                 break;
         }
     }
+    
+    private void onStartRecording(){
+        isRecording = true;
+        String storageMp4 = FileUtils.getStorageMp4(String.valueOf(System.currentTimeMillis()));
+        MediaObject.MediaPart mediaPart = mMediaObject.buildMediaPart(storageMp4);
+        mRecordCameraView.setSavePath(storageMp4);
+        mRecordCameraView.startRecord();
+        mCustomRecordImageView.startRecord();
+        mVideoRecordProgressView.start();
+        alterStatus();
+    }
+
+    private void onStopRecording() {
+            isRecording = false;
+            mRecordCameraView.stopRecord();
+            mVideoRecordProgressView.stop();
+            //todo:录制释放有延时，稍后处理
+            mMyHandler.sendEmptyMessageDelayed(DELAY_DETAL,250);
+            mCustomRecordImageView.stopRecord();
+            alterStatus();
+    }
 
     private void setBackAlpha(Button view ,int alpha) {
         if(alpha > 127){
@@ -248,7 +281,7 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
         mVideoFilter.setVisibility(View.VISIBLE);
         mCountDownTv.setVisibility(View.VISIBLE);
         mMatchingBack.setVisibility(View.VISIBLE);
-        mBtnRecordIv.setVisibility(View.VISIBLE);
+        mCustomRecordImageView.setVisibility(View.VISIBLE);
     }
     private void hideOtherView() {
         mIndexAlbum.setVisibility(View.INVISIBLE);
@@ -257,7 +290,7 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
         mVideoFilter.setVisibility(View.INVISIBLE);
         mCountDownTv.setVisibility(View.INVISIBLE);
         mMatchingBack.setVisibility(View.INVISIBLE);
-        mBtnRecordIv.setVisibility(View.INVISIBLE);
+        mCustomRecordImageView.setVisibility(View.INVISIBLE);
     }
     //正在录制中
     public void alterStatus(){
@@ -373,8 +406,8 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                                 activity.mMyHandler.removeCallbacks(null);
                                 activity.mCountTimeDownIv.setVisibility(View.GONE);
                                 activity.mVideoRecordProgressView.setVisibility(View.VISIBLE);
-                                activity.mBtnRecordIv.setVisibility(View.VISIBLE);
-                                activity.mBtnRecordIv.performClick();
+                                activity.mCustomRecordImageView.setVisibility(View.VISIBLE);
+                                activity.mCustomRecordImageView.performClick();
                                 activity.mVideoRecordProgressView.setCountDownTime(activity.mRecordTimeInterval);
                                 break;
                         }
@@ -385,11 +418,61 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
                         }
                         break;
                     case OVER_CLICK:
-                        activity.mBtnRecordIv.performClick(); //定时结束
+                        activity.mCustomRecordImageView.performClick(); //定时结束
                         break;
                 }
             }
         }
     }
 
+    private static final String TAG = "RecorderActivity";
+
+    String videoFileName;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case StaticFinalValues.REQUEST_CODE_PICK_VIDEO:
+                if (resultCode == RESULT_OK) {
+                    ArrayList<VideoFile> list = data.getParcelableArrayListExtra(StaticFinalValues.RESULT_PICK_VIDEO);
+                    for (VideoFile file : list) {
+                        videoFileName = file.getPath();
+                    }
+
+
+                    //这一段用来判断视频时间的
+                    try {
+                        MediaPlayer player = new MediaPlayer();
+                        player.setDataSource(videoFileName);
+                        player.prepare();
+                        int duration = player.getDuration();
+                        player.release();
+                        int s = duration / 1000;
+                        int hour = s / 3600;
+                        int minute = s % 3600 / 60;
+                        int second = s % 60;
+                        Log.e(TAG, "视频文件长度,分钟: " + minute + "视频有" + s + "秒");
+                        if (s >= 120) {
+                            Toast.makeText(this, "视频剪辑不能超过2分钟", Toast.LENGTH_LONG).show();
+                            return;
+                        } else if (s < 5) {
+                            Toast.makeText(this, "视频剪辑不能少于5秒", Toast.LENGTH_LONG).show();
+                            return;
+                        }else{
+                            Intent intent = new Intent(RecorderActivity.this, LocalVideoActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(StaticFinalValues.VIDEOFILEPATH, videoFileName);
+                            bundle.putInt(StaticFinalValues.MISNOTCOMELOCAL, 0);
+                            intent.putExtra(StaticFinalValues.BUNDLE, bundle);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+                break;
+        }
+    }
 }

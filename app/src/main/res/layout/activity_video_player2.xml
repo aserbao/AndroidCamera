@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/video_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    >
+
+
+    <com.aserbao.androidcustomcamera.whole.jiaozivideo.PublicVideoJZVideo
+        android:id="@+id/public_video_jz_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/video_btn_container_ll"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/video_play_submite_ll"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/video_player_tv_storage"
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="存为草稿箱"
+                android:layout_marginRight="3dp"
+                android:textColor="@color/color_454545"
+                android:background="@drawable/color_white60_radius_5_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_marginLeft="3dp"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:id="@+id/video_player_tv_public"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="保存到相册"
+                android:textColor="@color/white"
+                android:background="@drawable/color_fc4253_radius_5_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="32dp"
+        android:src="@drawable/back_white"/>
+
+
+    <LinearLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/video_player2_sel_cover"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="选封面"
+            android:shadowColor="@color/black50"
+            android:shadowDy="0"
+            android:shadowDx="0"
+            android:shadowRadius="10"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/bt_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/video_player2_edit_video_tv"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="19dp"
+            android:shadowColor="@color/black50"
+            android:shadowDy="0"
+            android:shadowDx="0"
+            android:shadowRadius="10"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/bt_clip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <include layout="@layout/pop_video_loading"/>
+</RelativeLayout>
+

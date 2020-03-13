@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:visibility="gone"
+    android:id="@+id/pop_video_loading_fl"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+        <LinearLayout
+            android:layout_gravity="center"
+            android:background="@drawable/btn_black50_r15_bg"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="30dp">
+                <FrameLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/pop_video_percent_tv"
+                            android:layout_gravity="center"
+                            android:textSize="8sp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <ProgressBar
+                            android:layout_gravity="center"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/pb_loading"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:indeterminateDrawable="@drawable/loading_video_progress"
+                            android:layout_centerVertical="true"/>
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_hint"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:text="正在剪辑视频..."/>
+        </LinearLayout>
+
+</FrameLayout>

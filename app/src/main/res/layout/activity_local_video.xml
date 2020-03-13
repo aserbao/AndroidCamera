@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_454545"
+    android:keepScreenOn="true">
+    <RelativeLayout
+        android:id="@+id/local_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/local_back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@drawable/bigicon_backwhite" />
+
+
+        <ImageView
+            android:id="@+id/local_rotate_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bigicon_video_rotate"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/local_video_next_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/btn_edit_next_bg"
+            android:text="下一步"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_below="@+id/local_title"
+        android:layout_above="@+id/local_sel_time_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.VideoPreviewView
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/local_video_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </FrameLayout>
+    <!--<VideoView
+        android:id="@+id/local_video_view"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/local_title"
+        android:layout_above="@+id/local_sel_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>-->
+    <TextView
+        android:id="@+id/local_sel_time_tv"
+        android:text="已选取30秒"
+        android:textColor="@color/white"
+        android:layout_above="@+id/local_frame_layout"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:id="@+id/local_frame_layout"
+        android:layout_marginBottom="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="@color/white30"
+        android:layout_height="67dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/local_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <com.aserbao.androidcustomcamera.whole.createVideoByVoice.localEdit.ThumbnailView
+            android:id="@+id/local_thumb_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+    <include layout="@layout/pop_video_loading"/>
+</RelativeLayout>
