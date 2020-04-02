@@ -18,13 +18,7 @@
         android:theme="@style/MyTheme">
         <activity android:name=".blocks.others.changeVoice.ChangeVoiceActivity"></activity>
         <activity android:name=".blocks.mediaCodec.show.MediaCodecShowOnGlSurfaceView" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".blocks.BlocksActivity" />
         <activity android:name=".blocks.mediaCodec.MediaCodecActivity" />
         <activity android:name=".whole.WholeActivity" />
