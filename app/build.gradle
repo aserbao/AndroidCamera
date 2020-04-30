@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
@@ -54,4 +56,8 @@ dependencies {
     //==================mp4parser====================
     implementation 'com.googlecode.mp4parser:isoparser:1.1.21'
     implementation files('libs/fmod.jar')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
