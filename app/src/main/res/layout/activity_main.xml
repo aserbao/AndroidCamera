@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aserbao.androidcustomcamera.MainActivity">
+    tools:context="com.aserbao.androidcustomcamera.HomeActivity">
 
     <android.support.v7.widget.RecyclerView
         android:layout_gravity="center"

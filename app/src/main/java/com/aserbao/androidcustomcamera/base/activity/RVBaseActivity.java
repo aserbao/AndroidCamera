@@ -18,9 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class RVBaseActivity extends AppCompatActivity implements IBaseRecyclerItemClickListener {
-
+    public final String TAG = this.getClass().getCanonicalName();
     @BindView(R.id.base_rv)
-    RecyclerView mBaseRv;
+    public RecyclerView mBaseRv;
     public CommonAdapter mCommonAdapter;
     public LinearLayoutManager mLinearLayoutManager;
 
