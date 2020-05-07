@@ -8,8 +8,8 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 - [Android openGl开发详解（二） - 通过SurfaceView，TextureView，GlSurfaceView显示相机预览（附演示）](https://www.jianshu.com/p/db8ecba6037a)
 - [Android 自定义相机开发（三) —— 了解下EGL](https://www.jianshu.com/p/1e82021b10b4)
 
-# 欢迎关注公众号领取更多openGl,相机相关学习资料
-|公众号(aserbao)|个人微信号(小老头)|微信交流群|
+# 欢迎关注公众号一起学习交流Android技术
+|公众号(aserbao)|个人微信号(小老头)|交流群(若过期加个人微信拉群)|
 |--|--|--|
 |![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/we_chat.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/Android%E4%BA%A4%E6%B5%81%E7%BE%A4.jpg)|
 
@@ -45,5 +45,12 @@ Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来�
 ![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/ExtractDecode.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/DecodeEditEncode.gif)
 ![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/Mediacodec录制随音乐改变.gif)![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaExtractor.gif)
 ![](https://github.com/aserbao/CommonSource/blob/master/AndroidCamera/images/MediaMuxer.gif)
+
+## 打赏
+开源不易，若有帮助就打赏一下呗，打赏请备注ID。
+
+|微信打赏|支付宝打赏|
+|--|--|
+|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F.jpeg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F.jpeg)|
 
 

@@ -15,34 +15,33 @@
 #define MODE_JINGSONG 3
 #define MODE_GAOGUAI 4
 #define MODE_KONGLING 5
-#define MODE_RELEASE 6
 
 using namespace FMOD;
 
 JNIEXPORT void JNICALL Java_com_aserbao_androidcustomcamera_utils_VoiceUtils_fix(JNIEnv *env,
-                                                            jclass jcls, jstring path_jstr, jint type) {
+		jclass jcls, jstring path_jstr, jint type) {
     //声音引擎
-    System *system;
+	System *system;
     //声音
-    Sound *sound;
-    //数字处理（音效）
+	Sound *sound;
+	//数字处理（音效）
     DSP *dsp;
     //正在播放
-    bool playing = true;
-    //音乐轨道
+	bool playing = true;
+	//音乐轨道
     Channel *channel;
-    //播放速度
+	//播放速度
     float frequency = 0;
     //音频地址
     const char* path_cstr = env->GetStringUTFChars(path_jstr, NULL);
 
     System_Create(&system);
-    system->init(32, FMOD_INIT_NORMAL, NULL);
+	system->init(32, FMOD_INIT_NORMAL, NULL);
 
-    try {
-        //创建声音
-        system->createSound(path_cstr, FMOD_DEFAULT, NULL, &sound);
-        switch (type) {
+	try {
+		//创建声音
+		system->createSound(path_cstr, FMOD_DEFAULT, NULL, &sound);
+		switch (type) {
             case MODE_NORMAL:
                 //原生播放
                 system->playSound(sound, 0, false, &channel);
@@ -82,29 +81,24 @@ JNIEXPORT void JNICALL Java_com_aserbao_androidcustomcamera_utils_VoiceUtils_fix
                 system->playSound(sound, 0, false, &channel);
                 channel->addDSP(0, dsp);
                 break;
-            case MODE_RELEASE:
-                sound->release();
-                system->close();
-                system->release();
-                break;
-        }
-    } catch (...) {
-        LOGE("%s", "发生异常");
-        goto end;
-    }
-    system->update();
+            }
+	} catch (...) {
+		LOGE("%s", "发生异常");
+		goto end;
+	}
+	system->update();
 
-    //单位是微妙
-    //每秒钟判断下是否是播放
-    while (playing) {
-        channel->isPlaying(&playing);
+	//单位是微妙
+	//每秒钟判断下是否是播放
+	while (playing) {
+		channel->isPlaying(&playing);
         usleep(1000);
-    }
-    goto end;
+	}
+	goto end;
 
     //释放资源
     end: env->ReleaseStringUTFChars(path_jstr, path_cstr);
-    sound->release();
-    system->close();
-    system->release();
+	sound->release();
+	system->close();
+	system->release();
 }

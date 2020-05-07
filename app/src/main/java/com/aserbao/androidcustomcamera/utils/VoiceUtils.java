@@ -17,7 +17,6 @@ public class VoiceUtils {
     public static final int MODE_JINGSONG = 3;
     public static final int MODE_GAOGUAI = 4;
     public static final int MODE_KONGLING = 5;
-    public static final int MODE_RELEASE = 6;
 
 
     /**

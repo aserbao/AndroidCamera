@@ -25,7 +25,6 @@ public class ChangeVoiceActivity extends RVBaseActivity {
         mBaseRecyclerBeen.add(new BaseRecyclerBean("惊悚",3));
         mBaseRecyclerBeen.add(new BaseRecyclerBean("搞怪",4));
         mBaseRecyclerBeen.add(new BaseRecyclerBean("空灵",5));
-        mBaseRecyclerBeen.add(new BaseRecyclerBean("释放",6));
         FMOD.init(this);
         fixedThreadPool = Executors.newFixedThreadPool(1);
     }
@@ -51,9 +50,6 @@ public class ChangeVoiceActivity extends RVBaseActivity {
                 break;
             case 5:
                 type = VoiceUtils.MODE_KONGLING;
-                break;
-            case 6:
-                type = VoiceUtils.MODE_RELEASE;
                 break;
         }
 //        VoiceUtils.fix(path, type);

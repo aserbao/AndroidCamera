@@ -19,8 +19,7 @@ extern "C" {
 #define com_aserbao_androidcustomcamera_utils_VoiceUtils_MODE_GAOGUAI 4L
 #undef com_aserbao_androidcustomcamera_utils_VoiceUtils_MODE_KONGLING
 #define com_aserbao_androidcustomcamera_utils_VoiceUtils_MODE_KONGLING 5L
-    #undef com_aserbao_androidcustomcamera_utils_VoiceUtils_MODE_RELEASE
-#define com_aserbao_androidcustomcamera_utils_VoiceUtils_MODE_RELEASE 6L
+
 /*
  * Class:     com_aserbao_androidcustomcamera_utils_VoiceUtils
  * Method:    fix

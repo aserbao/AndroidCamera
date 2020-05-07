@@ -9,3 +9,4 @@
 /build
 /capturess
 .externalNativeBuild
+/app/.cxx/
