@@ -103,8 +103,6 @@ public class MediaObject implements Serializable{
     }
 
     public MediaPart getCurrentPart() {
-        /*if (mMediaPart != null)
-            return mMediaPart;*/
         if (mMediaList != null && mMediaList.size() > 0)
             mMediaPart = mMediaList.get(mMediaList.size() - 1);
         return mMediaPart;

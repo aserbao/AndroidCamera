@@ -12,6 +12,7 @@ import com.aserbao.androidcustomcamera.R;
 import com.aserbao.androidcustomcamera.base.interfaces.IDetailCallBackListener;
 import com.aserbao.androidcustomcamera.blocks.interfaces.ICallBackListener;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.combineTwoVideo.CombineTwoVideos;
+import com.aserbao.androidcustomcamera.blocks.mediaExtractor.combineTwoVideo.CombineVideoAndMusic;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.FrequencyView;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.TransAacHandlerPure;
 import com.aserbao.androidcustomcamera.blocks.mediaExtractor.primary.decoder.DecoderAudioAAC2PCMPlay;
@@ -101,7 +102,11 @@ public class MediaExtractorActivity extends AppCompatActivity implements IDetail
 //                decoderAudioAndGetDb.start(audioMp3Path1, MIMETYPE_AUDIO_MPEG);
                 break;
             case R.id.exchange_video_and_audio:
-                CombineTwoVideos.combineTwoVideos(path + "/aserbao.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
+//                CombineTwoVideos.combineTwoVideos(path + "/aserbao.mp4", 0, path + "/lan.mp4", new File(path + "/aserbao.mp3"), this);
+                String inputVideo = "/storage/emulated/0/douyin.mp4";
+                String outputVideo = "/storage/emulated/0/douyinOut.mp4";
+                String inputMusic = "/storage/emulated/0/pg/.bgm/40e613e5e3695ab44b4f31e25088d7ac";
+                CombineVideoAndMusic.combineTwoVideos(inputMusic, 0, inputVideo, new File(outputVideo), this);
                 break;
             case R.id.decoder_aac_and_player:
                 String audioPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aac.aac";
