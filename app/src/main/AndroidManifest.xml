@@ -19,11 +19,7 @@
         <activity android:name=".blocks.others.changeVoice.ChangeVoiceActivity"></activity>
         <activity android:name=".blocks.mediaCodec.show.MediaCodecShowOnGlSurfaceView" />
         <activity android:name=".HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".blocks.BlocksActivity" />
         <activity android:name=".blocks.mediaCodec.MediaCodecActivity" />
@@ -38,7 +34,13 @@
         <activity android:name=".blocks.mediaCodec.bigflake.BigflakeActivity" />
         <activity
             android:name=".whole.record.RecorderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".blocks.mediaCodec.bigflake.encodeDecode.EncodeDecodeActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.extractDecodeEditEncodeMux.ExtractDecodeEditEncodeMuxActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.decodeEditEncode.DecodeEditEncodeActivity" />
@@ -52,12 +54,9 @@
         <activity android:name=".blocks.others.changeHue.ChangeHueActivity" />
         <activity android:name=".blocks.others.OthersActivity" />
         <activity android:name=".blocks.others.audioStyle.AudioStyleActivity" />
-        <activity android:name=".whole.createVideoByVoice.CreateVideoByAudioDbActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".blocks.ffmpeg.FFmpegActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".whole.createVideoByVoice.CreateVideoByAudioDbActivity">
         </activity>
         <activity
             android:name=".whole.pickvideo.VideoPickActivity"

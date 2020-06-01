@@ -3,8 +3,10 @@ package com.aserbao.androidcustomcamera.blocks.ffmpeg
 import Jni.FFmpegCmd
 import VideoHandle.*
 import android.os.Environment
+import android.support.annotation.MainThread
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.aserbao.androidcustomcamera.base.activity.RVBaseActivity
 import com.aserbao.androidcustomcamera.base.beans.BaseRecyclerBean
 import com.aserbao.androidcustomcamera.blocks.ffmpeg.beans.WaterFilter
@@ -18,12 +20,13 @@ var absolutePath = Environment.getExternalStorageDirectory().absolutePath
 class FFmpegActivity : RVBaseActivity(),OnEditorListener {
 
     override fun initGetData() {
+        mBaseRecyclerBeen.add(BaseRecyclerBean("取消", 100))
         mBaseRecyclerBeen.add(BaseRecyclerBean("视频中抽取音频", 0))
         mBaseRecyclerBeen.add(BaseRecyclerBean("视频添加水印", 1))
         mBaseRecyclerBeen.add(BaseRecyclerBean("无损视频合并", 2))
         mBaseRecyclerBeen.add(BaseRecyclerBean("多段视频合并", 3))
         mBaseRecyclerBeen.add(BaseRecyclerBean("多段视频加水印并合成", 4))
-        mBaseRecyclerBeen.add(BaseRecyclerBean("取消", 5))
+        mBaseRecyclerBeen.add(BaseRecyclerBean("视频添加配乐并调整音量大小", 5))
 
         mInputs.add(WaterFilter(videoPath1,png1))
         mInputs.add(WaterFilter(videoPath2,png2))
@@ -53,12 +56,19 @@ class FFmpegActivity : RVBaseActivity(),OnEditorListener {
     override fun itemClickBack(view: View, position: Int, isLongClick: Boolean, comeFrom: Int) {
         mStartTime = System.currentTimeMillis()
         when(position){
+            100 ->{
+//                FFmpegCmd.exit()
+                addMusicToVideo1()
+            }
             0 ->{
                 FFmpegUtils.demuxer(videoPath1,outputMusicPath,EpEditor.Format.MP3,this)
             }
             1 ->{
-                var epVideo1 = EpVideo(videoPath1)
-                epVideo1.addDraw(EpDraw(png1,0,0,576f,1024f,false))
+                var tempVideoPath = "/storage/emulated/0/Android/data/com.getremark.playground/files/Movies/15871817738614870009935443.mp4"
+                var tempBitmapPath = "/storage/emulated/0/playground/temp/123.png"
+                var epVideo1 = EpVideo(tempVideoPath)
+//                var epVideo1 = EpVideo(videoPath1)
+                epVideo1.addDraw(EpDraw(tempBitmapPath,0,0,576f,1024f,false))
                 val outputOption = EpEditor.OutputOption(outputPathMp4)
                 EpEditor.exec(epVideo1, outputOption,this)
             }
@@ -83,10 +93,34 @@ class FFmpegActivity : RVBaseActivity(),OnEditorListener {
                 addWaterFilterOneLine()
             }
             5 ->{
-                FFmpegCmd.exit()
+                addMusicToVideo()
             }
         }
     }
+
+    fun addMusicToVideo(){
+        var inputVideo = absolutePath + "/5.mp4"
+//        var inputVideo = absolutePath + "/temp.mp4"
+        var inputMusic = absolutePath + "/input.mp3"
+        var outputVideo = absolutePath + "/output.mp4"
+        var videoVolume = 0.5f
+        var musicVolume = 1f
+        FFmpegUtils.music(inputVideo,inputVideo,outputVideo,videoVolume,musicVolume,this)
+//        FFmpegUtils.addMusicForMp4(inputVideo,inputMusic,videoVolume,musicVolume,outputVideo,this)
+    }
+    fun addMusicToVideo1(){
+//        var inputVideo = absolutePath + "/5.mp4"
+//        var inputVideo = absolutePath + "/temp.mp4"
+//        var inputMusic = absolutePath + "/input.mp3"
+//        var inputVideo = "/storage/emulated/0/playground/temp/.capture/.remark-1588920936552.mp4"
+        var inputVideo = absolutePath + "/test1.mp4"
+        var inputMusic = absolutePath +"/er.m4a"
+        var outputVideo = absolutePath + "/output.mp4"
+        var videoVolume = 1f
+        var musicVolume = 1f
+        FFmpegUtils.music(inputVideo,inputMusic,outputVideo,videoVolume,musicVolume,this)
+    }
+
 
     private fun addWaterFilterOneLine() {
 //        ffmpeg -i 2.mp4 -i 3.mp4  -i img1.png -i img2.png -filter_complex "[0:v][2:v]overlay=0:0[in1];[1:v][3:v]overlay=0:10[in2];[in1][in2]concat" -y output.mp4
@@ -160,6 +194,7 @@ class FFmpegActivity : RVBaseActivity(),OnEditorListener {
         if(cuurIndex == 3){
             itemClickBack(mBaseRv,2,false,2)
         }*/
+
         Log.e(TAG, ": onSuccess 耗时： "  + (System.currentTimeMillis() - mStartTime) );
     }
 
@@ -170,6 +205,4 @@ class FFmpegActivity : RVBaseActivity(),OnEditorListener {
     override fun onProgress(progress: Float) {
         Log.e(TAG, ": onProgress" + progress );
     }
-
-
 }

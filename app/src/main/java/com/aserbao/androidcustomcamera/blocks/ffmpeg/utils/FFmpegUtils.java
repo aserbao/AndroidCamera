@@ -74,6 +74,35 @@ public class FFmpegUtils {
     }
 
     /**
+     * 给视频添加配乐
+     * @param inputVideoPath
+     * @param inputMusicPath
+     * @param videoVolume   0~1
+     * @param musicVolume   0~1
+     * @param outputVideoPath
+     */
+    public static void addMusicForMp4(String inputVideoPath,String inputMusicPath,float videoVolume,float musicVolume,String outputVideoPath,final OnEditorListener onEditorListener){
+//        ffmpeg -y -i 123.mp4 -i 5.aac -filter_complex "[0:a]aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo,volume=1.0[a0];
+//        [1:a]aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo,volume=0.5[a1];[a0][a1]amix=inputs=2:duration=first[aout]" -map "[aout]" -ac 2 -c:v copy -map 0:v:0 output.mp4
+        CmdList cmd = new CmdList();
+        cmd.append("ffmpeg").append("-y").append("-i").append(inputVideoPath)
+                .append("-i").append(inputMusicPath)
+                .append("-filter_complex")
+                .append("[0:a]volume=" + videoVolume + "[a0];[1:a]volume=" + musicVolume + "[a1];[a0][a1]amix=inputs=2:duration=first[aout]")
+                .append("-map")
+                .append("[aout]")
+                .append("-ac")
+                .append("2")
+                /*.append("-c:v")
+                .append("-copy")*/
+                .append("-map")
+                .append("0:v:0")
+                .append(outputVideoPath);
+        long d = VideoUitls.getDuration(inputVideoPath);
+        execCmd(cmd, d, onEditorListener);
+    }
+
+    /**
      * 音视频分离
      *
      * @param videoin          视频文件
@@ -398,4 +427,6 @@ public class FFmpegUtils {
             }
         });
     }
+
+
 }

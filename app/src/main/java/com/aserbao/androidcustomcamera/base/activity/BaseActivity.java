@@ -28,7 +28,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         startRequestPermission();
         initView();
-        getLifecycle()
     }
 
     private void startRequestPermission() {
