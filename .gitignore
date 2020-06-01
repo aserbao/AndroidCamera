@@ -1,7 +1,7 @@
 *.iml
 .cxx
 .idea
-.gradle
+/gradle/
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -10,3 +10,4 @@
 /capturess
 .externalNativeBuild
 /app/.cxx/
+/gradle/
