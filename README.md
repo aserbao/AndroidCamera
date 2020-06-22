@@ -2,9 +2,9 @@
 # 作者简介 
 Mr. Zhu ，英文名aserbao! 从事Android开发多年，技术不高，用来工作刚刚好。对视频音视频处理，硬编码这一块有一定的研究。之前北漂，现在深漂。同名微信公众号aserbao的维护者，喜欢看书，摄影，交友，目前生活这样子。欢迎大家关注我的公众号和微信一起学习交流。
 
-若有技术问题,只提供有偿咨询。
+若有技术相关问题,只提供有偿咨询。(被白嫖了好多次了)
 
-If you have any question about this repo,please prepare money,no free
+If you have any question about this repo,please prepare money,no free.
 
 # 学习资料
 - [Android 零基础开发相机](https://gitbook.cn/gitchat/activity/5aeb03e3af08a333483d71c1)
