@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:debuggable="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_lanuch"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
