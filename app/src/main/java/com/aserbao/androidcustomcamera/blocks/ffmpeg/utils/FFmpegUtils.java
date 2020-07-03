@@ -215,7 +215,7 @@ public class FFmpegUtils {
      * @param out				输出路径
      * @param w					输出图片宽度
      * @param h					输出图片高度
-     * @param rate				每秒视频生成图片数
+     * @param rate				每秒视频数
      * @param onEditorListener	回调接口
      */
     public static void video2pic(String videoin, String out, int w, int h, float rate, OnEditorListener onEditorListener) {

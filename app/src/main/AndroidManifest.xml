@@ -8,19 +8,25 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-        android:debuggable="true"
         android:name=".base.MyApplication"
         android:allowBackup="true"
+        android:debuggable="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".blocks.others.changeVoice.ChangeVoiceActivity"></activity>
-        <activity android:name=".blocks.mediaCodec.show.MediaCodecShowOnGlSurfaceView" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".blocks.atestcases.TestCaseActivity" />
+        <activity android:name=".blocks.others.changeVoice.ChangeVoiceActivity" />
+        <activity android:name=".blocks.mediaCodec.show.MediaCodecShowOnGlSurfaceView" />
+        <activity android:name=".HomeActivity"></activity>
         <activity android:name=".blocks.BlocksActivity" />
         <activity android:name=".blocks.mediaCodec.MediaCodecActivity" />
         <activity android:name=".whole.WholeActivity" />
@@ -34,12 +40,8 @@
         <activity android:name=".blocks.mediaCodec.bigflake.BigflakeActivity" />
         <activity
             android:name=".whole.record.RecorderActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".blocks.mediaCodec.bigflake.encodeDecode.EncodeDecodeActivity" />
         <activity android:name=".blocks.mediaCodec.bigflake.extractDecodeEditEncodeMux.ExtractDecodeEditEncodeMuxActivity" />
@@ -55,9 +57,7 @@
         <activity android:name=".blocks.others.OthersActivity" />
         <activity android:name=".blocks.others.audioStyle.AudioStyleActivity" />
         <activity android:name=".blocks.ffmpeg.FFmpegActivity" />
-
-        <activity android:name=".whole.createVideoByVoice.CreateVideoByAudioDbActivity">
-        </activity>
+        <activity android:name=".whole.createVideoByVoice.CreateVideoByAudioDbActivity" />
         <activity
             android:name=".whole.pickvideo.VideoPickActivity"
             android:screenOrientation="portrait" />

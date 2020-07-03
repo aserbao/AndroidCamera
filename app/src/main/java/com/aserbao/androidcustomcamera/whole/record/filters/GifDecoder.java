@@ -19,7 +19,6 @@ public class GifDecoder {
 			image = im;
 			delay = del;
 		}
-
 	}
 
 	// to define some error type

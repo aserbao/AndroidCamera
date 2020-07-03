@@ -36,6 +36,15 @@ android {
             path "CMakeLists.txt"
         }
     }
+
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            jvmArgs '-XX:MaxPermSize=256m'
+        }
+
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -57,6 +66,10 @@ dependencies {
     implementation 'com.googlecode.mp4parser:isoparser:1.1.21'
     implementation files('libs/fmod.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.9.5"
 }
 repositories {
     mavenCentral()

@@ -76,9 +76,8 @@ public class MediaCodecShowOnGlSurfaceView extends AppCompatActivity implements 
                 startActivityForResult(intent2, StaticFinalValues.REQUEST_CODE_PICK_VIDEO);
                 break;
             case R.id.decode_show_btn:
-                /*MediaCodecUtil1 mediaCodecUtil1 = new MediaCodecUtil1(videoFileName, mHolder.getSurface());
-                mediaCodecUtil1.start();*/
-
+                MediaCodecUtil1 mediaCodecUtil1 = new MediaCodecUtil1(videoFileName, mHolder.getSurface());
+                mediaCodecUtil1.start();
                 break;
             case R.id.detail_video_btn:
                 new Thread(new Runnable() {

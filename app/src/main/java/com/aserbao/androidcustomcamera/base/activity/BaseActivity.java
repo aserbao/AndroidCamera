@@ -30,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
     }
 
-    private void startRequestPermission() {
+    protected void startRequestPermission() {
         ActivityCompat.requestPermissions(this,BASIC_PERMISSIONS,123);
     }
     public void initView(){
