@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aserbao.androidcustomcamera.R;
+import com.aserbao.androidcustomcamera.WelcomeActivity;
 import com.aserbao.androidcustomcamera.base.MyApplication;
 import com.aserbao.androidcustomcamera.base.activity.BaseActivity;
 import com.aserbao.androidcustomcamera.base.pop.PopupManager;
@@ -35,6 +36,8 @@ import com.aserbao.androidcustomcamera.whole.record.ui.FocusImageView;
 import com.aserbao.androidcustomcamera.whole.record.ui.ProgressView;
 import com.aserbao.androidcustomcamera.whole.record.ui.SlideGpuFilterGroup;
 import com.aserbao.androidcustomcamera.whole.videoPlayer.VideoPlayerActivity2;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -371,6 +374,8 @@ public class RecorderActivity extends BaseActivity implements View.OnTouchListen
             }
         });
     }
+
+
     private static class MyHandler extends Handler {
 
         private WeakReference<RecorderActivity> mVideoRecordActivity;

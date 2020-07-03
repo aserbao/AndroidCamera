@@ -35,9 +35,9 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
     private static final String MIME_TYPE = "video/avc";
     private static final int WIDTH = 720;
     private static final int HEIGHT = 1280;
-    private static final int BIT_RATE = 4000000;
-    private static final int FRAMES_PER_SECOND = 4;
-    private static final int IFRAME_INTERVAL = 5;
+    private static final int BIT_RATE = 3000000;
+    private static final int FRAMES_PER_SECOND = 30;
+    private static final int IFRAME_INTERVAL = 1;
 
     private static final int NUM_FRAMES = 4 * 100;
     private static final int START_RECORDING = 0;
@@ -71,8 +71,8 @@ public class PrimaryMediaCodecActivity extends BaseActivity {
             case R.id.btn_recording:
                 if (mBtnRecording.getText().equals("开始录制")) {
                     try {
-//                        mOutputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis() + ".mp4");
-                        mOutputFile = new File(FileUtils.getStorageMp4("PrimaryMediaCodecActivity"));
+                        mOutputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis() + ".mp4");
+//                        mOutputFile = new File(FileUtils.getStorageMp4("PrimaryMediaCodecActivity"));
                         startRecording(mOutputFile);
                         mPrimaryMcTv.setText("文件保存路径为：" + mOutputFile.toString());
                         mBtnRecording.setText("停止录制");

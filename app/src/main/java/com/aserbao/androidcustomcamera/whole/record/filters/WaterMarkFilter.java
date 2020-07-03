@@ -125,7 +125,6 @@ public class WaterMarkFilter extends NoFilter{
             }
             //对画面进行矩阵旋转
 //            MatrixUtils.flip(mFilter.getMatrix(),false,true);
-
             mFilter.setTextureId(textures[0]);
         }
     }
