@@ -60,6 +60,7 @@ If you have any question about this repo,please prepare money,no free.
 ### 打赏记录
 |备注|金额|
 |--|--|
+|贺利军|66.66￥|
 |小个子|200￥|
 |小Qiao|66.66￥|
 |一路狂奔|20￥|
@@ -67,4 +68,4 @@ If you have any question about this repo,please prepare money,no free.
 |有点小激动|20￥|
 |Orange| 30￥|
 |卡霾哈霾哈|66￥|
-> 说明：挣钱不易，如果项目对你有所帮助再打赏。如果有遇到小问题有时间也会免费帮忙解决。
+> 说明：大家挣钱不易，如果项目对你有所帮助再打赏。如果有遇到小问题有时间也会免费帮忙解决。
