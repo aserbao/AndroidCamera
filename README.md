@@ -14,7 +14,7 @@ If you have any question about this repo,please prepare money,no free.
 
 # 欢迎关注公众号一起学习交流Android技术
 |公众号(aserbao)|QQ交流群(1055866980)
-|--|--|--|
+|--|--|
 |![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/qq交流群.jpeg)
 
 # 项目介绍
