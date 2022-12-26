@@ -13,9 +13,9 @@ If you have any question about this repo,please prepare money,no free.
 - [Android 自定义相机开发（三) —— 了解下EGL](https://www.jianshu.com/p/1e82021b10b4)
 
 # 欢迎关注公众号一起学习交流Android技术
-|公众号(aserbao)|QQ交流群(1055866980)
-|--|--|
-|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/qq交流群.jpeg)
+|公众号(aserbao)|
+|--|
+|![](https://github.com/aserbao/AserbaosAndroid/blob/master/app/src/main/assets/images/weixin.jpg)
 
 # 项目介绍
 项目目前功能有：
