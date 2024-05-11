@@ -69,3 +69,7 @@ If you have any question about this repo,please prepare money,no free.
 |Orange| 30￥|
 |卡霾哈霾哈|66￥|
 > 说明：大家挣钱不易，如果项目对你有所帮助再打赏。如果有遇到小问题有时间也会免费帮忙解决。
+
+### Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aserbao/AndroidCamera&type=Date)](https://star-history.com/#aserbao/AndroidCamera&Date)
